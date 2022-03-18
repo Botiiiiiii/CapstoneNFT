@@ -1,20 +1,24 @@
 import './App.css';
 import {
     BrowserRouter,
-    Routes,
+    Switch,
     Route
 } from "react-router-dom";
 import Login from './components/page/login/LoginPage'
-import Main from './components/page/main/MainPage'
+import ArtView from "./components/page/main/art/ArtView";
+import CreateView from "./components/page/main/create/CreateView";
+import SupportView from "./components/page/main/support/SupportView";
+import MyView from "./components/page/main/my/MyView";
 
 function App() {
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/main" element={<Main/>}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/main/art" component={ArtView}/>
+                <Route path="/main/create" component={CreateView}/>
+                <Route path="/main/my" component={MyView}/>
+                <Route path="/main/support" component={SupportView}/>
                 {/*<Route exact path="/info" render={() => <Info userInfo={userInfo} />} />*/}
-            </Routes>
         </BrowserRouter>
     );
 }
