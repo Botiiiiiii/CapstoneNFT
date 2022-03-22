@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import MainTab from "../../../common/MainTab";
+import MainTab from "../../../common/Tab/MainTab";
 import React from "react";
 
 // src/pages/index.js를 통해서 한번에 import 할 수 있도록 함

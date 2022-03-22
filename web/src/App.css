@@ -29,17 +29,16 @@
 }
 
 .tabMenu {
-    background-color: #dcdcdc;
-    font-weight: bold;
-    display: flex;
-    flex-direction: row;
-    justify-items: center;
-    align-items: center;
-    list-style: none;
+    cursor: pointer;
+    background-color: #a11735;
+}
+.tabItem{
+    margin-left: auto;
+    padding: 0;
 }
 .submenu {
-    padding: 15px 10px;
     cursor: pointer;
+    background-color: #a11735;
 }
 
 @keyframes App-logo-spin {

@@ -1,6 +1,6 @@
 import React from "react";
 // src/pages/index.js를 통해서 한번에 import 할 수 있도록 함
-import MainTab from "../../../common/MainTab";
+import MainTab from "../../../common/Tab/MainTab";
 import TestImg from "../../../../test/image/img.png"
 import Footer from "../FooterComp"
 import {Container, GridList, GridListTile, Grid} from "@material-ui/core";
@@ -31,9 +31,7 @@ const ArtView = (props) => {
     return (
         <div>
             <header>
-
                 <MainTab history={props} tabValue="0"/>
-
             </header>
             <div style={{display: "flex", marginTop: '200px', marginLeft: "auto"}}>
 
