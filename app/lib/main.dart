@@ -13,20 +13,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'NTF-Market',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: SplashScreen(
-        seconds: 5,
-        navigateAfterSeconds: MainPage(),
-        title: const Text("세종 NFT", style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20.0,
-          color: Colors.white
-        ),
-        ),
-        backgroundColor: const Color(0xffa11735),
-      )
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'NTF-Market',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: SplashScreen(
+          seconds: 5,
+          navigateAfterSeconds: MainPage(),
+          title: const Text(
+            "세종 NFT",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
+                color: Colors.white),
+          ),
+          backgroundColor: const Color(0xffa11735),
+        ));
   }
 }
