@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      title: 'NTF-Market',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: SplashScreen(
         seconds: 5,
