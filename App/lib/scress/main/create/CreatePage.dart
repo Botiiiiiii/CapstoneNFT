@@ -29,12 +29,12 @@ class _CreateState extends State<CreatePage>{
 
               Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                width: 300.0,
+                width: 390.0,
                   child:TextField(
                     controller: namedata,
                     decoration: InputDecoration(
-                      labelText: 'NAME',
-                        labelStyle: TextStyle(color: Colors.black),
+                        hintText: 'NAME',
+                        hintStyle: TextStyle(color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black,width: 5.0),
                         borderRadius: BorderRadius.all(Radius.circular(3.0)),
@@ -47,12 +47,12 @@ class _CreateState extends State<CreatePage>{
               SizedBox(height: 20,),
               Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                width: 300.0,
+                width: 390.0,
                 child:TextField(
                   controller: descriptiondata,
                   decoration: InputDecoration(
-                      labelText: 'Description',
-                      labelStyle: TextStyle(color: Colors.black),
+                      hintText: 'Description',
+                      hintStyle: TextStyle(color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black,width: 5.0),
                         borderRadius: BorderRadius.all(Radius.circular(3.0)),
