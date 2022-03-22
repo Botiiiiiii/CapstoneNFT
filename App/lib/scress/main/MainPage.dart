@@ -63,16 +63,21 @@ class _MyHomePageState extends State<MyHomePage>
             },
             tabs: const [
               Tab(
-                text: "my",
+                icon: Icon(Icons.account_circle),
+                text: "My",
+
               ),
               Tab(
-                text: "art",
+                icon: Icon(Icons.apps_outlined),
+                text: "Gallery",
               ),
               Tab(
-                text: "create",
+                icon: Icon(Icons.add_circle_outline),
+                text: "Create",
               ),
               Tab(
-                text: "support",
+                icon: Icon(Icons.contact_support_outlined),
+                text: "Support",
               )
             ],
           )),
@@ -90,19 +95,6 @@ class _MyHomePageState extends State<MyHomePage>
           CreatePage(),
           SupportPage()
         ],
-      ),
-    );
-  }
-
-  Container _container(int page, Color color) {
-    return Container(
-      color: color,
-      child: Center(
-        child: Text(
-          'Page $page',
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
-        ),
       ),
     );
   }
