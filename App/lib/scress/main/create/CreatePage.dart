@@ -24,7 +24,7 @@ class _CreateState extends State<CreatePage>{
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: 50.0),
-              Center(child: Image.network('https://picsum.photos/250?image=9',width: 320.0,height: 180.0)),
+              Center(child: Image.network('https://picsum.photos/250?image=9',width: 320.0,height: 180.0, )),
               SizedBox(height: 40.0),
 
               Container(
