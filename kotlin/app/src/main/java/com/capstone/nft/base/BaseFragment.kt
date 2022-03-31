@@ -9,8 +9,11 @@ import androidx.fragment.app.Fragment
 import com.capstone.nft.system.utils.Trace
 
 open class BaseFragment: Fragment() {
+    protected var mActivity: BaseActivity? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mActivity = activity as BaseActivity
         Trace.debug(">> onCreate()")
     }
 

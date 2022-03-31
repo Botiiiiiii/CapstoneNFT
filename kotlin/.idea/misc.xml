@@ -4,12 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_rect_red_r10.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/cursor_drawable.xml" value="0.24444444444444444" />
+        <entry key="app/src/main/res/drawable/sel_favorite.xml" value="0.24444444444444444" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2786458333333333" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.15625" />
+        <entry key="app/src/main/res/layout/clear_edit_text.xml" value="0.24351851851851852" />
         <entry key="app/src/main/res/layout/fragment_create.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.2564814814814815" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_my.xml" value="0.2564814814814815" />
         <entry key="app/src/main/res/layout/support.xml" value="0.2564814814814815" />
+        <entry key="app/src/main/res/layout/view_artist.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/view_gallery.xml" value="0.25" />
       </map>
     </option>
   </component>

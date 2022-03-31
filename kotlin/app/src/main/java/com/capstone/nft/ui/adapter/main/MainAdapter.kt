@@ -9,7 +9,7 @@ import com.capstone.nft.ui.fragment.main.MyFragment
 import com.capstone.nft.ui.fragment.main.SupportFragment
 
 class MainAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
-    override fun getItemCount(): Int = 4
+    override fun getItemCount(): Int = 3
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
@@ -18,9 +18,8 @@ class MainAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fra
 
             1 -> GalleryFragment()
 
-            2 -> CreateActivity()
+            2 -> SupportFragment()
 
-            3 -> SupportFragment()
             else -> GalleryFragment()
         }
     }
