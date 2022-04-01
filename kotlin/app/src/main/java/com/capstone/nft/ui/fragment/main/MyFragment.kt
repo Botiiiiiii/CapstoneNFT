@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment
 import com.capstone.nft.R
 import com.capstone.nft.base.BaseFragment
 import com.capstone.nft.databinding.FragmentMyBinding
+import com.capstone.nft.ui.adapter.main.MyAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MyFragment: BaseFragment() {
     lateinit var mBinding: FragmentMyBinding
-
+lateinit var mAdapter: MyAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -23,6 +26,20 @@ class MyFragment: BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_my, container, false)
+        mAdapter= MyAdapter(mActivity!!)
+        mBinding.viewPager.adapter=mAdapter
+
+        TabLayoutMediator(mBinding.fmTvTab,mBinding.viewPager
+        )
+        { tab, position ->
+            when (position) {
+                0 -> tab.text = "보유 작품"
+                1 -> tab.text = "내 작품"
+                2 -> tab.text = "거래 내역"
+            }
+        }.attach()
+
         return mBinding.root
+
     }
 }
