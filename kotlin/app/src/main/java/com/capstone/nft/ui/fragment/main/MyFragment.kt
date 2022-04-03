@@ -1,5 +1,6 @@
 package com.capstone.nft.ui.fragment.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +10,18 @@ import androidx.fragment.app.Fragment
 import com.capstone.nft.R
 import com.capstone.nft.base.BaseFragment
 import com.capstone.nft.databinding.FragmentMyBinding
+import com.capstone.nft.ui.activity.login.LoginActivity
 import com.capstone.nft.ui.adapter.main.MyAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.fragment_my.*
 
 class MyFragment: BaseFragment() {
     lateinit var mBinding: FragmentMyBinding
 lateinit var mAdapter: MyAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
