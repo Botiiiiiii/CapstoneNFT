@@ -27,5 +27,10 @@
         <activity android:name="com.capstone.nft.ui.activity.main.MainActivity"
             android:exported="false">
         </activity>
+
+        <activity android:name=".ui.activity.create.CreateActivity"
+            android:exported="false">
+        </activity>
+
     </application>
 </manifest>
