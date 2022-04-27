@@ -6,19 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.capstone.nft.R
 import com.capstone.nft.base.BaseFragment
 import com.capstone.nft.databinding.FragmentMyBinding
-<<<<<<< HEAD
-import com.capstone.nft.ui.activity.login.LoginActivity
-=======
 import com.capstone.nft.ui.activity.create.CreateActivity
->>>>>>> dabd3697cca7a74a6ac69f1880c27e46a8ea9085
+import com.capstone.nft.ui.activity.login.LoginActivity
 import com.capstone.nft.ui.adapter.main.MyAdapter
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_my.*
 
 class MyFragment : BaseFragment() {
     lateinit var mBinding: FragmentMyBinding
@@ -58,6 +52,11 @@ class MyFragment : BaseFragment() {
         when(v.id){
             R.id.fm_fbtn_create -> {
                 val intent = Intent(mActivity, CreateActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.fm_btn_login -> {
+                val intent = Intent(mActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
         }

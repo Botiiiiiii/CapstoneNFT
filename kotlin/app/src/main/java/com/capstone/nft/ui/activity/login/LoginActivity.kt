@@ -2,55 +2,35 @@ package com.capstone.nft.ui.activity.login
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.capstone.nft.R
+import com.capstone.nft.databinding.ActivityLoginBinding
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity:AppCompatActivity() {
-    val TAG : String="LoginActivity"
+class LoginActivity : AppCompatActivity() {
+    val TAG: String = "LoginActivity"
+    lateinit var mBinding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        al_btn_login.setOnClickListener{
-            var id = al_et_id.text.toString()
-            var pw = al_et_pw.text.toString()
-
-            val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
-            val savedId= sharedPreference.getString("id","")
-            val savedPw = sharedPreference.getString("pw","")
-
-            if(id==savedId&&pw==savedPw){
-                dialog("Success")
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        mBinding.alLlLogin.setOnClickListener {
+            val uri = "intent://klipwallet/open?url=https://klipwallet.com/?target=/a2a?request_key=0b0ee0ad-62b3-4146-980b-531b3201265d#Intent;scheme=kakaotalk;package=com.kakao.talk;end"
+            val intent = Intent.parseUri(uri, Intent.URI_INTENT_SCHEME);
+            val existPackage = packageManager.getLaunchIntentForPackage(intent.getPackage()!!)
+            if (existPackage != null) {
+                startActivity(intent)
+            } else {
+                var marketIntent = Intent(Intent.ACTION_VIEW)
+                marketIntent.setData(Uri.parse("market://details?id=com.kakao.talk"))
+                startActivity(marketIntent)
             }
         }
-
-
-
-    }
-
-    private fun dialog(type: String) {
-        var dialog = AlertDialog.Builder(this)
-        if(type.equals("Success")){
-            dialog.setTitle("로그인 성공")
-            dialog.setMessage("로그인 성공 !")
-        }
-        else if(type.equals("fail")){
-            dialog.setTitle("로그인 실패")
-            dialog.setMessage("로그인 실패 !")
-        }
-
-        var dialog_listener = object : DialogInterface.OnClickListener{
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                when(which){
-                    DialogInterface.BUTTON_POSITIVE-> Log.d(TAG,"")
-                }
-            }
-        }
-        dialog.setPositiveButton("확인",dialog_listener)
-        dialog.show()
     }
 
 }

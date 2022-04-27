@@ -16,6 +16,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -31,6 +32,9 @@ dependencies {
     compileOnly 'com.zaxxer:HikariCP:3.4.5'
     compileOnly group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
     compileOnly group: 'commons-io', name: 'commons-io', version: '2.6'
+    implementation 'xyz.groundx.caver:caver-java-ext-kas:1.9.0'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0'
+    runtimeOnly 'mysql:mysql-connector-java'
 }
 
 tasks.named('test') {

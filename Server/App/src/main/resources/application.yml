@@ -7,12 +7,12 @@ spring:
       max-request-size: 100MB
 
   datasource:
-    url: mysql://ec2-18-220-138-199.us-east-2.compute.amazonaws.com:3306
+    url: mysql://ec2-18-220-138-199.us-east-2.compute.amazonaws.com:3306/nft
     username: user
     password: User123!
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
-      jdbc-url: jdbc:mysql://ec2-18-220-138-199.us-east-2.compute.amazonaws.com:3306
+      jdbc-url: jdbc:mysql://ec2-18-220-138-199.us-east-2.compute.amazonaws.com:3306/nft
       username: user
       password: User123!
       driver-class-name: com.mysql.jdbc.Driver
