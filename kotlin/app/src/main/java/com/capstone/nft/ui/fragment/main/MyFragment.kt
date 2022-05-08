@@ -10,11 +10,9 @@ import androidx.fragment.app.Fragment
 import com.capstone.nft.R
 import com.capstone.nft.base.BaseFragment
 import com.capstone.nft.databinding.FragmentMyBinding
-<<<<<<< HEAD
 import com.capstone.nft.ui.activity.login.LoginActivity
-=======
 import com.capstone.nft.ui.activity.create.CreateActivity
->>>>>>> dabd3697cca7a74a6ac69f1880c27e46a8ea9085
+
 import com.capstone.nft.ui.adapter.main.MyAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
