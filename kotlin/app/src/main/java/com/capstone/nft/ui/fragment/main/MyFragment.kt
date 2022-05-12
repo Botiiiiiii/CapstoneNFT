@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.capstone.nft.R
 import com.capstone.nft.base.BaseFragment
 import com.capstone.nft.databinding.FragmentMyBinding
 import com.capstone.nft.ui.activity.create.CreateActivity
-import com.capstone.nft.ui.activity.login.LoginActivity
 import com.capstone.nft.ui.adapter.main.MyAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -20,7 +20,6 @@ class MyFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
