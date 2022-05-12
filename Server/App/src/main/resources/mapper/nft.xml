@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nft">
+    <insert id="insertNft" parameterType="Nft">
+        INSERT INTO nft.NFT(tokenId, title, description, imageSrc, owner, creator)
+        VALUES (#{tokenId}, #{title}, #{description}, #{imageSrc}, #{owner}, #{creator})
+    </insert>
+    <select id="getNftList" resultType="Nft">
+        SELECT * FROM nft.NFT
+    </select>
+
+<!--    this.tokenId = tokenId;-->
+<!--    this.title = title;-->
+<!--    this.description = description;-->
+<!--    this.imageSrc = imageSrc;-->
+<!--    this.owner = owner;-->
+<!--    this.creator = creator;-->
+
+
+<!--    <select id="login" resultType="User">-->
+<!--        SELECT BOARD_NO as boardNo-->
+<!--             , TITLE    as title-->
+<!--             , CONTENT  as content-->
+<!--             , REG_DATE as regDate-->
+<!--        FROM BOARD-->
+<!--    </select>-->
+<!--    <select id="findBoardById" parameterType="int" resultType="board">-->
+<!--        SELECT BOARD_NO as boardNo-->
+<!--             , TITLE    as title-->
+<!--             , CONTENT  as content-->
+<!--             , REG_DATE as regDate-->
+<!--        FROM BOARD-->
+<!--        WHERE BOARD_NO = #{boardNo}-->
+<!--    </select>-->
+</mapper>

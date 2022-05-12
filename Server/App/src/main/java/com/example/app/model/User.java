@@ -9,6 +9,8 @@ public class User {
     private String token;
     private String pw;
 
+    public User(){}
+
     public User(String address,
                 String publicKey,
                 String nickname,

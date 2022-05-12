@@ -1,23 +1,15 @@
 package com.example.app.controller;
 
-import com.example.app.service.S3Uploader;
+import com.example.app.model.UserInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 public class HelloController {
 
-    private final S3Uploader s3Uploader;
-
     @PostMapping("/images")
-    public String upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
-        s3Uploader.upload(multipartFile, "static");
-        return "test";
+    public UserInfo upload(@RequestBody UserInfo user) {
+        return user;
     }
 }

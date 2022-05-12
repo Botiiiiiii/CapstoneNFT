@@ -12,9 +12,11 @@ public class AppApplication {
             + "classpath:aws.yml";
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(AppApplication.class)
-                .properties(APPLICATION_LOCATIONS)
-                .run(args);
+        SpringApplication.run(AppApplication.class, args);
+
+//        new SpringApplicationBuilder(AppApplication.class)
+//                .properties(APPLICATION_LOCATIONS)
+//                .run(args);
     }
 
 }

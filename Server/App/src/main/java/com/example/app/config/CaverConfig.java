@@ -2,6 +2,8 @@ package com.example.app.config;
 
 import org.springframework.context.annotation.Bean;
 import xyz.groundx.caver_ext_kas.CaverExtKAS;
+import xyz.groundx.caver_ext_kas.ConfigOptions;
+import xyz.groundx.caver_ext_kas.kas.KAS;
 
 public class CaverConfig {
 

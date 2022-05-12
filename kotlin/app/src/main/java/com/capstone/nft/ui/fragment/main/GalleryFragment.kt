@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,11 +18,13 @@ import com.capstone.nft.databinding.FragmentGalleryBinding
 import com.capstone.nft.system.utils.PixelUtil
 import com.capstone.nft.ui.adapter.main.GalleryAdapter
 import com.capstone.nft.ui.adapter.main.ProfileAdapter
+import com.capstone.nft.viewmodel.MainViewModel
 
 class GalleryFragment() : BaseFragment() {
     lateinit var mBinding: FragmentGalleryBinding
     lateinit var mProfileAdapter: ProfileAdapter
     lateinit var mGalleryAdapter: GalleryAdapter
+    val mViewMode: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,5 +78,9 @@ class GalleryFragment() : BaseFragment() {
 
             }
         })
+
+        mViewMode.mldGallery.observe(viewLifecycleOwner){
+            mBinding.fgClSearch.get(0)
+        }
     }
 }

@@ -20,14 +20,13 @@ public class UserControler {
     private JDBCRepository jdbcRepository;
 
     @PostMapping("/regist")
-    public Integer Regist(@RequestBody UserInfo userInfo) throws ApiException {
+    public User Regist(@RequestBody UserInfo userInfo) throws ApiException {
         CaverExtKAS caver = new CaverConfig().caverConfig();
         Account account = caver.kas.wallet.createAccount();
 
         User user = new User(account.getAddress(), account.getPublicKey(), userInfo.getNickname(), 0, "", userInfo.getPw());
-        Integer result = jdbcRepository.insertUser(user);
-
-        return result;
+        jdbcRepository.insertUser(user);
+        return user;
     }
 
     @PostMapping("/login")

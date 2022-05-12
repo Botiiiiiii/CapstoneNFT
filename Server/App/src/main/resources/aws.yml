@@ -1,11 +1,11 @@
-cloud:
-  aws:
-    credentials:
-      accessKey: AKIA23475HTAJPJGTN3T
-      secretKey: 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
-    s3:
-      bucket: sejong-nft-bucket
-    region:
-      static: us-east-2
-    stack:
-      auto: false
+#cloud:
+#  aws:
+#    credentials:
+#      accessKey: AKIA23475HTAJPJGTN3T
+#      secretKey: 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
+#    s3:
+#      bucket: sejong-nft-bucket
+#    region:
+#      static: us-east-2
+#    stack:
+#      auto: false

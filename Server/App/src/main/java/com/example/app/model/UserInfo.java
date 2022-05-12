@@ -4,6 +4,8 @@ public class UserInfo {
     private String nickname;
     private String pw;
 
+    public UserInfo(){}
+
     public UserInfo(String nickname, String pw){
         this.nickname = nickname;
         this.pw = pw;
