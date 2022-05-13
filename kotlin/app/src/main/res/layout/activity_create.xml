@@ -39,7 +39,7 @@
             android:layout_height="150dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/cloud_image"
+            android:src="@drawable/test"
             android:onClick="@{listener::onClick}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,0 +1,23 @@
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      location: ${java.io.tmpdir}
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  datasource:
+    url: mysql://ec2-18-220-138-199.us-east-2.compute.amazonaws.com:3306
+    username: user
+    password: User123!
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      jdbc-url: jdbc:mysql://ec2-18-220-138-199.us-east-2.compute.amazonaws.com:3306
+      username: user
+      password: User123!
+      driver-class-name: com.mysql.jdbc.Driver
+
+
+#      server:
+#        tomcat:
+#          max-swallow-size:

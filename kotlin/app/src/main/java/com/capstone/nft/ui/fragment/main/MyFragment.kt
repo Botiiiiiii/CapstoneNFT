@@ -1,5 +1,6 @@
 package com.capstone.nft.ui.fragment.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +10,14 @@ import androidx.fragment.app.Fragment
 import com.capstone.nft.R
 import com.capstone.nft.base.BaseFragment
 import com.capstone.nft.databinding.FragmentMyBinding
+import com.capstone.nft.ui.activity.create.CreateActivity
 import com.capstone.nft.ui.adapter.main.MyAdapter
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MyFragment: BaseFragment() {
+class MyFragment : BaseFragment() {
     lateinit var mBinding: FragmentMyBinding
-lateinit var mAdapter: MyAdapter
+    lateinit var mAdapter: MyAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -26,10 +28,12 @@ lateinit var mAdapter: MyAdapter
         savedInstanceState: Bundle?
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_my, container, false)
-        mAdapter= MyAdapter(mActivity!!)
-        mBinding.viewPager.adapter=mAdapter
+        mBinding.listener = this
+        mAdapter = MyAdapter(mActivity!!)
+        mBinding.viewPager.adapter = mAdapter
 
-        TabLayoutMediator(mBinding.fmTvTab,mBinding.viewPager
+        TabLayoutMediator(
+            mBinding.fmTvTab, mBinding.viewPager
         )
         { tab, position ->
             when (position) {
@@ -41,5 +45,19 @@ lateinit var mAdapter: MyAdapter
 
         return mBinding.root
 
+    }
+
+    fun onClick(v:View){
+        when(v.id){
+            R.id.fm_fbtn_create -> {
+                val intent = Intent(mActivity, CreateActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.fm_btn_login -> {
+                val intent = Intent(mActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }

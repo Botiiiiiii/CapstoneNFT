@@ -10,4 +10,5 @@
 
     <color name="transparent">#ffffffff</color>
     <color name="primary">#A11735</color>
+    <color name="blue">#216FEA</color>
 </resources>
