@@ -37,23 +37,25 @@ from selenium import webdriver
 
 
 
-def crawling_tx():
+def crawling_tx(num):
     tx_list = []
     # 드라이버 연결
     driver = webdriver.Chrome()
-    # 웹사이트 이동
-    driver.get(URL_account + ContractAddress)
-    # 로딩 대기
-    driver.implicitly_wait(5)
-    # 테이블
-    table = driver.find_element(By.XPATH,'//*[@id="root"]/div/div[2]/div[2]/div/div/div[4]/div/div[2]/div/div[1]/div[2]')
 
     try:
-        for i in range(1,26):
-                Xpath_Tx_hash_link = '//*[@id="root"]/div/div[2]/div[2]/div/div/div[4]/div/div[2]/div/div[1]/div[2]/div/div[' + str(i) + ']/div[1]/div/a' #href
+        for j in range(1,num):
+            # 웹사이트 이동
+            driver.get(URL_account + ContractAddress +'?version=2&page='+str(j))
+            # 로딩 대기
+            driver.implicitly_wait(5)
+            # 테이블
+            table = driver.find_element(By.XPATH,
+                                        '//*[@id="root"]/div/div[2]/div[2]/div/div/div[4]/div/div[2]/div/div[1]/div[2]')
+            for i in range(1,26):
+                    Xpath_Tx_hash_link = '//*[@id="root"]/div/div[2]/div[2]/div/div/div[4]/div/div[2]/div/div[1]/div[2]/div/div[' + str(i) + ']/div[1]/div/a' #href
 
-                Tx_hash_link = table.find_element(By.XPATH,Xpath_Tx_hash_link).get_attribute('href')
-                tx_list.append(Tx_hash_link)
+                    Tx_hash_link = table.find_element(By.XPATH,Xpath_Tx_hash_link).get_attribute('href')
+                    tx_list.append(Tx_hash_link)
 
         return tx_list
 
@@ -79,8 +81,9 @@ def crawling_data(tx_data):
             # 테이블 서치
             table = driver.find_element(By.XPATH,'//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]')
             Timestamp = driver.find_element(By.XPATH,'//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[1]/div/div[1]/div[6]/div[2]/span').get_attribute('innerText')
+            trans_num_check = driver.find_element(By.XPATH,'//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[1]/div/div[1]/div[4]/div[2]').get_attribute('innerText')
             try:
-                try:
+                if(trans_num_check == '4'):
                     Xpath_From_Address = '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div[4]/div[3]/div/span[1]/div/a'  # href
                     Xpath_To_Address = '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div[4]/div[3]/div/span[3]/div/a' #href
                     Xpath_To_Value = '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div[4]/div[5]/div[1]/span[1]'
@@ -90,7 +93,7 @@ def crawling_data(tx_data):
                     To_Address = To_Address_link[33:]
                     Value = table.find_element(By.XPATH, Xpath_To_Value).get_attribute('innerText')
 
-                except:
+                else:
                     Xpath_From_Address = '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div[3]/div[3]/div/span[1]/div/a'  # href
                     Xpath_To_Address = '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div[3]/div[3]/div/span[3]/div/a'  # href
                     Xpath_To_Value = '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div[3]/div[5]/div[1]/span[1]'
@@ -136,10 +139,12 @@ def create_csv(data_df):
         data_df.to_csv("token/" + csv_name, index=False, mode='a', encoding='utf-8-sig', header=False)
     i += 1
 
-crawl_tx = crawling_tx()
+
+num=3
+crawl_tx = crawling_tx(num)
 crawl_data = crawling_data(crawl_tx)
 # print(crawl_data)
-tmp = np.append(tmp,crawl_data).reshape(25,8)
+tmp = np.append(tmp,crawl_data).reshape((num-1)*25,8)
 df = pd.DataFrame(tmp,columns=['Txn Hash', 'Timestamp', 'From', 'To', 'TokenID','Token_Name','Contract_Address','Value'])
 print(df)
 create_csv(df)
