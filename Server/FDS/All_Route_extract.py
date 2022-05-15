@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
 
 
 import numpy as np
@@ -204,7 +200,7 @@ def main():
     All_Route_keys = list(map(str,(All_Route_keys)))
 
     # 전체 딕셔너리에 키 값이 3 이상인 것들 뽑아내기(키 값은 엣지 갯수, 벨류는 경로 딕셔너리가 들어간 리스트)
-    choose_Route_keys = Choose_Route_keys(3,All_Route)
+    choose_Route_keys = Choose_Route_keys(1,All_Route)
     pyvis_graph = get_Pyvis_From_Routes(All_Route,choose_Route_keys)
 
 

@@ -36,18 +36,18 @@ tmp = np.array([])
 from selenium import webdriver
 
 
-
 def crawling_tx(num):
     tx_list = []
     # 드라이버 연결
     driver = webdriver.Chrome()
+    # 웹사이트 이동
+    driver.get(URL_account + ContractAddress)
+    # 로딩 대기
+    driver.implicitly_wait(5)
 
     try:
-        for j in range(1,num):
-            # 웹사이트 이동
-            driver.get(URL_account + ContractAddress +'?version=2&page='+str(j))
-            # 로딩 대기
-            driver.implicitly_wait(5)
+        for j in range(1,num+1):
+
             # 테이블
             table = driver.find_element(By.XPATH,
                                         '//*[@id="root"]/div/div[2]/div[2]/div/div/div[4]/div/div[2]/div/div[1]/div[2]')
@@ -57,21 +57,26 @@ def crawling_tx(num):
                     Tx_hash_link = table.find_element(By.XPATH,Xpath_Tx_hash_link).get_attribute('href')
                     tx_list.append(Tx_hash_link)
 
-        return tx_list
+            if(j < num):
+                driver.find_element(By.XPATH,'//*[@id="root"]/div/div[2]/div[2]/div/div/div[4]/div/div[2]/div/div[2]/ul/li[4]/button').click()
 
     except:
         print('crawling error')
 
     finally:
+        # print(tx_list)
         # 브라우저 (드라이버) 종료
         driver.quit()
+        # 리스트 반환
+        return tx_list
 
 
 def crawling_data(tx_data):
     data_list = []
     # 드라이버 연결
     driver = webdriver.Chrome()
-
+    # 카운팅
+    cnt = 0
     try:
         for i in tx_data:
             # 웹사이트 이동
@@ -102,14 +107,15 @@ def crawling_data(tx_data):
                     To_Address_link = table.find_element(By.XPATH, Xpath_To_Address).get_attribute('href')
                     To_Address = To_Address_link[33:]
                     Value = table.find_element(By.XPATH, Xpath_To_Value).get_attribute('innerText')
+
             except:
                 print(i)
-
 
             driver.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[1]/div[2]').click() #NFT Transfers 클릭
             driver.implicitly_wait(5)
             Token_name = driver.find_element(By.XPATH,'//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div/div[4]/a/div/span[2]').get_attribute('innerText')
             Token_Id = driver.find_element(By.XPATH,'//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div/div[5]/a').get_attribute(('innerText'))
+
 
             data_list.append(i[28:])
             data_list.append(Timestamp)
@@ -119,6 +125,7 @@ def crawling_data(tx_data):
             data_list.append(Token_name)
             data_list.append('0x41cff281b578f4cf45515d6e4efd535e47e76efd')
             data_list.append(Value)
+            cnt += 1
             print(Value)
 
     except:
@@ -127,7 +134,7 @@ def crawling_data(tx_data):
     finally:
         # 브라우저 (드라이버) 종료
         driver.quit()
-        return data_list
+        return data_list, cnt
 
 def create_csv(data_df):
     i=0
@@ -140,13 +147,13 @@ def create_csv(data_df):
     i += 1
 
 
-num=3
+num=10
 crawl_tx = crawling_tx(num)
-crawl_data = crawling_data(crawl_tx)
+crawl_data, cnt = crawling_data(crawl_tx)
 # print(crawl_data)
-tmp = np.append(tmp,crawl_data).reshape((num-1)*25,8)
+tmp = np.append(tmp,crawl_data).reshape(cnt,8)
 df = pd.DataFrame(tmp,columns=['Txn Hash', 'Timestamp', 'From', 'To', 'TokenID','Token_Name','Contract_Address','Value'])
-print(df)
+#print(df)
 create_csv(df)
 
 
