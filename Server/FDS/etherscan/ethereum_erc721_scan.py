@@ -146,8 +146,7 @@ def main():
         page = requests.get(url, headers=headers)
         time.sleep(7)
         soup = bs(page.text, "html.parser")
-        #lastpage = soup.select_one('document.querySelector("#maindiv > div.table-responsive.mb-2.mb-md-0 > div > div > ul > li:nth-child(3) > span > strong:nth-child(2)")').text
-        lastpage = 1
+        lastpage = soup.select_one('document.querySelector("#maindiv > div.table-responsive.mb-2.mb-md-0 > div > div > ul > li:nth-child(3) > span > strong:nth-child(2)")').text
 
         token_name = re.sub(r"[?!$/'.,]","",token_list_df.loc[i]['Token'])
         if len(token_name) > 151:

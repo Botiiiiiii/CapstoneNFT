@@ -147,7 +147,7 @@ def create_csv(data_df):
     i += 1
 
 
-num=100
+num=2
 crawl_tx = crawling_tx(num)
 crawl_data, cnt = crawling_data(crawl_tx)
 # print(crawl_data)
