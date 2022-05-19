@@ -1,0 +1,11 @@
+﻿Market Place,Address Type,Address,Account Type
+Opensea,Opensea 거래 컨트랙트,0x7Be8076f4EA4A4AD08075C2508e481d6C946D12b,CA
+Foundation,Foundation Market,0xcDA72070E455bb31C7690a170224Ce43623d0B6f,CA
+Foundation,Foundation token contract,0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405,CA
+Cryptopunks,Cryptopunks,0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB,CA
+Rarible,Rarible_exchange_proxy,0x9757F2d2b135150BBeb65308D4a91804107cd8D6,CA
+Rarible,Rarible_asset_contract ERC721,0xF6793dA657495ffeFF9Ee6350824910Abc21356C,CA
+Mintable,Mintable trade contract,0x974b10a997DE02E2c14C439f95EEaa58090A0Ca1,CA
+SuperRare,superRare trade contract,0x2947F98C42597966a0ec25e92843c09ac17Fbaa7,CA
+Zora,zora market,0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2,CA
+Zora,zora auction house,0xE468cE99444174Bd3bBBEd09209577d25D1ad673,CA

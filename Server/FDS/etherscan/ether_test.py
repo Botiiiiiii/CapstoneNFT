@@ -43,7 +43,7 @@ web3 = []
 for i in range(len(infura_url)):
     web3.append(Web3(Web3.HTTPProvider(infura_url[i])))
 
-def crawling_data_ether(tx_address,page):
+def crawling_data_ether(tx_address,page,Name):
     raw_data = {
         'Txn Hash': [],
         'Method': [],
@@ -67,41 +67,39 @@ def crawling_data_ether(tx_address,page):
         # 테이블 서치
         table = driver.find_element(By.XPATH,'//*[@id="maindiv"]/div[2]/table')
 
-        for j in range(1,page+1):
-            for i in range(1,26):
-                Xpath_Txn_Hash = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[2]/span/a'
-                Xpath_Method = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[3]/span'
-                Xpath_From_Address = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[8]/a'
-                Xpath_To_Address = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[6]/a'
-                Xpath_TokenID = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[9]/a'
-                Xpath_timestamp = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[5]/span' #title
+        for i in range(1,26):
+            Xpath_Txn_Hash = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[2]/span/a'
+            Xpath_Method = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[3]/span'
+            Xpath_From_Address = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[8]/a'
+            Xpath_To_Address = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[6]/a'
+            Xpath_TokenID = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[9]/a'
+            Xpath_timestamp = '//*[@id="maindiv"]/div[2]/table/tbody/tr['+ str(i) +']/td[5]/span' #title
 
-                Txn_Hash = table.find_element(By.XPATH, Xpath_Txn_Hash).get_attribute('innerText')
-                Method = table.find_element(By.XPATH, Xpath_Method).get_attribute('innerText')
-                From_Address = table.find_element(By.XPATH, Xpath_From_Address).get_attribute('innerText')
-                To_Address = table.find_element(By.XPATH, Xpath_To_Address).get_attribute('innerText')
-                Token_Id = table.find_element(By.XPATH, Xpath_TokenID).get_attribute('innerText')
-                timestamp = table.find_element(By.XPATH, Xpath_timestamp).get_attribute('title')
-
-                raw_data['Txn Hash'].append(Txn_Hash)
-                raw_data['Method'].append(Method)
-                raw_data['Timestamp'].append(timestamp)
-                raw_data['To'].append(To_Address)
-                raw_data['From'].append(From_Address)
-                raw_data['TokenID'].append(Token_Id)
+            Txn_Hash = table.find_element(By.XPATH, Xpath_Txn_Hash).get_attribute('innerText')
+            Method = table.find_element(By.XPATH, Xpath_Method).get_attribute('innerText')
+            From_Address = table.find_element(By.XPATH, Xpath_From_Address).get_attribute('innerText')
+            To_Address = table.find_element(By.XPATH, Xpath_To_Address).get_attribute('innerText')
+            Token_Id = table.find_element(By.XPATH, Xpath_TokenID).get_attribute('innerText')
+            timestamp = table.find_element(By.XPATH, Xpath_timestamp).get_attribute('title')
+            print(Token_Id)
+            raw_data['Txn Hash'].append(Txn_Hash)
+            raw_data['Method'].append(Method)
+            raw_data['Timestamp'].append(timestamp)
+            raw_data['To'].append(To_Address)
+            raw_data['From'].append(From_Address)
+            raw_data['TokenID'].append(Token_Id)
 
 
     except:
         print("crawling data error")
 
     finally:
-        # 브라우저 (드라이버) 종료
-        driver.quit()
-        return raw_data
+        get_Token_Dataframe(raw_data)
 
 
-def get_Token_Dataframe(data, w_num):
+def get_Token_Dataframe(data, w_num, Name):
     table_df = pd.DataFrame(data)
+    csv_name = Name + ".csv"
     value = []
     tx_to = []
     for i in range(len(table_df)):
@@ -111,13 +109,16 @@ def get_Token_Dataframe(data, w_num):
 
     table_df['Contract Address'] = tx_to
     table_df['value'] = value
-    print(table_df)
+    # print(table_df)
 
-    return table_df
+    if not os.path.exists("token/" + csv_name):
+        table_df.to_csv("token/" + csv_name, index=False, mode='w', encoding='utf-8-sig')
+    else:
+        table_df.to_csv("token/" + csv_name, index=False, mode='a', encoding='utf-8-sig', header=False)
+
 
 def create_csv(Token_address, Name, web3_num, pagenum):
     address = Token_address
-    csv_name = Name + ".csv"
     w_num = web3_num
     lastpage = pagenum
 
@@ -136,25 +137,18 @@ def create_csv(Token_address, Name, web3_num, pagenum):
 
         global error
         try:
-            dic_data = crawling_data_ether(address, i)
-            df_data = get_Token_Dataframe(dic_data, w_num)
+            crawling_data_ether(address, i, Name)
         except:
             print()
-            # try:
-            #     error = 1
-            #     dic_data = crawling_data_ether(address, i)
-            #     df = get_Token_Dataframe(dic_data, w_num)
-            #     error = 0
-            # except:
-            #     error = 2
-            #     dic_data = crawling_data_ether(address, i)
-            #     df = get_Token_Dataframe(dic_data, w_num)
-            #     error = 0
+            try:
+                error = 1
+                crawling_data_ether(address, i, Name)
+                error = 0
+            except:
+                error = 2
+                crawling_data_ether(address, i, Name)
+                error = 0
 
-        if not os.path.exists("token/" + csv_name):
-            df_data.to_csv("token/" + csv_name, index=False, mode='w', encoding='utf-8-sig')
-        else:
-            df_data.to_csv("token/" + csv_name, index=False, mode='a', encoding='utf-8-sig', header=False)
 
 
 def main():
@@ -173,20 +167,26 @@ def main():
         address = token_contract
 
         url = "https://etherscan.io/token/" + str(address)
-        # # 드라이버 연결
-        # driver = webdriver.Chrome()
-        # # 웹사이트 이동
-        # driver.get(URL_token + address)
-        # # 로딩 대기
-        # driver.implicitly_wait(5)
+        # 드라이버 연결
+        driver = webdriver.Chrome()
+        # 웹사이트 이동
+        driver.get(URL_token + address)
+        # 로딩 대기
+        driver.implicitly_wait(5)
 
-        #lastpage = driver.find_element(By.XPATH,'//*[@id="maindiv"]/div[1]/nav/ul/li[3]/span/strong[2]').get_attribute('innerText')
+        WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.ID, "tokentxnsiframe")))
+        elements = WebDriverWait(driver, 20).until(EC.visibility_of_all_elements_located(
+            (By.XPATH, '//*[@id="maindiv"]/div[2]/table/tbody/tr[1]/td[2]/span/a')))
 
+        lastpage = driver.find_element(By.XPATH,'//*[@id="maindiv"]/div[1]/nav/ul/li[3]/span/strong[2]').get_attribute('innerText')
+
+        print('마지막 페이지:', lastpage)
+        driver.quit()
         token_name = re.sub(r"[?!$/'.,]", "", token_list_df.loc[i]['Token'])
         if len(token_name) > 151:
             token_name = token_name[0:150]
 
-        create_csv(token_contract, token_name, web3_num, int(1))
+        create_csv(token_contract, token_name, web3_num, int(lastpage))
         web3_num = web3_num + 1
 
 
