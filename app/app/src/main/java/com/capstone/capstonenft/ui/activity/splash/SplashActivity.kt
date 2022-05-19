@@ -49,7 +49,7 @@ class SplashActivity : AppCompatActivity() {
                     startProcess()
                 }
                 else{
-                        finish()
+//                        finish()
                     }
             }
         }
