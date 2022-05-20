@@ -7,7 +7,9 @@ import networkx as nx
 from pyvis import network as net
 import pandas as pd
 import os
+import locale
 
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 
 # 폴더 파일 리스트
@@ -18,6 +20,7 @@ file_list = os.listdir(path)
 token_df = pd.read_csv("classification/"+file_list[0],encoding='latin_1')
 idx = token_df[token_df['From'].str.slice(start=0, stop=10) == "Black Hole"]['From'].index
 token_df.drop(idx, inplace=True)
+token_df['Value'] = token_df['Value'].str.replace(',','')
 
 # From Group , To Group
 From_group = token_df.groupby("From")
@@ -138,6 +141,7 @@ def get_All_Route():
         Route_check(From_group_list[0])
         Route_len = len(Edges)
 
+
         current_Route = {'Route len':Route_len,'Nodes':Nodes,'Edges':Edges,'Weighted_Edges':Weighted_Edges, 'Values':Values,'TokenID':TokenID}
 
         if str(current_Route['Route len']) in All_Route:
@@ -178,15 +182,18 @@ def show_networkx_graph(Route,keys):
     G = nx.DiGraph()
     for key in keys:
         for i in range(len(Route[key])):
-            G.add_edges_from(Route[key][i]['Edges'])
-            print(Route[key][i]['Edges'])
+            G.add_weighted_edges_from(Route[key][i]['Weighted_Edges'])
+            print(Route[key][i]['Weighted_Edges'])
+
+    edges = G.edges
+    weights = [G[u][v]['weight'] for u, v in edges]
     plt.figure(figsize=(25, 25))
     pos = nx.spring_layout(G, k=0.2)
     d = dict(G.degree)
 
-    n_data = [v * 100 for v in d.values()]
-    nx.draw_networkx_edges(G, pos, width=0.5, arrows=True, arrowstyle='->', arrowsize=5)
-    nx.draw(G, pos, with_labels=True, font_size=6, linewidths=0.5,
+    n_data = [v * 1000 for v in d.values()]
+    nx.draw_networkx_edges(G, pos,width=0.5,arrows=True, arrowstyle='->', arrowsize=5, )
+    nx.draw(G, pos, width = weights, with_labels=True, font_size=6, linewidths=0.5,
             edge_color="black", edgecolors='gray', node_size=n_data, node_color=n_data)
     plt.show()
 
@@ -200,14 +207,14 @@ def main():
     All_Route_keys = list(map(str,(All_Route_keys)))
 
     # 전체 딕셔너리에 키 값이 3 이상인 것들 뽑아내기(키 값은 엣지 갯수, 벨류는 경로 딕셔너리가 들어간 리스트)
-    choose_Route_keys = Choose_Route_keys(1,All_Route)
-    pyvis_graph = get_Pyvis_From_Routes(All_Route,choose_Route_keys)
-
-
-    pyvis_graph.repulsion(central_gravity=0)
-    pyvis_graph.show_buttons(filter_=['physics'])
-
-    pyvis_graph.show("d.html")
-    #show_networkx_graph(All_Route,choose_Route_keys)
+    choose_Route_keys = Choose_Route_keys(3,All_Route)
+    # pyvis_graph = get_Pyvis_From_Routes(All_Route,choose_Route_keys)
+    #
+    #
+    # pyvis_graph.repulsion(central_gravity=0)
+    # pyvis_graph.show_buttons(filter_=['physics'])
+    #
+    # pyvis_graph.show("d.html")
+    show_networkx_graph(All_Route,choose_Route_keys)
 
 main()

@@ -70,7 +70,7 @@ def From_search(From: str,cycle_Nodes,cycle_Edges,cycle_Values,cycle_TokenID,cyc
                         cycle_Edges.append((to_from_df.iloc[df_index]['From'],From))
                         cycle_Values.append(to_from_df.iloc[df_index]['Value'])
                         cycle_TokenID.append(to_from_df.iloc[df_index]['TokenID'])
-                        cycle_TimeStamp.append(to_from_df.iloc[df_index]['TimeStamp'])
+                        cycle_TimeStamp.append(to_from_df.iloc[df_index]['Timestamp'])
                         cycle_MarketPlace.append(to_from_df.iloc[df_index]['Market Place'])
 
                     From_search(from_address,cycle_Nodes,cycle_Edges,cycle_Values,cycle_TokenID,cycle_TimeStamp,cycle_MarketPlace)
@@ -263,6 +263,22 @@ def get_DataFrame_From_cycle_Route(Route):
 
     return cycle_Route_df
 
+def show_networkx_graph(Route,keys):
+    G = nx.DiGraph()
+    for key in keys:
+        for i in range(len(Route[key])):
+            G.add_edges_from(Route[key][i]['Cycle Edges'])
+            print(Route[key][i]['Cycle Edges'])
+    plt.figure(figsize=(25, 25))
+    pos = nx.spring_layout(G, k=0.2)
+    d = dict(G.degree)
+
+    n_data = [v * 100 for v in d.values()]
+    nx.draw_networkx_edges(G, pos, width=0.5, arrows=True, arrowstyle='->', arrowsize=5)
+    nx.draw(G, pos, with_labels=True, font_size=6, linewidths=0.5,
+            edge_color="black", edgecolors='gray', node_size=n_data, node_color=n_data)
+    plt.show()
+
 
 def main():
 
@@ -277,12 +293,13 @@ def main():
 
     # 순환 경로 그래프 그리기
     cycle_Route_key = cycle_Route.keys()
-    pyvis_graph = get_Pyvis_From_cycle_Routes(cycle_Route, cycle_Route_key)
+    # pyvis_graph = get_Pyvis_From_cycle_Routes(cycle_Route, cycle_Route_key)
+    #
+    # pyvis_graph.repulsion(central_gravity=0)
+    # pyvis_graph.show_buttons(filter_=['physics'])
+    #
+    # pyvis_graph.show("cycle_route/"+token_name+".html")
 
-    pyvis_graph.repulsion(central_gravity=0)
-    pyvis_graph.show_buttons(filter_=['physics'])
-
-    pyvis_graph.show("cycle_route/"+token_name+".html")
-
+    show_networkx_graph(cycle_Route, cycle_Route_key)
 
 main()
