@@ -154,7 +154,7 @@ def get_Token_Dataframe(data, w_num, Name):
         tx_to.append(transaction['to'])
 
     table_df['Contract Address'] = tx_to
-    table_df['value'] = value
+    table_df['Value'] = value
     # print(table_df)
 
     if not os.path.exists("token2/" + csv_name):
