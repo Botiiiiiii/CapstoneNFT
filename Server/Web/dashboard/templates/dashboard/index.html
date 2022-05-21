@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <link href="/static/html/css/sb-admin-2.min.css" rel="stylesheet">
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>NFT MONITORING SYSTEM</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+            * {font-family: "Roboto";}
+            body {background-color: #F5F5F5;}
+            form {
+                background-color: #FFFFFF;
+                padding: 25px;
+            }
+            #wallet_table >  div.dataTable-top{
+                display:none;
+            }
+            #wallet_table > div.dataTable-bottom > div{
+                display:none;
+            }
+            #wallet_table > div > div.dataTable-top{
+                display:none;
+            }
+            .row > *{
+                box-shadow:0 1px 2px rgba(0,0,0,0.07),
+                0 2px 4px rgba(0,0,0,0.07),
+                0 2px 4px rgba(0,0,0,0.07),
+                0 4px 4px rgba(0,0,0,0.07),
+                0 4px 4px rgba(0,0,0,0.07),
+                0 4px 21px rgba(0,0,0,0.07)
+                }
+            table{
+                table-layout:auto;
+                white-space: nowrap;
+            }
+        </style>
+
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="/static/html/css/styles.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+        <!--Ajax 라이브러리-->
+
+    </head>
+
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+
+            <!-- 상단-->
+            <a class="navbar-brand ps-3" href="/dashboard/">NFT MONITORING</a>
+
+            <!-- 메뉴 버튼-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        </nav>
+	    <!-- 메뉴-->
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+
+                            <div class="sb-sidenav-menu-heading">Core</div>
+
+		                    <!-- 이상거래 모니터링 메뉴 -->
+                            <a class="nav-link" href="/dashboard/">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                FDS MONITOR
+                            </a>
+
+		                    <!-- 이미지 모니터링 메뉴 -->
+                            <a class="nav-link" href="/image/">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                IMG MONITOR
+                            </a>
+
+		                    <!-- 사이드 메뉴 -->
+                            <div class="sb-sidenav-menu-heading">Addons</div>
+
+		                    <!-- 차트 -->
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Charts
+                            </a>
+
+		                    <!-- 테이블 -->
+                            <a class="nav-link" href="/table/">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Tables
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="sb-sidenav-footer">
+		            <div class="small">My Future ChangChang:</div>
+                        NFT MONITORING SYSTEM
+                    </div>
+                </nav>
+            </div>
+            <!-- 메뉴 끝 -->
+
+            <!----------------------- 메인 ------------------------->
+            <div id="layoutSidenav_content">
+	            <main>
+
+                <!----------------- 페이지 상단 --------------->
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">FDS MONITOR</h1>
+                        <ol class="breadcrumb mb-4" style="background-color:white">
+                            <li class="breadcrumb-item">CORE</li>
+                            <li class="breadcrumb-item active">FDS MONITOR</li>
+                        </ol>
+                    </div>
+                <!----------------- 상단 카드 부분 --------------->
+                    <div class="row" style="margin-bottom:2%;">
+                        <div style="height:100px; width:23.5%; background-color:#4B6FF3; margin-left:0.8%;
+                        margin-right:0.5%; color:white; text-align:center;" >
+                            <p style="margin-top:2%;">트랜잭션</p>
+                            <p style="font-size:31px">{{transaction_num}}</p>
+                        </div>
+
+
+                        <div style="height:100px; width:23.5%; background-color:#4B6FF3;margin-left:0.8%;
+                        margin-right:0.5%; color:white; text-align:center;" >
+                            <p style="margin-top:2%;">총 거래 횟수</p>
+                            <p style="font-size:31px">{{trade_num}}</p>
+                        </div>
+
+
+                        <div style="height:100px; width:23.5%; background-color:#4B6FF3;margin-left:0.8%;
+                        margin-right:0.5%; color:white; text-align:center;" >
+                            <p style="margin-top:2%;">평균 거래 금액</p>
+                            <p style="font-size:31px">{{avg_trade_value}}ETH</p>
+                        </div>
+
+
+                        <div style="height:100px; width:23.5%; background-color:#4B6FF3;margin-left:0.8%;
+                        margin-right:0.5%; color:white; text-align:center;" >
+                            <p style="margin-top:2%;">이상거래 의심 지갑</p>
+                            <p style="font-size:31px">{{fraud_wallet}}</p>
+                        </div>
+                    </div>
+
+                    <!----------------- 대시보드 첫째 행 --------------->
+                    <div class="row" style="margin-bottom:2%;">
+
+                        <!----------------- 막대 그래프 --------------->
+                        <div class="col-xl-3 col-md-6" style="margin-left:0.6%;box-shadow:gray; text-align:center; width:46%; height:380px; color:black;" >
+                            <h4 style="margin-top:1%; margin-bottom:2%">지갑 거래 평균</h4>
+                            <div align="center"><canvas align="center" id="barChart" style="margin-top:5%; height:300px;"></canvas></div>
+
+                        </div>
+
+                        <!-------------- 비율 그래프 --------------->
+                        <div class="col-xl-3 col-md-6" style="margin-left:0.6%;text-align:center; width:23%;height:380px;  color:black;" >
+                            <h4 style="margin-bottom:15%; margin-top:2%;">이상 거래 유형</h4>
+
+                            <h4 class="small font-weight-bold" style="text-align:left;">이상 거래<span
+                                class="float-right">{{normal_trade_num}}% ({{fraud_trade}} / {{trade_num}})</span></h4>
+                            <div class="progress mb-4">
+
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: {{normal_trade_num}}%;"
+                                        aria-valuenow="{{normal_trade_num}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                            <hr>
+                            <h4 class="small font-weight-bold" style="text-align:left;">고액 거래<span
+                                class="float-right">{{high_value_num}}%</span></h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{high_value_num}}%"
+                                    aria-valuenow="{{high_value_num}}" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+
+                            <h4 class="small font-weight-bold" style="text-align:left;">자전 거래<span
+                                class="float-right">{{single_cycle_num}}%</span></h4>
+                            <div class="progress mb-4">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{single_cycle_num}}%"
+                                            aria-valuenow="{{single_cycle_num}}" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                            </div>
+
+                            <h4 class="small font-weight-bold" style="text-align:left;">순환 거래<span
+                                class="float-right">{{multi_cycle_num}}%</span></h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{multi_cycle_num}}%"
+                                    aria-valuenow="{{multi_cycle_num}}" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <!----------------- 파이 그래프 --------------->
+                        <div class="col-xl-3 col-md-6" style="text-align:center; margin-left:0.6%; width:28%;  height:380px; color:black;" align="center">
+                            <div align="center">
+                                <h4 style="margin-top:2%;">순환 유형 지갑 비율</h4>
+                                <div>
+                                <canvas id="pieChart" align="center" style="margin-top:20px; text-align:center;"></canvas>
+                                </div>
+                                <div align="left" style="margin-left:14%; vertical-align:center;">
+                                    <div style="height:17px;width:15px;vertical-align:center; background-color:#C1444A;
+                                    font-size:13px;float:left;"></div>
+                                    <p style="vertical-align:center;float:left;font-size:13px;margin-right:10px;margin-left:5px;">순환&자전 : {{multi_single_percent}}%</p>
+                                    <div style="height:17px; width:15px; vertical-align:center;background-color:#E6994C;font-size:13px;float:left;"></div>
+                                    <p style="vertical-align:center;float:left;font-size:13px;margin-right:10px;margin-left:5px;">순환 : {{multi_wallet_percent}}%</p>
+                                    <div style="height:17px;width:15px; vertical-align:center;background-color:#EEC346;font-size:13px;float:left;"></div>
+                                    <p style="vertical-align:center;float:left;font-size:13px;margin-left:5px;">자전 : {{single_wallet_percent}}%</p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- 첫쨰 행 끝 -->
+
+                    <!----------------- 대시보드 둘째 행 --------------->
+                    <div class="row" style="margin-top:2%; text-align:center;" align="center">
+
+                        <!----------------- 이상 거래 점수 기준 --------------->
+                        <div class="col-xl-3 col-md-6" style="text-align:center; margin-left:10px; width:27%;  height:400px; color:black;">
+                              	<h4 style="margin-top:2%;">위험 등급 기준</h4>
+                                <img src="/static/image/danger.svg" style="width:100%; height:80%;">
+                        </div>
+
+                        <!----------------- 지갑별 위험도 비율(위험,관심,일반) --------------->
+                        <div class="col-xl-3 col-md-6" style="; margin-left:10px; width:26%;  height:400px; color:black;">
+                            <h4 style="margin-top:2%;">위험 지갑 비율</h4>
+                            <div align="center">
+                                <canvas id="doughnutChart" style="margin-top:40px;" align="center"></canvas>
+                            </div>
+
+                                <div align="left" style="margin-left:14%; vertical-align:center;">
+                                    <div style="height:17px;width:15px;vertical-align:center; background-color:#C1444A;
+                                    font-size:13px;float:left;"></div>
+                                    <p style="vertical-align:center;float:left;font-size:13px;margin-right:10px;margin-left:5px;">위험 : {{danger_wallet_avg}}%</p>
+                                    <div style="height:17px; width:15px; vertical-align:center;background-color:#EEC346;font-size:13px;float:left;"></div>
+                                    <p style="vertical-align:center;float:left;font-size:13px;margin-right:10px;margin-left:5px;">관심 : {{caution_wallet_avg}}%</p>
+                                    <div style="height:17px;width:15px; vertical-align:center;background-color:#4A8559;font-size:13px;float:left;"></div>
+                                    <p style="vertical-align:center;float:left;font-size:13px;margin-left:5px;">일반 : {{normal_wallet_avg}}%</p>
+
+                                </div>
+                        </div>
+
+                        <!-----------------지갑별 위험도 순위 표 --------------->
+                        <div class="col-xl-3 col-md-6" style="text-align:center; margin-left:10px; width:44%;  height:400px; color:black;">
+                            <h4 style="margin-top:1%;">지갑 위험 점수 표</h4>
+                            <div style=" overflow:hidden;">
+                                <div class="card-body" id="wallet_table" style="height:200px;">
+                                    {{wallet_score_table|safe}}
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-----------------그래프 스크립트 부분 --------------->
+                    <!------------ 막대 그래프 부분 ------------>
+                    <script type="text/javascript">
+                        window.addEventListener('DOMContentLoaded', event => {
+                        // Simple-DataTables
+                        // https://github.com/fiduswriter/Simple-DataTables/wiki
+
+                        const datatablesSimple = document.getElementById('datatablesSimple');
+                        if (datatablesSimple) {
+                            new simpleDatatables.DataTable(datatablesSimple, {
+                             perPage: 5
+                             });
+
+
+                        }
+                    });
+
+            			var context = document.getElementById('barChart').getContext('2d');
+            			var myChart = new Chart(context, {
+                		type: 'bar', // 차트의 형태
+                		data: { // 차트에 들어갈 데이터
+                		        //x 축
+                    			labels: ['거래 횟수(주)','거래 금액(주)','거래 횟수(일)','거래 금액(일)','거래 횟수(시간)','거래 금액(시간)'],
+                    			datasets: [{
+                            			label: '거래 평균', //차트 제목
+                            			fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            			data: {{trade_avg}}, //x축
+
+                            		    backgroundColor: [
+                                                'rgba(28, 73, 204,1)',
+                                                'rgba(28, 73, 204,1)',
+                                				'rgba(75, 111, 243, 1)',
+                                				'rgba(75, 111, 243, 1)',
+                                				'rgba(137, 161, 247, 1)',
+                                				'rgba(137, 161, 247, 1)',
+                            		    ],
+
+                            		    borderColor: [
+                                				//경계선 색상
+                                				'rgba(28, 73, 204,1)',
+                                				'rgba(28, 73, 204,1)',
+                                                'rgba(75, 111, 243, 1)',
+                                				'rgba(75, 111, 243, 1)',
+                                				'rgba(137, 161, 247, 1)',
+                                				'rgba(137, 161, 247, 1)',
+                            		    ],
+
+                            		    borderWidth: 1 //경계선 굵기
+                        		}]
+                		},
+                		options: {
+                		        responsive:false,
+                                animation: {
+                                    onComplete: function () {
+                                        var ctx = this.chart.ctx;
+                                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                                        ctx.fillStyle = "black";
+                                        ctx.textAlign = 'center';
+                                        ctx.textBaseline = 'bottom';
+
+                                        this.data.datasets.forEach(function (dataset)
+                                        {
+                                            for (var i = 0; i < dataset.data.length; i++) {
+                                                for(var key in dataset._meta)
+                                                {
+                                                    var model = dataset._meta[key].data[i]._model;
+                                                    ctx.fillText(dataset.data[i], model.x, model.y - 5);
+                                                }
+                                            }
+                                        });
+                                    }
+                                },
+                		    	legend: {
+        	                            display: false
+                                },
+                    			scales: {
+                                    xAxes: [{
+                                            ticks: {
+                                                    beginAtZero: true,
+                                            },
+                                            gridLines: {
+                                                display:false,
+                                            }
+                                    }],
+                        				yAxes: [{
+                        				        gridLines:{display:false},
+                                				ticks: {
+                                    					beginAtZero: true,
+
+                                				}
+                            			}]
+                    			}
+                		}
+            		});
+
+        		</script>
+                <!------------ 지갑 비율 부분------------>
+                <script type="text/javascript">
+                    var context = document.getElementById('pieChart').getContext('2d');
+                    var myChart = new Chart(context, {
+                    type: 'doughnut', // 차트의 형태
+                    data: {
+                            labels: ['순환&자전','순환','자전'],
+                            datasets: [{
+                                    label: 'test1',
+                                    fill: false,
+                                    data: [{{multi_single_percent}},{{multi_wallet_percent}},{{single_wallet_percent}}],
+                                    backgroundColor: [
+                                            'rgba(193,68,74, 1)',
+                                            'rgba(230,153,76, 1)',
+                                            'rgba(238,195,70, 1)',
+                                    ],
+                                    borderColor: [
+                                            'rgba(193,68,74, 1)',
+                                            'rgba(230,153,76, 1)',
+                                            'rgba(238,195,70, 1)',
+                                    ],
+                                    borderWidth: 1
+                                    }]
+                    },
+                    options: {
+                            responsive:false,
+                            legend: {
+                                display:false
+                            },
+                            scales: {
+                                    xAxes: [{
+                                            ticks: {
+                                                    beginAtZero: true,
+                                                    display:false
+                                            },
+                                            gridLines: {
+                                                color: "rgba(0, 0, 0, 0)",
+                                                display:false
+                                            }
+                                    }],
+                                    yAxes: [{
+                                            ticks: {
+                                                    beginAtZero: true,
+                                                    display:false
+                                            },
+                                            gridLines: {
+                                                color: "rgba(0, 0, 0, 0)",
+                                                display:false
+                                            }
+                                    }]
+                            }
+                    }
+                });
+                myChart.legend.maxWidth = '2000px';
+        		</script>
+
+                <!------------ 이상거래 지갑 부분 ------------>
+                <script type="text/javascript">
+                    var context = document.getElementById('doughnutChart').getContext('2d');
+                    var myChart = new Chart(context, {
+                    type: 'doughnut', // 차트의 형태
+                    data: {
+                            labels: ['위험','관심','일반'],
+                            datasets: [{
+                                    label: 'test1',
+                                    fill: false,
+                                    data: [{{danger_wallet_avg}},{{caution_wallet_avg}},{{normal_wallet_avg}}],
+                                    backgroundColor: [
+                                            'rgba(193,68,74, 1)',
+                                            'rgba(238,195,70, 1)',
+                                            'rgba(74,133,89,1)',
+                                    ],
+                                    borderColor: [
+                                            'rgba(193,68,74, 1)',
+                                            'rgba(238,195,70, 1)',
+                                            'rgba(74,133,89,1)',
+                                    ],
+                                    borderWidth: 1
+                                    }]
+                    },
+                    options: {
+                            legend: {
+                                display:false
+                            },
+                            responsive:false,
+                            scales: {
+                                    xAxes: [{
+                                            ticks: {
+                                                    beginAtZero: true,
+                                                    display:false
+                                            },
+                                            gridLines: {
+                                                color: "rgba(0, 0, 0, 0)",
+                                                display:false
+                                            }
+                                    }],
+                                    yAxes: [{
+                                            ticks: {
+                                                    beginAtZero: true,
+                                                    display:false
+                                            },
+                                            gridLines: {
+                                                color: "rgba(0, 0, 0, 0)",
+                                                display:false
+                                            }
+                                    }]
+                            }
+                    }
+                });
+        		</script>
+                </main>
+
+	            <!-- 하단 -->
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4" style="margin-bottom:-1.2%;">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; My Future ChangChang 2021</div>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="/static/html/js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="/static/html/assets/demo/chart-area-demo.js"></script>
+        <script src="/static/html/assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="/static/html/js/datatables-simple-demo.js"></script>
+    </body>
+</html>

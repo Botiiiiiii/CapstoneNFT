@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>NFT MONITORING SYSTEM</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+            * {font-family: "Roboto";}
+            body {background-color: #F5F5F5;}
+            form {
+                background-color: #FFFFFF;
+                padding: 25px;
+            }
+            #tradeinfo > div.card-body > div > div.dataTable-top{
+                display:none;
+            }
+            #tradeinfo > div.card-body > div > div.dataTable-bottom > div{
+                display:none;
+            }
+
+        </style>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="/static/html/css/styles.css" rel="stylesheet" />
+        <!--Ajax 라이브러리-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+        <!--csrfToken setup -->
+        <script>
+          $.ajaxSetup({
+            headers: { "X-CSRFToken": '{{csrf_token}}' }
+          });
+        </script>
+
+    </head>
+
+    <body class="sb-nav-fixed">
+
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- 상단-->
+            <a class="navbar-brand ps-3" href="/dashboard/">NFT MONITORING</a>
+
+            <!-- 메뉴 버튼-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        </nav>
+	    <!-- 메뉴-->
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+
+                            <div class="sb-sidenav-menu-heading">Core</div>
+
+		                    <!-- 이상거래 모니터링 메뉴 -->
+                            <a class="nav-link" href="/dashboard/">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                FDS MONITOR
+                            </a>
+
+		                    <!-- 이미지 모니터링 메뉴 -->
+                            <a class="nav-link" href="/image/">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                IMG MONITOR
+                            </a>
+
+		                    <!-- 사이드 메뉴 -->
+                            <div class="sb-sidenav-menu-heading">Addons</div>
+
+		                    <!-- 차트 -->
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Charts
+                            </a>
+
+		                    <!-- 테이블 -->
+                            <a class="nav-link" href="/wallet/">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Tables
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="sb-sidenav-footer">
+		            <div class="small">My Future ChangChang:</div>
+                                        NFT MONITORING SYSTEM
+                    </div>
+                </nav>
+            </div>
+
+
+            <div id="layoutSidenav_content">
+	            <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">FDS MONITOR</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">CORE</li>
+                            <li class="breadcrumb-item active">FDS MONITOR</li>
+                            <li class="breadcrumb-item active">WALLET</li>
+                        </ol>
+                        <div class="card mb-4">
+                            <div class="card-body" id="wallet_name">
+                                WALLET : {{wallet}} <br>
+                            </div>
+                        </div>
+                        <div class="card mb-4" style="float:left; height:300px; width:15%; margin-right:2.5%;" id="tradeinfo">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                거래 유형
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" style="border:1px">
+                                    <thead>
+                                        <tr>
+                                            <th>유형</th>
+                                            <th>횟수</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td id="trade" onclick="trade_table()">거래</td>
+                                            <td>{{tr}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td id="single" onclick="single_cycle_table()">자전유형</td>
+                                            <td>{{si}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td id="multi" onclick="multi_cycle_table()">순환유형</td>
+                                            <td>{{mu}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <br>
+
+                               
+                                <!-- 마우스 커서 변경 -->
+                                <script>
+                                    if({{tr}} != 0){
+                                        var trade = document.getElementById('trade');
+                                        trade.style="cursor:pointer;";
+                                    };
+                                    if({{si}} != 0){
+                                        var single = document.getElementById('single');
+                                        single.style="cursor:pointer;";
+                                    };
+                                    if({{mu}} != 0){
+                                        var multi = document.getElementById('multi');
+                                        multi.style="cursor:pointer;";
+                                    };
+                                </script>
+
+                                <!-- onclick에 들어갈 함수들 -->
+                                <script>
+                                    function trade_table(){
+                                        if({{tr}} != 0){
+                                            var wallet_name = document.getElementById('wallet_name').innerText;
+                                            var wallet = wallet_name.substring(9)
+                                            var req ={'wallet':wallet,'type':'trade'};
+                                            var graph = document.getElementById('visual_graph');
+                                            graph.style.display = "none";
+                                            $.ajax({
+                                                    type : "POST",
+                                                    url : "/table/wallet/",
+                                                    processData: false,
+                                                    contentType: 'application/json;',
+                                                    data : JSON.stringify(req),
+                                                    dataType: 'json',
+                                                    success : function(resp){
+                                                        var table_elem = document.getElementById('wallet_table');
+                                                        table_elem.innerHTML=resp.multi_table;
+                                                        const datatablesSimple = document.getElementById('datatablesSimple2');
+                                                        if (datatablesSimple) {
+                                                            new simpleDatatables.DataTable(datatablesSimple);
+                                                        }
+                                                        var button = document.getElementById('visual_button');
+                                                        button.style.display = "block";
+                                                        var graph = document.getElementById('visual_graph');
+                                                        graph.srcdoc = resp.multi_graph
+                                                    },
+                                                    error: function(){
+                                                        alert("error");
+                                                    }
+                                                })
+                                            }
+                                    }
+
+                                    function single_cycle_table(){
+                                        if({{si}} != 0){
+                                            var wallet_name = document.getElementById('wallet_name').innerText;
+                                            var wallet = wallet_name.substring(9)
+                                            var req ={'wallet':wallet,'type':'single'};
+                                            var graph = document.getElementById('visual_graph');
+                                            graph.style.display = "none";
+                                            $.ajax({
+                                                type : "POST",
+                                                url : "/table/wallet/",
+                                                processData: false,
+                                                contentType: 'application/json;',
+                                                data : JSON.stringify(req),
+                                                dataType: 'json',
+                                                success : function(resp){
+                                                    var table_elem = document.getElementById('wallet_table');
+                                                    table_elem.innerHTML=resp.multi_table;
+                                                    const datatablesSimple = document.getElementById('datatablesSimple2');
+                                                    if (datatablesSimple) {
+                                                        new simpleDatatables.DataTable(datatablesSimple);
+                                                    }
+                                                    var button = document.getElementById('visual_button');
+                                                    button.style.display = "block";
+                                                    var graph = document.getElementById('visual_graph');
+                                                    graph.srcdoc = resp.multi_graph
+                                                },
+                                                error: function(){
+                                                    alert("error");
+                                                }
+                                            })
+                                        }
+                                    }
+
+                                    function multi_cycle_table(){
+                                        if({{mu}} != 0){
+                                            var wallet_name = document.getElementById('wallet_name').innerText;
+                                            var wallet = wallet_name.substring(9)
+                                            var req ={'wallet':wallet,'type':'multi'};
+                                            var graph = document.getElementById('visual_graph');
+                                            graph.style.display = "none";
+                                            $.ajax({
+                                                type : "POST",
+                                                url : "/table/wallet/",
+                                                processData: false,
+                                                contentType: 'application/json;',
+                                                data : JSON.stringify(req),
+                                                dataType: 'json',
+                                                success : function(resp){
+                                                    var table_elem = document.getElementById('wallet_table');
+                                                    table_elem.innerHTML=resp.multi_table;
+                                                    const datatablesSimple = document.getElementById('datatablesSimple2');
+                                                    if (datatablesSimple) {
+                                                        new simpleDatatables.DataTable(datatablesSimple);
+                                                    }
+                                                    var button = document.getElementById('visual_button');
+                                                    button.style.display = "block";
+                                                    var graph = document.getElementById('visual_graph');
+                                                    graph.srcdoc = resp.multi_graph
+                                                },
+                                                error: function(){
+                                                    alert("error");
+                                                }
+                                            })
+                                        }
+                                    }
+                                </script>
+                                <script>
+                                    function graph_button(){
+                                        var graph = document.getElementById('visual_graph');
+                                        graph.style.display = "block";
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <div class="card mb-4" style="float:left; height:700px; width:40%; margin-right:2.5%;">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                거래 유형 상세정보
+                            </div>
+                            <div class="card-body" id="wallet_table">
+
+                            </div>
+                            <input type="button" id="visual_button" onclick="graph_button();"
+                                   style="margin-left:70%; display:none;" value="시각화 보기">
+
+                        </div>
+                        <div class="card mb-4" style="float:left; height:700px; width:40%;">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                시각화
+
+                            </div>
+                            <div class="card-body">
+                                <iframe id="visual_graph" srcdoc="" align="center" style="height:100%; width:100%; display:none;">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+	   <!-- 하단 -->
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; My Future ChangChang 2021</div>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="/static/html/js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="/static/html/js/datatables-simple-demo.js"></script>
+
+    </body>
+</html>
