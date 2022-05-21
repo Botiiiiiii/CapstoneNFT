@@ -148,6 +148,16 @@ def crawling_data(tx_data):
                 print('time sleep')
                 time.sleep(310)
                 try:
+                    # 웹사이트 이동
+                    driver.get(i + '?tabId=tokenTransfer')
+                    # 로딩 대기
+                    driver.implicitly_wait(10)
+                    Timestamp = driver.find_element(By.XPATH,
+                                                    '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[1]/div/div[1]/div[6]/div[2]/span').get_attribute(
+                        'innerText')
+                    trans_num_check = driver.find_element(By.XPATH,
+                                                          '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[1]/div/div[1]/div[4]/div[2]').get_attribute(
+                        'innerText')
                     if (trans_num_check == '4'):
                         # 테이블 서치
                         table = driver.find_element(By.XPATH,
@@ -180,8 +190,7 @@ def crawling_data(tx_data):
                 except:
                     print()
 
-            if(error != 0):
-                continue
+
             try:
                 driver.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[1]/div[2]').click() #NFT Transfers 클릭
                 driver.implicitly_wait(5)
@@ -214,15 +223,6 @@ def crawling_data(tx_data):
             df = pd.DataFrame(raw_data)
             # print(df)
             create_csv(df)
-            # data_list.append(i[28:])
-            # data_list.append(Timestamp)
-            # data_list.append(From_Address)
-            # data_list.append(To_Address)
-            # data_list.append(Token_Id)
-            # data_list.append(Token_name)
-            # data_list.append('0x41cff281b578f4cf45515d6e4efd535e47e76efd')
-            # data_list.append(Value)
-
     except:
         print(tx_data.index[tx_data['Txn Hash'] == i])
         return raw_data
@@ -249,6 +249,6 @@ num=2000
 # else:
 #     table_df.to_csv('txn_hash.csv', index=False, mode='a', encoding='utf-8-sig', header=False)
 crawl_tx = pd.read_csv('txn_hash.csv')
-crawl_tx = crawl_tx[2738:]
+crawl_tx = crawl_tx[3294:]
 crawl_data = crawling_data(crawl_tx)
 # print(crawl_data)

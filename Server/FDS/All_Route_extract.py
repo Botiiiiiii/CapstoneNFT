@@ -20,7 +20,9 @@ file_list = os.listdir(path)
 token_df = pd.read_csv("classification/"+file_list[0],encoding='latin_1')
 idx = token_df[token_df['From'].str.slice(start=0, stop=10) == "Black Hole"]['From'].index
 token_df.drop(idx, inplace=True)
-token_df['Value'] = token_df['Value'].str.replace(',','')
+token_df['Value'] = token_df['Value'].str.replace(',','').astype('float')
+
+# print(token_df['Value'])
 
 # From Group , To Group
 From_group = token_df.groupby("From")
@@ -166,6 +168,7 @@ def Choose_Route_keys(num,All_Route: dict):
 def get_Pyvis_From_Routes(Route,keys):
     pyvis_graph = net.Network(notebook=True, directed=True, height="750px", width="100%")
 
+
     # 경로들 리스트에서 꺼내서 pyvis에 넣기
     for key in keys:
         for i in range(len(Route[key])):
@@ -179,14 +182,21 @@ def get_Pyvis_From_Routes(Route,keys):
 
 
 def show_networkx_graph(Route,keys):
+    sum_weight = 0
+    length = 0
     G = nx.DiGraph()
     for key in keys:
         for i in range(len(Route[key])):
             G.add_weighted_edges_from(Route[key][i]['Weighted_Edges'])
-            print(Route[key][i]['Weighted_Edges'])
+            sum_weight += sum(Route[key][i]['Values'])
+            length += len(Route[key][i]['Values'])
+            # print(Route[key][i]['Weighted_Edges'])
 
+    avg = sum_weight/length
+    print(avg)
     edges = G.edges
-    weights = [G[u][v]['weight'] for u, v in edges]
+    weights = [G[u][v]['weight']*5.0/avg for u, v in edges]
+    print(weights)
     plt.figure(figsize=(25, 25))
     pos = nx.spring_layout(G, k=0.2)
     d = dict(G.degree)
