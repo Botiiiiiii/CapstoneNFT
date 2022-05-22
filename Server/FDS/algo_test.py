@@ -142,14 +142,14 @@ def get_All_Route():
 
         Route_check(From_group_list[0])
         Route_len = len(Edges)
+        Node_len = len(Nodes)
 
+        current_Route = {'Node_len':Node_len,'Route len':Route_len,'Nodes':Nodes,'Edges':Edges,'Weighted_Edges':Weighted_Edges, 'Values':Values,'TokenID':TokenID}
 
-        current_Route = {'Route len':Route_len,'Nodes':Nodes,'Edges':Edges,'Weighted_Edges':Weighted_Edges, 'Values':Values,'TokenID':TokenID}
-
-        if str(current_Route['Route len']) in All_Route:
-            All_Route[str(current_Route['Route len'])].append(current_Route)
+        if str(current_Route['Node_len']) in All_Route:
+            All_Route[str(current_Route['Node_len'])].append(current_Route)
         else:
-            All_Route.setdefault(str(current_Route['Route len']), [current_Route])
+            All_Route.setdefault(str(current_Route['Node_len']), [current_Route])
     return All_Route
 
 
@@ -160,6 +160,7 @@ def Choose_Route_keys(num,All_Route: dict):
 
     choose_keys = sorted(filter(lambda x: x >= num,Route_keys),reverse=True)
     choose_keys = list(map(str,choose_keys))
+
     print("엣지",num,"이상인 경로: ",choose_keys)
     return choose_keys
 
@@ -191,23 +192,24 @@ def get_Pyvis_From_Routes(Route,keys):
     return pyvis_graph
 
 
-def show_networkx_graph(Route,keys):
+def show_networkx_graph(Route:dict ,keys):
     sum_weight = 0
     length = 0
     G = nx.DiGraph()
+
     for key in keys:
         for i in range(len(Route[key])):
             G.add_weighted_edges_from(Route[key][i]['Weighted_Edges'])
             sum_weight += sum(Route[key][i]['Values'])
             length += len(Route[key][i]['Values'])
             # print(Route[key][i]['Weighted_Edges'])
-        print(Route[key])
+        # print(Route[key])
 
     avg = sum_weight/length
-    print(avg)
+    # print(avg)
     edges = G.edges
     weights = [G[u][v]['weight']*3.0/avg for u, v in edges]
-    print(weights)
+    # print(weights)
     plt.figure(figsize=(25, 25))
     pos = nx.spring_layout(G, k=0.2)
     d = dict(G.degree)
@@ -243,7 +245,7 @@ def draw_graph3(networkx_graph,notebook=True,output_filename=file_list[0]+'.html
         width: width in px or %, e.g, "750px" or "100%
         bgcolor: background color, e.g., "black" or "#222222"
         font_color: font color,  e.g., "black" or "#222222"
-        pyvis_options: provide pyvis-specific options (https://pyvis.readthedocs.io/en/latest/documentation.html#pyvis.options.Options.set  )
+        pyvis_options: provide pyvis-specific options (https://pyvis.readthedocs.io/en/latest/documentation.html#pyvis.options.Options.set)
     """
 
     # import
@@ -284,17 +286,13 @@ def draw_graph3(networkx_graph,notebook=True,output_filename=file_list[0]+'.html
 def main():
     # 전체 경로 얻기
     All_Route = get_All_Route()
-
+    print(All_Route)
     # 전체 경로 키
     All_Route_keys = sorted(map(int,list(All_Route.keys())),reverse=True)
     All_Route_keys = list(map(str,(All_Route_keys)))
 
-
-
     # 전체 딕셔너리에 키 값이 3 이상인 것들 뽑아내기(키 값은 엣지 갯수, 벨류는 경로 딕셔너리가 들어간 리스트)
     choose_Route_keys = Choose_Route_keys(10,All_Route)
-
-    print(choose_Route_keys)
     # pyvis_graph = get_Pyvis_From_Routes(All_Route,choose_Route_keys)
     #
     #
@@ -302,6 +300,6 @@ def main():
     # pyvis_graph.show_buttons(filter_=['physics'])
     #
     # pyvis_graph.show("d1.html")
-    # show_networkx_graph(All_Route,choose_Route_keys)
+    show_networkx_graph(All_Route,choose_Route_keys)
 
 main()
