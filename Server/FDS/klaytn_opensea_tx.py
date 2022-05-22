@@ -249,6 +249,6 @@ num=2000
 # else:
 #     table_df.to_csv('txn_hash.csv', index=False, mode='a', encoding='utf-8-sig', header=False)
 crawl_tx = pd.read_csv('txn_hash.csv')
-crawl_tx = crawl_tx[3294:]
+crawl_tx = crawl_tx[4774:]
 crawl_data = crawling_data(crawl_tx)
 # print(crawl_data)

@@ -29,9 +29,9 @@ for token_name in file_list :
             
         if token_df.loc[i]['From'][0:10] != "Black Hole" and token_df.loc[i]['To'][0:10] != "Black Hole" and token_df.loc[i]['Value'] != 0 and market_name[i] != "None":
             transaction_type.append("Trading")
-        elif token_df.loc[i]['From'][0:10] == "Black Hole" :
+        elif token_df.loc[i]['From'][0:10] == "Black Hole" or token_df.loc[i]['From'][0:12] == "NULL Address":
             transaction_type.append("Minting")
-        elif token_df.loc[i]['To'][0:10] == "Black Hole" :
+        elif token_df.loc[i]['To'][0:10] == "Black Hole" or token_df.loc[i]['To'][0:12] == "NULL Address":
             transaction_type.append("Destroy")
         else :
             transaction_type.append("Transfer")
