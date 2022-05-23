@@ -197,6 +197,7 @@ def show_networkx_graph(Route,keys):
     G = nx.DiGraph()
     for key in keys:
         for i in range(len(Route[key])):
+            print(Route[key][i]['Weighted_Edges'])
             G.add_weighted_edges_from(Route[key][i]['Weighted_Edges'])
             sum_weight += sum(Route[key][i]['Values'])
             length += len(Route[key][i]['Values'])
@@ -302,6 +303,6 @@ def main():
     # pyvis_graph.show_buttons(filter_=['physics'])
     #
     # pyvis_graph.show("d1.html")
-    # show_networkx_graph(All_Route,choose_Route_keys)
+    show_networkx_graph(All_Route,choose_Route_keys)
 
 main()
