@@ -3,16 +3,26 @@ package com.capstone.capstonenft.ui.activity.splash
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModel
+import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.databinding.ActivitySplashBinding
+import com.capstone.capstonenft.system.utils.getPref
+import com.capstone.capstonenft.system.utils.setPref
 import com.capstone.capstonenft.ui.activity.main.MainActivity
+import com.capstone.capstonenft.viewmodel.login.LoginViewModel
 
 class SplashActivity : AppCompatActivity() {
     lateinit var mBinding: ActivitySplashBinding
+
+    val mViewModel: LoginViewModel by viewModels()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +30,7 @@ class SplashActivity : AppCompatActivity() {
         checkPermission()
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
     }
+
     private fun checkPermission()
     {
         val internetPermission = ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)
@@ -57,5 +68,16 @@ class SplashActivity : AppCompatActivity() {
     private fun startProcess(){
         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         finish()
+    }
+    fun initObserve(){
+       mViewModel.loginResponse.observe(this){
+           if(it.message.equals("true")){
+               NFT.instance.privatekey = it.privatekey
+               NFT.instance.name = it.name
+               }
+           Intent(this,MainActivity::class.java).apply {
+               startActivity(this)
+           }
+       }
     }
 }
