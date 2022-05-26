@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/al_ll_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
@@ -29,6 +30,7 @@
                 android:text="아이디" />
 
             <EditText
+                android:id="@+id/al_et_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -38,6 +40,7 @@
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/al_ll_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
@@ -52,6 +55,7 @@
                 android:text="비밀번호" />
 
             <EditText
+                android:id="@+id/al_et_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -65,6 +69,7 @@
             android:layout_marginTop="20dp">
 
             <TextView
+                android:id="@+id/al_tv_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -75,6 +80,7 @@
                 android:textColor="@color/white" />
 
             <TextView
+                android:id="@+id/al_tv_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_rect_red_full_r10"
