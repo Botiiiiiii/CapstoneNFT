@@ -1,6 +1,6 @@
 package com.capstone.capstonenft.dto
 
-data class Login(
+data class LoginRequest(
     val name: String,
     val pw: String,
     val fcm: String
