@@ -21,6 +21,7 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         mBinding.listener = this
+        initObserve()
 
         mBinding.alEtId.setOnFocusChangeListener { _, b ->
             mBinding.alLlId.isSelected = b
@@ -34,6 +35,7 @@ class LoginActivity : BaseActivity() {
     fun onClick(v:View){
         when(v.id){
             R.id.al_tv_login -> {
+                mViewModel.login(mBinding.alEtId.text.toString(), mBinding.alEtPw.text.toString())
 
             }
 
@@ -44,6 +46,12 @@ class LoginActivity : BaseActivity() {
 
             }
 
+        }
+    }
+
+    fun initObserve(){
+        mViewModel.loginResponse.observe(this){
+            finish()
         }
     }
 
