@@ -23,7 +23,7 @@ class GalleryAdapter: RecyclerView.Adapter<GalleryAdapter.SearchViewHolder>() {
 
     }
 
-    override fun getItemCount(): Int = 15
+    override fun getItemCount(): Int = listItem.items.size
 
     fun setItem(item: GalleryList){
         listItem = item

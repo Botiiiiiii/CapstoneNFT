@@ -1,14 +1,15 @@
 package com.capstone.capstonenft.protocol
 
+import com.capstone.capstonenft.dto.BaseResponse
 import com.capstone.capstonenft.dto.Gallery
 import com.capstone.capstonenft.dto.GalleryList
 import com.capstone.capstonenft.system.net.AbstractHttpProtocol
 import com.capstone.capstonenft.system.net.HttpConst
 
-class MainProtocol: AbstractHttpProtocol<GalleryList>() {
-    var PATH = "token/list"
+class UploadProtocol: AbstractHttpProtocol<BaseResponse>() {
+    var PATH = "upload"
 
     override fun getUrl() = getDomain() + PATH
 
-    override fun getMethod(): Int = HttpConst.HTTP_GET
+    override fun getMethod(): Int = HttpConst.HTTP_FILE_UPLOAD
 }

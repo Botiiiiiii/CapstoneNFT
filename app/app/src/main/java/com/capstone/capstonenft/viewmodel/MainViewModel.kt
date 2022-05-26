@@ -22,6 +22,7 @@ class MainViewModel: ViewModel() {
 
         protocol.setHttpResponsable(object : HttpResponsable<GalleryList> {
             override fun onResponse(res: GalleryList) {
+                Trace.error("onResponse = $res")
                 mldGallery.value = res
             }
 

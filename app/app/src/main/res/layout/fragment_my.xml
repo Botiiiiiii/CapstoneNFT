@@ -48,8 +48,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fm_cl_my"
-            android:visibility="gone">
+            android:id="@+id/fm_cl_my">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fm_fbtn_create"
@@ -80,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="40dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/fm_cv_profile"
                 app:layout_constraintStart_toEndOf="@+id/fm_cv_profile"
                 app:layout_constraintTop_toTopOf="@+id/fm_cv_profile">
@@ -88,13 +87,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="이름 : test"
+                    android:text="ID : "
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/fm_tv_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Token Address"
+                    android:text="test"
                     android:textSize="24sp" />
             </LinearLayout>
 
