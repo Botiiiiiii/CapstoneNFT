@@ -38,6 +38,9 @@ class LoginActivity : BaseActivity() {
             }
 
             R.id.al_tv_register -> {
+                Intent(this, RegisterActivity::class.java).apply {
+                    startActivity(this)
+                }
 
             }
 
