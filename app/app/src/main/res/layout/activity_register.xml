@@ -102,7 +102,9 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
                 android:text="확인"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:onClick="@{listener::onClick}"
+                />
 
         </LinearLayout>
 
