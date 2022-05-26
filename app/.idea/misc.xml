@@ -3,20 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_create.xml" value="0.15520833333333334" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.40329218106995884" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12664640324214793" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.4256225585937501" />
-        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.12664640324214793" />
-        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.15520833333333334" />
-        <entry key="app/src/main/res/layout/fragment_my.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/drawable-v24/bg_rect_gray_r10.xml" value="0.1675" />
+        <entry key="app/src/main/res/drawable-v24/bg_rect_red_full_r10.xml" value="0.1675" />
+        <entry key="app/src/main/res/drawable/sel_login_field.xml" value="0.1675" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/fragment_my.xml" value="0.14427083333333332" />
         <entry key="app/src/main/res/layout/fragment_my_adapter.xml" value="0.30833333333333335" />
-        <entry key="app/src/main/res/layout/fragment_support.xml" value="0.25836334228515623" />
-        <entry key="app/src/main/res/layout/fragment_tab1.xml" value="0.15520833333333334" />
-        <entry key="app/src/main/res/layout/fragment_tab2.xml" value="0.15520833333333334" />
-        <entry key="app/src/main/res/layout/view_gallery.xml" value="0.15520833333333334" />
-        <entry key="app/src/main/res/layout/view_profile.xml" value="0.15520833333333334" />
-        <entry key="app/src/main/res/layout/view_td.xml" value="0.15520833333333334" />
       </map>
     </option>
   </component>

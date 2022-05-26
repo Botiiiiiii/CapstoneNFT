@@ -8,8 +8,7 @@
             type="com.capstone.capstonenft.ui.activity.login.RegisterActivity" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:background="@color/transparent" />
+                android:background="@color/transparent"
+                android:inputType="textPassword" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -75,17 +75,17 @@
             android:paddingVertical="10dp">
 
             <TextView
-                android:id="@+id/ar_et_pwre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="비밀번호확인" />
 
             <EditText
-
+                android:id="@+id/ar_et_pwre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:background="@color/transparent" />
+                android:background="@color/transparent"
+                android:inputType="textPassword" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -99,12 +99,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_rect_red_full_r10"
+                android:onClick="@{listener::onClick}"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
                 android:text="확인"
-                android:textColor="@color/white"
-                android:onClick="@{listener::onClick}"
-                />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

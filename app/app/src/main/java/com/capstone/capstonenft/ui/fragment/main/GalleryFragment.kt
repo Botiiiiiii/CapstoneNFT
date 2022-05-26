@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseFragment
@@ -22,9 +20,8 @@ import com.capstone.capstonenft.viewmodel.MainViewModel
 
 class GalleryFragment() : BaseFragment() {
     lateinit var mBinding: FragmentGalleryBinding
-    lateinit var mProfileAdapter: ProfileAdapter
     lateinit var mGalleryAdapter: GalleryAdapter
-    val mViewMode: MainViewModel by activityViewModels()
+    val mViewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +40,6 @@ class GalleryFragment() : BaseFragment() {
     }
 
     fun init() {
-        mProfileAdapter = ProfileAdapter()
-        mBinding.fgRvArtist.adapter = mProfileAdapter
-        mBinding.fgRvArtist.layoutManager =
-            LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
 
         mGalleryAdapter = GalleryAdapter()
         mBinding.fgRvGallery.adapter = mGalleryAdapter
@@ -79,8 +72,8 @@ class GalleryFragment() : BaseFragment() {
             }
         })
 
-        mViewMode.mldGallery.observe(viewLifecycleOwner){
-            mBinding.fgClSearch.get(0)
+        mViewModel.mldGallery.observe(viewLifecycleOwner){
+            mGalleryAdapter.setItem(it)
         }
     }
 }

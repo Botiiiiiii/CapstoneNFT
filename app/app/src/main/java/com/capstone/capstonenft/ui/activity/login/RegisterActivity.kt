@@ -8,10 +8,13 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivityLoginBinding
 import com.capstone.capstonenft.databinding.ActivityRegisterBinding
+import com.capstone.capstonenft.system.utils.Trace
+import com.capstone.capstonenft.system.utils.setPref
 import com.capstone.capstonenft.viewmodel.login.LoginViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -34,6 +37,17 @@ class RegisterActivity : BaseActivity() {
             mBinding.arLlPwre.isSelected=b
         }
 
+        mViewModel.register.observe(this){
+            if(it.message.equals("true")){
+                setPref(this, "id", mBinding.arEtId.text.toString())
+                setPref(this, "pw", mBinding.arEtPw.text.toString())
+
+                NFT.instance.privatekey = it.privatekey
+                NFT.instance.name = it.name
+                setResult(RESULT_OK)
+                finish()
+            }
+        }
     }
 
     fun onClick(v:View){
@@ -46,9 +60,11 @@ class RegisterActivity : BaseActivity() {
 
             }
             R.id.ar_et_rg-> {
-
-                if (mBinding.arEtPw.text != mBinding.arEtPwre.text)
+                Trace.error("pw = ${mBinding.arEtPw.text} rePw = ${mBinding.arEtPwre.text}")
+                if (mBinding.arEtPw.text.toString() != mBinding.arEtPwre.text.toString())
                     Toast.makeText(this@RegisterActivity,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_SHORT).show()
+                else
+                    mViewModel.register(mBinding.arEtId.text.toString(), mBinding.arEtPw.text.toString())
             }
         }
     }
