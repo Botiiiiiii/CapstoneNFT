@@ -43,7 +43,8 @@ class RegisterActivity : BaseActivity() {
 
             }
             R.id.ar_et_rg-> {
-                if (ar_et_pw != ar_et_pwre)
+
+                if (mBinding.arEtPw.text != mBinding.arEtPwre.text)
                     Toast.makeText(this@RegisterActivity,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_SHORT).show()
             }
         }
