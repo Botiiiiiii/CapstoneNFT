@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1011705279191",
+    "project_id": "sejongnft-e4a7b",
+    "storage_bucket": "sejongnft-e4a7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011705279191:android:a4a551ce9b538ec7d4b692",
+        "android_client_info": {
+          "package_name": "com.capstone.capstonenft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011705279191-2u49qlhbblvktcp76tbfm186b4d7864t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsblMmm8mHpSebzLJMhNjlqBET9aLDX34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011705279191-2u49qlhbblvktcp76tbfm186b4d7864t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
