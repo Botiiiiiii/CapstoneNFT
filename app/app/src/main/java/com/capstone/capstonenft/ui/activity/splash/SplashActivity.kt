@@ -63,7 +63,10 @@ class SplashActivity : AppCompatActivity() {
                     startProcess()
                 }
                 else{
-//                        finish()
+                    Intent(this,MainActivity::class.java).apply {
+                        startActivity(this)
+                        finish()
+                    }
                     }
             }
         }
@@ -83,6 +86,7 @@ class SplashActivity : AppCompatActivity() {
 
            Intent(this,MainActivity::class.java).apply {
                startActivity(this)
+               finish()
            }
        }
     }
