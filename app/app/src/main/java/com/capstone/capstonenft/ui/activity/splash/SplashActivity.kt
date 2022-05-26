@@ -3,6 +3,7 @@ package com.capstone.capstonenft.ui.activity.splash
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -25,10 +26,12 @@ class SplashActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        initObserve()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         checkPermission()
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
+
     }
 
     private fun checkPermission()
@@ -66,8 +69,10 @@ class SplashActivity : AppCompatActivity() {
         }
     }
     private fun startProcess(){
-        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-        finish()
+        val id = getPref(this,"id")
+        val pw = getPref(this,"pw")
+        if(!id.isNullOrEmpty()&&!pw.isNullOrEmpty())
+            mViewModel.login(id,pw)
     }
     fun initObserve(){
        mViewModel.loginResponse.observe(this){
@@ -75,6 +80,7 @@ class SplashActivity : AppCompatActivity() {
                NFT.instance.privatekey = it.privatekey
                NFT.instance.name = it.name
                }
+
            Intent(this,MainActivity::class.java).apply {
                startActivity(this)
            }

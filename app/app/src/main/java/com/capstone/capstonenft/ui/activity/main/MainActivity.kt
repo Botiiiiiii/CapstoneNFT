@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
+import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivityMainBinding
+import com.capstone.capstonenft.system.utils.Trace
 import com.capstone.capstonenft.ui.adapter.main.MainAdapter
 import com.capstone.capstonenft.viewmodel.MainViewModel
 import com.google.android.material.tabs.TabLayout
