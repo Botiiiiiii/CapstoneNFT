@@ -1,11 +1,12 @@
 package com.capstone.capstonenft.protocol
 
 import com.capstone.capstonenft.dto.LoginResponse
+import com.capstone.capstonenft.dto.RegisterResponse
 import com.capstone.capstonenft.system.net.AbstractHttpProtocol
 import com.capstone.capstonenft.system.net.HttpConst
 
-class LoginProtocol: AbstractHttpProtocol<LoginResponse>() {
-    var PATH = "user/login"
+class RegisterProtocol: AbstractHttpProtocol<RegisterResponse>() {
+    var PATH = "user/regist"
 
     override fun getUrl() = getDomain() + PATH
 

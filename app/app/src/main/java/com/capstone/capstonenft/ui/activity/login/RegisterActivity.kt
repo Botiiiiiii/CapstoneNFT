@@ -5,17 +5,20 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivityLoginBinding
 import com.capstone.capstonenft.databinding.ActivityRegisterBinding
+import com.capstone.capstonenft.viewmodel.login.LoginViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : BaseActivity() {
-    val TAG: String = "RegisterActivity"
     lateinit var mBinding: ActivityRegisterBinding
+    val mViewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_register)
