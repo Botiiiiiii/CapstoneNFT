@@ -14,8 +14,8 @@
             android:orientation="horizontal"
             android:text="MORE"
             android:textSize="30dp"
-            android:textColor="@color/white"
-            android:background="@color/primary2"
+            android:textColor="@color/primary"
+            android:background="@color/white"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:text="About"
-            android:textColor="@color/white"
+            android:textColor="@color/primary"
             android:textSize="20dp"
-            android:background="@color/primary2"
+            android:background="@color/white"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fs_btn2"
@@ -34,9 +34,9 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:text="Blog"
-            android:textColor="@color/white"
+            android:textColor="@color/primary"
             android:textSize="20dp"
-            android:background="@color/primary2"
+            android:background="@color/white"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fs_btn3"
@@ -44,9 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:text="Help Center"
-            android:textColor="@color/white"
+            android:textColor="@color/primary"
             android:textSize="20dp"
-            android:background="@color/primary2"
+            android:background="@color/white"
             />
 
 

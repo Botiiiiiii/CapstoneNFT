@@ -1,4 +1,4 @@
-package com.capstone.capstonenft.dataclass
+package com.capstone.capstonenft.dto
 
 data class Item (
     val createdAt : String,

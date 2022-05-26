@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.capstone.capstonenft">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CapstoneNFT">
         <activity
+            android:name=".ui.activity.login.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -20,18 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".ui.activity.main.MainActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".ui.activity.create.CreateActivity"
-             android:exported="false"/>
-
-        <activity android:name=".ui.activity.login.LoginActivity"/>
-
+            android:exported="false" />
+        <activity android:name=".ui.activity.login.LoginActivity" />
     </application>
 
 </manifest>
