@@ -13,6 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/Theme.CapstoneNFT">
         <activity
             android:name=".ui.activity.login.RegisterActivity"
@@ -33,6 +34,10 @@
             android:name=".ui.activity.create.CreateActivity"
             android:exported="false" />
         <activity android:name=".ui.activity.login.LoginActivity" />
+
+        <activity android:name=".ui.activity.detail.GalleryDetailActivity"/>
+
+        <activity android:name=".ui.activity.detail.UserDetailActivity"/>
 
         <service
             android:exported="false"

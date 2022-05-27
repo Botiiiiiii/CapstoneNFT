@@ -20,10 +20,7 @@ import com.capstone.capstonenft.viewmodel.login.LoginViewModel
 
 class SplashActivity : AppCompatActivity() {
     lateinit var mBinding: ActivitySplashBinding
-
     val mViewModel: LoginViewModel by viewModels()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initObserve()
@@ -31,25 +28,23 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         checkPermission()
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
-
     }
 
-    private fun checkPermission()
-    {
-        val internetPermission = ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)
-        if(internetPermission==PackageManager.PERMISSION_GRANTED){
+    private fun checkPermission() {
+        val internetPermission =
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+        if (internetPermission == PackageManager.PERMISSION_GRANTED) {
             startProcess()
-        }
-        else {
+        } else {
             requestPermission()
         }
 
     }
 
-        private fun requestPermission(){
-            ActivityCompat.requestPermissions(this,arrayOf(android.Manifest.permission.CAMERA),99)
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), 99)
 
-        }
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -57,37 +52,42 @@ class SplashActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-            99->{
-                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+        when (requestCode) {
+            99 -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startProcess()
-                }
-                else{
-                    Intent(this,MainActivity::class.java).apply {
+                } else {
+                    Intent(this, MainActivity::class.java).apply {
                         startActivity(this)
                         finish()
                     }
-                    }
+                }
             }
         }
     }
-    private fun startProcess(){
-        val id = getPref(this,"id")
-        val pw = getPref(this,"pw")
-        if(!id.isNullOrEmpty()&&!pw.isNullOrEmpty())
-            mViewModel.login(id,pw)
-    }
-    fun initObserve(){
-       mViewModel.loginResponse.observe(this){
-           if(it.message.equals("true")){
-               NFT.instance.privatekey = it.privatekey
-               NFT.instance.name = it.name
-               }
 
-           Intent(this,MainActivity::class.java).apply {
-               startActivity(this)
-               finish()
-           }
-       }
+    private fun startProcess() {
+//        val id = getPref(this, "id")
+//        val pw = getPref(this, "pw")
+//        if (!id.isNullOrEmpty() && !pw.isNullOrEmpty())
+//            mViewModel.login(id, pw)
+//        else
+            Intent(this, MainActivity::class.java).apply {
+                startActivity(this)
+            }
+    }
+
+    fun initObserve() {
+        mViewModel.loginResponse.observe(this) {
+            if (it.message.equals("true")) {
+                NFT.instance.privatekey = it.privatekey
+                NFT.instance.name = it.name
+            }
+
+            Intent(this, MainActivity::class.java).apply {
+                startActivity(this)
+                finish()
+            }
+        }
     }
 }

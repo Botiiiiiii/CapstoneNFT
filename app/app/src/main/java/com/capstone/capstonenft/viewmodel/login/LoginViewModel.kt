@@ -9,6 +9,7 @@ import com.capstone.capstonenft.dto.LoginResponse
 import com.capstone.capstonenft.dto.RegisterResponse
 import com.capstone.capstonenft.protocol.LoginProtocol
 import com.capstone.capstonenft.protocol.RegisterProtocol
+import com.capstone.capstonenft.protocol.Upload
 import com.capstone.capstonenft.protocol.UploadProtocol
 import com.capstone.capstonenft.system.net.HttpResponsable
 import com.capstone.capstonenft.system.net.NetworkManager
@@ -79,6 +80,7 @@ class LoginViewModel : ViewModel() {
 
     fun uploadFile(file: File) {
         val protocol: UploadProtocol = ProtocolFactory.create(UploadProtocol::class.java)
+        var upload:Map<String, File> = mapOf(Pair("file", file))
 
         protocol.setJsonRequestBody(file)
         protocol.setHttpResponsable(object : HttpResponsable<BaseResponse> {

@@ -1,20 +1,35 @@
 package com.capstone.capstonenft.ui.fragment.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.capstonenft.R
+import com.capstone.capstonenft.databinding.FragmentTab1Binding
+import com.capstone.capstonenft.databinding.FragmentTab3Binding
+import com.capstone.capstonenft.ui.activity.detail.GalleryDetailActivity
+import com.capstone.capstonenft.ui.adapter.main.GalleryAdapter
 
 
 class Tab1Fragment : Fragment() {
+    lateinit var mBinding: FragmentTab1Binding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab1,container,false)
+        mBinding.ftRvList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        mBinding.ftRvList.adapter = GalleryAdapter(){ v, pos ->
+            Intent(activity, GalleryDetailActivity::class.java).apply {
+                activity?.startActivity(this)
+            }
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab1, container, false)
+        return mBinding.root
     }
 
 }

@@ -7,7 +7,7 @@ import com.capstone.capstonenft.system.net.AbstractHttpProtocol
 import com.capstone.capstonenft.system.net.HttpConst
 
 class UploadProtocol: AbstractHttpProtocol<BaseResponse>() {
-    var PATH = "upload"
+    var PATH = "test/upload"
 
     override fun getUrl() = getDomain() + PATH
 

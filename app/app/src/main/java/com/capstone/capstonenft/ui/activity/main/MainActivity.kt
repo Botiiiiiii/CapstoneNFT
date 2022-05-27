@@ -47,6 +47,8 @@ class MainActivity : BaseActivity() {
                 }
             }
         }.attach()
+
+        mBinding.amVpPager.setCurrentItem(1, false)
     }
 
     fun setObserve(){

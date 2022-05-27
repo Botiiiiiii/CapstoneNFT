@@ -27,6 +27,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
                 android:text="아이디" />
 
             <EditText
@@ -34,7 +36,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:background="@color/transparent" />
+                android:background="@color/transparent"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -52,6 +56,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
                 android:text="비밀번호" />
 
             <EditText
@@ -60,6 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:background="@color/transparent"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
                 android:inputType="textPassword" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -77,6 +85,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
                 android:text="비밀번호확인" />
 
             <EditText
@@ -85,6 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:background="@color/transparent"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
                 android:inputType="textPassword" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -99,6 +111,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_rect_red_full_r10"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
                 android:onClick="@{listener::onClick}"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"

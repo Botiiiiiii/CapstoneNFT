@@ -377,7 +377,7 @@ class NetworkManager private constructor() {
         fun uploadFile(
             @Url strUrl: String,
             @HeaderMap headers: Map<String, String>,
-            @Part filePart: MultipartBody.Part,
+            @Part file: MultipartBody.Part,
         ): Call<ResponseBody>
 
         @POST
