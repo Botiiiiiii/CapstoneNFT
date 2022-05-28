@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseFragment
 import com.capstone.capstonenft.databinding.FragmentMyBinding
@@ -43,7 +45,7 @@ class MyFragment : BaseFragment() {
             }
         }.attach()
 
-        mBinding.fmBtnLogin.setOnClickListener(object : View.OnClickListener{
+        mBinding.fmBtnLogin.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 val intent = Intent(mActivity, CreateActivity::class.java)
                 startActivity(intent)
@@ -55,8 +57,21 @@ class MyFragment : BaseFragment() {
 
     }
 
-    fun onClick(v:View){
-        when(v.id){
+    override fun onResume() {
+        super.onResume()
+                mBinding.fmClMy.isVisible = false
+
+
+//        mBinding.fmLlLogin.isVisible = NFT.instance.privatekey.isNullOrEmpty()
+//
+//        mBinding.fmClMy.isVisible = !NFT.instance.privatekey.isNullOrEmpty()
+//        if(!NFT.instance.privatekey.isNullOrEmpty()){
+//            mBinding.fmTvId.text = NFT.instance.name
+//        }
+    }
+
+    fun onClick(v: View) {
+        when (v.id) {
             R.id.fm_fbtn_create -> {
                 val intent = Intent(mActivity, CreateActivity::class.java)
                 startActivity(intent)

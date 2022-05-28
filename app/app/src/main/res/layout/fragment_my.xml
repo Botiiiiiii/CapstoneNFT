@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/fm_ll_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -26,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="이용하시려면 로그인해라"
+                android:fontFamily="@font/notosanskr_regular"
+                android:text="이용하시려면 로그인하시오"
                 app:layout_constraintBottom_toTopOf="@id/fm_btn_login"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -36,6 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Login"
+                android:paddingVertical="0dp"
+                android:fontFamily="@font/notosanskr_regular"
                 android:onClick="@{listener::onClick}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +51,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_marginTop="10dp"
+            android:id="@+id/fm_cl_my">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fm_fbtn_create"
@@ -78,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="40dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/fm_cv_profile"
                 app:layout_constraintStart_toEndOf="@+id/fm_cv_profile"
                 app:layout_constraintTop_toTopOf="@+id/fm_cv_profile">
@@ -86,13 +91,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="이름 : test"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:text="ID : "
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/fm_tv_id"
+                    android:fontFamily="@font/notosanskr_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Token Address"
+                    android:text="test"
                     android:textSize="24sp" />
             </LinearLayout>
 

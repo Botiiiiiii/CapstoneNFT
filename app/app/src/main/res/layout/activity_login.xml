@@ -1,11 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <data>
+
+        <variable
+            name="listener"
+            type="com.capstone.capstonenft.ui.activity.login.LoginActivity" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/al_ll_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:background="@drawable/sel_login_field"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp">
+
+            <TextView
+                android:fontFamily="@font/notosanskr_regular"
+                android:layout_width="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_height="wrap_content"
+                android:text="아이디" />
+
+            <EditText
+                android:fontFamily="@font/notosanskr_regular"
+                android:id="@+id/al_et_id"
+                android:includeFontPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="@color/transparent" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/al_ll_pw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/sel_login_field"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/notosanskr_regular"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="비밀번호" />
+
+            <EditText
+                android:id="@+id/al_et_pw"
+                android:fontFamily="@font/notosanskr_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_marginStart="20dp"
+                android:background="@color/transparent" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/al_tv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/bg_rect_red_full_r10"
+                android:fontFamily="@font/notosanskr_regular"
+                android:paddingHorizontal="20dp"
+                android:text="로그인"
+                android:onClick="@{listener::onClick}"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/al_tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rect_red_full_r10"
+                android:fontFamily="@font/notosanskr_regular"
+                android:paddingHorizontal="20dp"
+                android:onClick="@{listener::onClick}"
+                android:text="회원가입"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>
