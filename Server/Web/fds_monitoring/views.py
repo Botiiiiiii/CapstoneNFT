@@ -7,11 +7,11 @@ from django.http import HttpResponse
 
 from elasticsearch import Elasticsearch
 
-es = Elasticsearch('http://34.64.68.123:9200/')
+es = Elasticsearch('http://192.168.65.128:9200/')
 
 def index(request):
     # 컨텍스트 데이터프레임으로 넘겨주기
-    response_score = es.get(index='scorecheck_df', id=1)
+    response_score = es.get(index='scorecheck_df', id=2)
     wallet_score_df = pd.DataFrame(response_score['_source'])
     wallet_score_df = wallet_score_df[['type','score','wallet','trade count','value sum','value average','single cycle number','multi cycle number']]
     wallet_score_df['wallet'] = wallet_score_df['wallet'].apply(lambda x: f'<a href="/table/wallet?wallet={x}">{x}</a>')
@@ -26,7 +26,7 @@ def wallet(request):
         wallet_name = request.GET.get('wallet', None)
 
         # 데이터프레임 생성
-        response_score = es.get(index='scorecheck_df', id=1)
+        response_score = es.get(index='scorecheck_df', id=2)
         wallet_score_df = pd.DataFrame(response_score['_source']) 
         wallet_info = wallet_score_df[wallet_score_df['wallet'] == wallet_name]
 
@@ -68,7 +68,7 @@ def get_trade_df(wallet_name):
     token_df = pd.DataFrame()
     token_list = ['animal_society','ape_harbour_yachts','dogex','metavillains','the_evolving_forest']
     for token_name in token_list:
-        es_response = es.get(index=token_name, id=1)
+        es_response = es.get(index=token_name, id=2)
         df = pd.DataFrame(es_response['_source'])
         token_df = token_df.append(df)
 
@@ -111,7 +111,7 @@ def get_trade_df(wallet_name):
 
 def get_single_cycle(wallet_name):
     # df 불러오기
-    response_cycle = es.get(index='all_cycle_df', id=1)
+    response_cycle = es.get(index='all_cycle_df', id=2)
     cycle_df = pd.DataFrame(response_cycle['_source'])
     cycle_df = cycle_df[cycle_df['From']==wallet_name].copy()
 
@@ -124,7 +124,7 @@ def get_single_cycle(wallet_name):
 
 def get_multi_cycle(wallet_name):
     # df 불러오기
-    response_cycle = es.get(index='all_cycle_df', id=1)
+    response_cycle = es.get(index='all_cycle_df', id=2)
     cycle_df = pd.DataFrame(response_cycle['_source'])
 
     # 자전 거래 제거

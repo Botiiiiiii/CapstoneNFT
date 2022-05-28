@@ -60,7 +60,7 @@ def crawling_data_ether(tx_address, Name, web3_num, lastpage,):
     cnt = 0
     try:
         # 웹사이트 이동
-        driver.get(URL_token + tx_address)
+        driver.get('https://etherscan.io/token/generic-tokentxns2?contractAddress=0x64b6b4142d4D78E49D53430C1d3939F2317f9085&mode=&sid=9d6af8991dbd338d9f4c1ce51c2d868e&m=normal&p=3')
         # 로딩 대기
         driver.implicitly_wait(5)
 
@@ -69,7 +69,7 @@ def crawling_data_ether(tx_address, Name, web3_num, lastpage,):
 
         driver.find_element(By.XPATH,'//*[@id="maindiv"]/div[1]/nav/ul/li[4]/a').click()
         driver.implicitly_wait(5)
-        time.sleep(10)
+        time.sleep(50)
 
     except:
         print("crawling data error")

@@ -63,6 +63,7 @@ def crawling_data_ether(tx_address, Name, web3_num, lastpage):
         driver.get(URL_token + tx_address)
         # 로딩 대기
         driver.implicitly_wait(5)
+
         for i in range(1, lastpage + 1):
             er = 0
 
@@ -102,24 +103,24 @@ def crawling_data_ether(tx_address, Name, web3_num, lastpage):
                         Xpath_TokenID = '//*[@id="maindiv"]/div[2]/table/tbody/tr[' + str(j) + ']/td[9]/a'
                         Xpath_timestamp = '//*[@id="maindiv"]/div[2]/table/tbody/tr[' + str(j) + ']/td[5]/span'  # title
 
-                        print('Find Txn_Hash')
+                        # print('Find Txn_Hash')
                         Txn_Hash = table.find_element(By.XPATH, Xpath_Txn_Hash).get_attribute('innerText')
-                        print('Find Method')
+                        # print('Find Method')
                         Method = table.find_element(By.XPATH, Xpath_Method).get_attribute('innerText')
-                        print('Find To_Address')
-                        To_Address = table.find_element(By.XPATH, Xpath_To_Address).get_attribute('innerText')
-                        print('Find From_Address')
-                        From_Address = table.find_element(By.XPATH, Xpath_From_Address).get_attribute('innerText')
-                        print('Find Token_Id')
+                        # print('Find To_Address')
+                        To_Address = table.find_element(By.XPATH, Xpath_To_Address).get_attribute('href')
+                        # print('Find From_Address')
+                        From_Address = table.find_element(By.XPATH, Xpath_From_Address).get_attribute('href')
+                        # print('Find Token_Id')
                         Token_Id = table.find_element(By.XPATH, Xpath_TokenID).get_attribute('innerText')
-                        print('Find timestmap')
+                        # print('Find timestmap')
                         timestamp = table.find_element(By.XPATH, Xpath_timestamp).get_attribute('data-original-title')
                         print(Token_Id)
                         raw_data['Txn Hash'].append(Txn_Hash)
                         raw_data['Method'].append(Method)
                         raw_data['Timestamp'].append(timestamp)
-                        raw_data['To'].append(To_Address)
-                        raw_data['From'].append(From_Address)
+                        raw_data['To'].append(To_Address[72:])
+                        raw_data['From'].append(From_Address[72:])
                         raw_data['TokenID'].append(Token_Id)
 
                     except:
@@ -157,10 +158,10 @@ def get_Token_Dataframe(data, w_num, Name):
     table_df['Value'] = value
     # print(table_df)
 
-    if not os.path.exists("token2/" + csv_name):
-        table_df.to_csv("token2/" + csv_name, index=False, mode='w', encoding='utf-8-sig')
+    if not os.path.exists("token_plus/" + csv_name):
+        table_df.to_csv("token_plus/" + csv_name, index=False, mode='w', encoding='utf-8-sig')
     else:
-        table_df.to_csv("token2/" + csv_name, index=False, mode='a', encoding='utf-8-sig', header=False)
+        table_df.to_csv("token_plus/" + csv_name, index=False, mode='a', encoding='utf-8-sig', header=False)
 
 
 def main():
@@ -173,7 +174,7 @@ def main():
         print("현재 web3_num", web3_num)
         print("현재 진행상황 : ", i)
 
-        token_contract = token_list_df.loc[len(token_list_df)-3-i]['contract']
+        token_contract = token_list_df.loc[i]['contract']
         address = token_contract
 
         url = "https://etherscan.io/token/" + str(address)
@@ -192,7 +193,7 @@ def main():
 
         print('마지막 페이지:', lastpage)
         driver.quit()
-        token_name = re.sub(r"[?!$/'.,]", "", token_list_df.loc[len(token_list_df)-3-i]['Token'])
+        token_name = re.sub(r"[?!$/'.,]", "", token_list_df.loc[i]['Token'])
         if len(token_name) > 151:
             token_name = token_name[0:150]
 

@@ -7,35 +7,47 @@ from django.http import HttpResponse
 
 from elasticsearch import Elasticsearch
 
-es = Elasticsearch('http://34.64.68.123:9200/')
-
+es = Elasticsearch('http://192.168.65.128:9200/')
 
 def index(request):
-    response_score = es.get(index='scorecheck_df', id=1)
-    wallet_score_df = pd.DataFrame(response_score['_source'])
+    response_score = es.get(index='scorecheck_df', id=2)
+    wallet_score_df = pd.DataFrame.from_dict([response_score['_source']])
 
-    response_cycle = es.get(index='all_cycle_df', id=1)
-    cycle_df = pd.DataFrame(response_cycle['_source'])
+    response_cycle = es.get(index='all_cycle_df', id=2)
+    cycle_df = pd.DataFrame([response_cycle['_source']])
+
+
+    # token_list = ['animal_society','ape_harbour_yachts','dogex','metavillains','the_evolving_forest']
+    # for token_name in token_list:
+    #     es_response = es.get(index=token_name, id=2)
+    #     df = pd.DataFrame(es_response['_source'])
+    #
+    #     token_df = token_df.append(df)
 
     token_df = pd.DataFrame()
+    cnt = 0
+    path ="C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/token/"
+    file_list = os.listdir(path)
+    for name in file_list:
+        if(cnt == 0):
+            token_df = pd.read_csv(path+name)
+            cnt += 1
+            continue
 
-    token_list = ['animal_society','ape_harbour_yachts','dogex','metavillains','the_evolving_forest']
-    for token_name in token_list:
-        es_response = es.get(index=token_name, id=1)
-        df = pd.DataFrame(es_response['_source'])
+        token_df_tmp = pd.read_csv(path + name)
+        token_df = token_df.concat(token_df,token_df_tmp)
 
-        token_df = token_df.append(df)
 
     token_df.reset_index(drop=True,inplace=True)
     transaction_num = len(token_df)
 
-    # 블랙홀 제거
-    idx = token_df[token_df['From'].str.slice(start=0, stop=10) == "Black Hole"].index
-    token_df.drop(idx, inplace=True)
-
-    # 전송 제거
-    idx = token_df[token_df['Value'] == 0].index
-    token_df.drop(idx, inplace=True)
+    # # 블랙홀 제거
+    # idx = token_df[token_df['From'].str.slice(start=0, stop=10) == "Black Hole"].index
+    # token_df.drop(idx, inplace=True)
+    #
+    # # 전송 제거
+    # idx = token_df[token_df['Value'] == 0].index
+    # token_df.drop(idx, inplace=True)
 
     trade_num = len(token_df)
     avg_trade_value = round(token_df['Value'].agg('mean'),2)

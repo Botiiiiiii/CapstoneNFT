@@ -7,13 +7,13 @@
 import pandas as pd
 import os
 
-path = "top10 token/"
+path = "carry/"
 file_list = os.listdir(path)
 
 
 for token_name in file_list :
     print("현재 파일 : ",token_name)
-    token_df = pd.read_csv("top10 token/" + token_name)
+    token_df = pd.read_csv("carry/" + token_name)
     market_place_df = pd.read_csv("marketplace_list.csv")
 
     market_name = []

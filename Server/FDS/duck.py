@@ -1,17 +1,10 @@
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import networkx as nx
 from pyvis import network as net
 import pandas as pd
 import os
 import locale
-
-
-class node_info():
-    From = []
-    To = []
-
 
 # 폴더 파일 리스트
 path = "classification/"
@@ -31,6 +24,7 @@ To_group = token_df.groupby("To")
 To_group_list = list(To_group.groups.keys())
 
 Node_list = list(set(From_group_list + To_group_list))
+Circle_list = []
 
 node_route = []
 
@@ -40,11 +34,12 @@ for addr in Node_list:
     # print(addr)
     node_conn[addr] = {'From': set([]), 'To': set([]), 'Max_hop': 0}
 
+# 각 노드 연결 정보 설정
 for i in range(token_df.From.count()):
     node_conn[token_df.at[i, 'From']]['To'].add(token_df.at[i, 'To'])
-
     node_conn[token_df.at[i, 'To']]['From'].add(token_df.at[i, 'From'])
 
+# set to list
 for addr in Node_list:
     node_conn[addr]['From'] = list(node_conn[addr]['From'])
     node_conn[addr]['To'] = list(node_conn[addr]['To'])
@@ -60,31 +55,57 @@ def update_nodehop(addr, stack):
     h = 0
 
     for n in node_conn[addr]['To']:
+        # 순환 탐색
+        if (stack.count(n)):
+            Circle_list.append(stack[0])
+
         # 만약 To의 Max_hop이 0이면 update_nodehop 실행
         if (stack.count(n) == 0 and node_conn[n]['Max_hop'] == 0):
             update_nodehop(n, stack + [addr])
         # h 갱신
         if (node_conn[n]['Max_hop'] > h): h = node_conn[n]['Max_hop']
 
+    # Max_hop 갱신
     node_conn[addr]['Max_hop'] = h + 1
 
 
-# dfs로 Max_hop 갱신해주기
+def update_nodehop_rev(addr, stack, h):
+    # Max_hop 갱신
+    node_conn[addr]['Max_hop'] = h + 1
+
+    for n in node_conn[addr]['From']:
+        # 순환 루트 노드 탐색하기
+        if (stack.count(n)):
+            Circle_list.append(addr)
+            # From의 Max_hop이 0이면, 또는 addr의 Max_hop이 From의 Max_hop보다 같거나 큰 경우 update_nodehop_rev 실행
+        elif (node_conn[n]['Max_hop'] == 0 or node_conn[addr]['Max_hop'] >= node_conn[n]['Max_hop']):
+            update_nodehop_rev(n, stack + [addr], h + 1)
+
+
+# root 노드 기준으로 Max_hop 갱신해주기
 for addr in Root_list:
     update_nodehop(addr, [])
 
-Circle_list = []
+# root 노드 없을 때 순환 노드 Max_hop 갱신해주기
+for addr in Node_list:
+    if (len(node_conn[addr]['To']) == 0 and node_conn[addr]['Max_hop'] == 0):
+        update_nodehop_rev(addr, [], 0)
+
 # 순환 탐색하기
 for addr in Node_list:
     if (node_conn[addr]['Max_hop'] == 0):
         update_nodehop(addr, [])
-        Circle_list.append(addr)
+
+Circle_list = list(set(Circle_list))
+
+print(Circle_list)
 
 
 def get_node(n):
     rlist = []
 
-    for addr in Root_list + Circle_list:
+    for addr in list(set(Root_list + Circle_list)):
+        # for addr in Circle_list:
         if (node_conn[addr]['Max_hop'] >= n):
             # print(addr + ' : ' + str(node_conn[addr]))
             rlist.append(addr)
@@ -92,18 +113,39 @@ def get_node(n):
     return rlist
 
 
-def dfs_node(addr):
-    if (node_conn[addr]['Max_hop'] == 1): return
+check_route = []
+
+
+def dfs_node(addr, n):
+    if (check_route.count(addr)):
+        return
+    else:
+        check_route.append(addr)
+
+    if (node_conn[addr]['Max_hop'] == 1):
+        for to in node_conn[addr]['To']:
+            print([addr, to])
+            node_route.append(
+                [[addr, to, float(token_df[(token_df.From == addr) & (token_df.To == to)].loc[:, ['Value']].sum())]])
+        return
+    if (node_conn[addr]['Max_hop'] < n):
+        return
     for to in node_conn[addr]['To']:
-        node_route.append([[addr, to, float(token_df[(token_df.From == addr) & (token_df.To == to)].loc[:, ['Value']].sum())]])
-        dfs_node(to)
+        print([addr, to])
+        node_route.append(
+            [[addr, to, float(token_df[(token_df.From == addr) & (token_df.To == to)].loc[:, ['Value']].sum())]])
+        if (node_conn[to]['Max_hop'] < node_conn[addr]['Max_hop']):
+            dfs_node(to, n - 1)
 
 
-for i in get_node(4):
-    dfs_node(i)
+lst = get_node(3)
+for i in lst:
+    dfs_node(i, 3)
 
-def draw_graph3(networkx_graph,notebook=True,output_filename=file_list[0]+'.html',show_buttons=True,only_physics_buttons=False,
-                height="750px",width="100%",bgcolor=None,font_color=None,pyvis_options=None):
+
+def draw_graph3(networkx_graph, notebook=True, output_filename=file_list[0] + '.html', show_buttons=True,
+                only_physics_buttons=False,
+                height="750px", width="100%", bgcolor=None, font_color=None, pyvis_options=None):
     """
     This function accepts a networkx graph object,
     converts it to a pyvis network object preserving its node and edge attributes,
@@ -125,28 +167,31 @@ def draw_graph3(networkx_graph,notebook=True,output_filename=file_list[0]+'.html
         bgcolor: background color, e.g., "black" or "#222222"
         font_color: font color,  e.g., "black" or "#222222"
         pyvis_options: provide pyvis-specific options (https://pyvis.readthedocs.io/en/latest/documentation.html#pyvis.options.Options.set  )
-        
+
     """
-    
+
     # import
     from pyvis import network as net
 
     # make a pyvis network
-    network_class_parameters = {"notebook": notebook, "height": height, "width": width, "bgcolor": bgcolor, "font_color": font_color}
-    pyvis_graph = net.Network(**{parameter_name: parameter_value for parameter_name, parameter_value in network_class_parameters.items() if parameter_value})
+    network_class_parameters = {"notebook": notebook, "height": height, "width": width, "bgcolor": bgcolor,
+                                "font_color": font_color}
+    pyvis_graph = net.Network(
+        **{parameter_name: parameter_value for parameter_name, parameter_value in network_class_parameters.items() if
+           parameter_value})
 
     # for each node and its attributes in the networkx graph
-    for node,node_attrs in networkx_graph.nodes(data=True):
-        pyvis_graph.add_node(node,**node_attrs)
+    for node, node_attrs in networkx_graph.nodes(data=True):
+        pyvis_graph.add_node(node, **node_attrs)
 
     # for each edge and its attributes in the networkx graph
-    for source,target,edge_attrs in networkx_graph.edges(data=True):
+    for source, target, edge_attrs in networkx_graph.edges(data=True):
         # if value/width not specified directly, and weight is specified, set 'value' to 'weight'
         if not 'value' in edge_attrs and not 'width' in edge_attrs and 'weight' in edge_attrs:
             # place at key 'value' the weight of the edge
-            edge_attrs['value']=edge_attrs['weight']
+            edge_attrs['value'] = edge_attrs['weight']
         # add the edge
-        pyvis_graph.add_edge(source,target,**edge_attrs)
+        pyvis_graph.add_edge(source, target, **edge_attrs)
 
     # turn buttons on
     if show_buttons:
@@ -162,33 +207,33 @@ def draw_graph3(networkx_graph,notebook=True,output_filename=file_list[0]+'.html
     # return and also save
     return pyvis_graph.show(output_filename)
 
+
 def show_networkx_graph():
     sum_weight = 0
     length = 0
     G = nx.DiGraph()
 
-    
     for n in node_route:
-        print(n)
         G.add_weighted_edges_from(n)
         sum_weight += n[0][2]
         length += 1
 
-    avg = sum_weight/length
+    avg = sum_weight / length
     print(avg)
     edges = G.edges
-    weights = [G[u][v]['weight']*3.0/avg for u, v in edges]
+    weights = [G[u][v]['weight'] * 3.0 / avg for u, v in edges]
     print(weights)
     plt.figure(figsize=(25, 25))
     pos = nx.spring_layout(G, k=0.2)
     d = dict(G.degree)
 
     n_data = [v * 1000 for v in d.values()]
-    nx.draw_networkx_edges(G, pos,width=0.5,arrows=True, arrowstyle='->', arrowsize=5, )
-    nx.draw(G, pos, width = weights, with_labels=True, font_size=6, linewidths=0.5,
-    edge_color="black", edgecolors='gray', node_size=n_data, node_color=n_data)
+    nx.draw_networkx_edges(G, pos, width=0.5, arrows=True, arrowstyle='->', arrowsize=10)
+    nx.draw(G, pos, width=weights, with_labels=True, font_size=6, linewidths=0.5,
+            edge_color="black", edgecolors='gray', node_size=n_data, node_color=n_data)
     plt.show()
 
     draw_graph3(G)
+
 
 show_networkx_graph()
