@@ -177,7 +177,7 @@ class txnalyz:
         for tx in txlist:
             df = pd.concat([df, self.token_df[self.token_df['Txn Hash'] == tx]])
         
-        df.to_csv('result/' + fname + '.csv', header = True, index = False)
+        df.to_csv('result/' + fname, header = True, index = False)
             
     def draw_graph3(self, networkx_graph,notebook=True, show_buttons=True,only_physics_buttons=False,
                 height="750px",width="100%",bgcolor=None,font_color=None,pyvis_options=None):        

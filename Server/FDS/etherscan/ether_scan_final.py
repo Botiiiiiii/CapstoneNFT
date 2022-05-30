@@ -112,10 +112,10 @@ def crawling_data_ether(tx_address, Name, web3_num, lastpage):
                         # print('Find From_Address')
                         From_Address = table.find_element(By.XPATH, Xpath_From_Address).get_attribute('href')
                         # print('Find Token_Id')
-                        Token_Id = table.find_element(By.XPATH, Xpath_TokenID).get_attribute('innerText')
+                        Token_Id = 'ID'+table.find_element(By.XPATH, Xpath_TokenID).get_attribute('innerText')
                         # print('Find timestmap')
                         timestamp = table.find_element(By.XPATH, Xpath_timestamp).get_attribute('data-original-title')
-                        print(Token_Id)
+                        # print(Token_Id)
                         raw_data['Txn Hash'].append(Txn_Hash)
                         raw_data['Method'].append(Method)
                         raw_data['Timestamp'].append(timestamp)
@@ -158,10 +158,10 @@ def get_Token_Dataframe(data, w_num, Name):
     table_df['Value'] = value
     # print(table_df)
 
-    if not os.path.exists("token_plus/" + csv_name):
-        table_df.to_csv("token_plus/" + csv_name, index=False, mode='w', encoding='utf-8-sig')
+    if not os.path.exists("tokenID/" + csv_name):
+        table_df.to_csv("tokenID/" + csv_name, index=False, mode='w', encoding='utf-8-sig')
     else:
-        table_df.to_csv("token_plus/" + csv_name, index=False, mode='a', encoding='utf-8-sig', header=False)
+        table_df.to_csv("tokenID/" + csv_name, index=False, mode='a', encoding='utf-8-sig', header=False)
 
 
 def main():
@@ -199,7 +199,6 @@ def main():
 
         crawling_data_ether(token_contract, token_name, web3_num, int(lastpage))
         web3_num = web3_num + 1
-
 
 main()
 
