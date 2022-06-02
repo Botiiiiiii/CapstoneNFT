@@ -38,6 +38,10 @@ tmp = np.array([])
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
+# 크롤링 옵션 생성
+options = webdriver.ChromeOptions()
+# 백그라운드 실행 옵션 추가
+options.add_argument("headless")
 
 
 def crawling_tx(num):
@@ -45,7 +49,7 @@ def crawling_tx(num):
         'Txn Hash': []
     }
     # 드라이버 연결
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=options)
     # 웹사이트 이동
     driver.get(URL_account + ContractAddress)
     # 로딩 대기
@@ -93,7 +97,7 @@ def crawling_data(tx_data):
         'Token Name': [],
     }
     # 드라이버 연결
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=options)
     try:
         for i in tx_data['Txn Hash']:
             raw_data.clear()
@@ -249,6 +253,6 @@ num=2000
 # else:
 #     table_df.to_csv('txn_hash.csv', index=False, mode='a', encoding='utf-8-sig', header=False)
 crawl_tx = pd.read_csv('txn_hash.csv')
-crawl_tx = crawl_tx[4774:]
+crawl_tx = crawl_tx[4999:]
 crawl_data = crawling_data(crawl_tx)
 # print(crawl_data)

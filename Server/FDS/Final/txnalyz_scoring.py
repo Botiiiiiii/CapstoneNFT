@@ -52,6 +52,7 @@ class txnalyz:
         self.wallet_df["single cycle number"] = 0
         self.wallet_df["multi cycle number"] = 0
         self.wallet_df["cycle wallets number"] = 0
+        self.wallet_df["trade count"] = 0
         self.wallet_df["score"] = 0
 
     def count_score_cycle(self):

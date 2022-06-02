@@ -44,6 +44,7 @@ def index(request):
 
     token_df.reset_index(drop=True,inplace=True)
     transaction_num = len(token_df)
+    wallet_num = len(wallet_score_df)
 
     # # 블랙홀 제거
     # idx = token_df[token_df['From'].str.slice(start=0, stop=10) == "Black Hole"].index
@@ -57,7 +58,7 @@ def index(request):
     avg_trade_value = round(token_df['Value'].agg('mean'),2)
     fraud_trade = len(wallet_score_df[wallet_score_df['type']=="위험"])
 
-    render_context = {'transaction_num': format(transaction_num,','), 'trade_num': format(trade_num,','), 'avg_trade_value': avg_trade_value,
+    render_context = {'wallet_num': format(wallet_num,','), 'trade_num': format(trade_num,','), 'avg_trade_value': avg_trade_value,
                       'fraud_wallet': fraud_trade}
 
 

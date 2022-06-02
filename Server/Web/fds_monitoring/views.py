@@ -11,8 +11,10 @@ es = Elasticsearch('http://192.168.65.128:9200/')
 
 def index(request):
     # 컨텍스트 데이터프레임으로 넘겨주기
-    response_score = es.get(index='scorecheck_df', id=2)
-    wallet_score_df = pd.DataFrame(response_score['_source'])
+    # response_score = es.get(index='scorecheck_df', id=2)
+    # wallet_score_df = pd.DataFrame(response_score['_source'])
+    wallet_score_df = pd.read_csv(
+        "C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv", encoding='utf-8')
     wallet_score_df = wallet_score_df[['type','score','wallet','trade count','value sum','value average','single cycle number','multi cycle number']]
     wallet_score_df['wallet'] = wallet_score_df['wallet'].apply(lambda x: f'<a href="/table/wallet?wallet={x}">{x}</a>')
     wallet_score_table = wallet_score_df.to_html(index=False,table_id='datatablesSimple',render_links=True,escape=False)
@@ -38,7 +40,7 @@ def wallet(request):
         wallet_name = str(wallet_name)
         return render(request, 'fds_monitoring/wallet.html', context={'wallet':wallet_name,'tr':trade,'si':single_cycle,
                                                             'mu':multi_cycle})
-    elif request.method == "POST" and request.is_ajax():
+    elif request.method == "POST" and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         req_data = json.loads(request.body)
         wallet_name = req_data['wallet'][:-1]
         function_type = req_data['type']
