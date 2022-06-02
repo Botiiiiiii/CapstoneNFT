@@ -38,7 +38,7 @@ class txnalyz:
         idx = self.token_df[self.token_df['From'].str.slice(start=0, stop=10) == "Black Hole"]['From'].index
         self.token_df.drop(idx, inplace=True)
         self.token_df['Value'] = self.token_df['Value'].astype('str').str.replace(',','').astype('float')
-        self.token_df['TokenID'] = self.token_df['TokenID'].fillna(-1).astype('int64').replace({-1: None})
+        self.token_df['TokenID'] = self.token_df['TokenID'].astype('str').str.replace('ID','')
         
     def delete_node(self, delete_list):
         for addr in delete_list:
@@ -53,7 +53,7 @@ class txnalyz:
         To_group = self.token_df.groupby("To")
         To_group_list = list(To_group.groups.keys())
         self.node_list = list(set(From_group_list+To_group_list))
-        
+
     def init_nodeconnect(self):
         # 노드 연결 정보 초기화
         self.node_conn = {}
@@ -99,7 +99,6 @@ class txnalyz:
 
         for n in self.node_conn[addr]['From']:
             # 순환 루트 노드 탐색하기
-            # 여기 어케 알아서 지우셈 ㅇㅋ?
             if(stack.count(n)):
                 self.cycle_list.append(addr) 
             # From의 Max_hop이 0이면, 또는 addr의 Max_hop이 From의 Max_hop보다 같거나 큰 경우 update_nodehop_rev 실행
@@ -162,7 +161,7 @@ class txnalyz:
         l = self.get_node(n, mode=mode)
         for i in l:
             self.dfs_node(i, n)
-            
+
     def get_txlist(self):
         txlist = []
     

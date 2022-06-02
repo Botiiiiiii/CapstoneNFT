@@ -26,8 +26,9 @@ def wallet(request):
         wallet_name = request.GET.get('wallet', None)
 
         # 데이터프레임 생성
-        response_score = es.get(index='scorecheck_df', id=2)
-        wallet_score_df = pd.DataFrame(response_score['_source']) 
+        # response_score = es.get(index='scorecheck_df', id=2)
+        # wallet_score_df = pd.DataFrame(response_score['_source'])
+        wallet_score_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv", encoding='utf-8')
         wallet_info = wallet_score_df[wallet_score_df['wallet'] == wallet_name]
 
         trade = int(wallet_info['trade count'].agg('sum'))
@@ -68,8 +69,9 @@ def get_trade_df(wallet_name):
     token_df = pd.DataFrame()
     token_list = ['animal_society','ape_harbour_yachts','dogex','metavillains','the_evolving_forest']
     for token_name in token_list:
-        es_response = es.get(index=token_name, id=2)
-        df = pd.DataFrame(es_response['_source'])
+        # es_response = es.get(index=token_name, id=2)
+        # df = pd.DataFrame(es_response['_source'])
+        df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/token/" + token_name +'.csv', encoding='utf-8')
         token_df = token_df.append(df)
 
     token_df.reset_index(drop=True, inplace=True)
@@ -111,8 +113,9 @@ def get_trade_df(wallet_name):
 
 def get_single_cycle(wallet_name):
     # df 불러오기
-    response_cycle = es.get(index='all_cycle_df', id=2)
-    cycle_df = pd.DataFrame(response_cycle['_source'])
+    # response_cycle = es.get(index='all_cycle_df', id=2)
+    # cycle_df = pd.DataFrame(response_cycle['_source'])
+    cycle_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
     cycle_df = cycle_df[cycle_df['From']==wallet_name].copy()
 
     # 자전 거래만 추출
@@ -124,8 +127,10 @@ def get_single_cycle(wallet_name):
 
 def get_multi_cycle(wallet_name):
     # df 불러오기
-    response_cycle = es.get(index='all_cycle_df', id=2)
-    cycle_df = pd.DataFrame(response_cycle['_source'])
+    # response_cycle = es.get(index='all_cycle_df', id=2)
+    # cycle_df = pd.DataFrame(response_cycle['_source'])
+    cycle_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv",
+                           encoding='utf-8')
 
     # 자전 거래 제거
     single_cycle_index = cycle_df[cycle_df['Cycle Length'] == 1].index

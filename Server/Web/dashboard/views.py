@@ -10,11 +10,15 @@ from elasticsearch import Elasticsearch
 es = Elasticsearch('http://192.168.65.128:9200/')
 
 def index(request):
-    response_score = es.get(index='scorecheck_df', id=2)
-    wallet_score_df = pd.DataFrame.from_dict([response_score['_source']])
+    # response_score = es.get(index='scorecheck_df', id=2)
+    # wallet_score_df = pd.DataFrame.from_dict([response_score['_source']])
 
-    response_cycle = es.get(index='all_cycle_df', id=2)
-    cycle_df = pd.DataFrame([response_cycle['_source']])
+    wallet_score_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv" ,encoding= 'utf-8')
+
+    # response_cycle = es.get(index='all_cycle_df', id=2)
+    # cycle_df = pd.DataFrame([response_cycle['_source']])
+
+    cycle_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
 
 
     # token_list = ['animal_society','ape_harbour_yachts','dogex','metavillains','the_evolving_forest']
@@ -35,7 +39,7 @@ def index(request):
             continue
 
         token_df_tmp = pd.read_csv(path + name)
-        token_df = token_df.concat(token_df,token_df_tmp)
+        token_df = pd.concat([token_df,token_df_tmp])
 
 
     token_df.reset_index(drop=True,inplace=True)
