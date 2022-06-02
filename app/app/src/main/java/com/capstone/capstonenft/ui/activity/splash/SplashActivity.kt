@@ -67,11 +67,11 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun startProcess() {
-        val id = getPref(this, "id")
-        val pw = getPref(this, "pw")
-        if (!id.isNullOrEmpty() && !pw.isNullOrEmpty())
-            mViewModel.login(id, pw)
-        else
+//        val id = getPref(this, "id")
+//        val pw = getPref(this, "pw")
+//        if (!id.isNullOrEmpty() && !pw.isNullOrEmpty())
+//            mViewModel.login(id, pw)
+//        else
             Intent(this, MainActivity::class.java).apply {
                 startActivity(this)
             }

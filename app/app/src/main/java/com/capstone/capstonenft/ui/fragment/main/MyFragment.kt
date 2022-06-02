@@ -12,6 +12,7 @@ import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseFragment
 import com.capstone.capstonenft.databinding.FragmentMyBinding
 import com.capstone.capstonenft.ui.activity.create.CreateActivity
+import com.capstone.capstonenft.ui.activity.create.ImageCheckActivity
 import com.capstone.capstonenft.ui.activity.login.LoginActivity
 import com.capstone.capstonenft.ui.adapter.main.MyAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -33,7 +34,6 @@ class MyFragment : BaseFragment() {
         mBinding.listener = this
         mAdapter = MyAdapter(mActivity!!)
         mBinding.viewPager.adapter = mAdapter
-
         TabLayoutMediator(
             mBinding.fmTvTab, mBinding.viewPager
         )
@@ -44,14 +44,6 @@ class MyFragment : BaseFragment() {
                 2 -> tab.text = "거래 내역"
             }
         }.attach()
-
-        mBinding.fmBtnLogin.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                val intent = Intent(mActivity, CreateActivity::class.java)
-                startActivity(intent)
-            }
-
-        })
 
         return mBinding.root
 
@@ -73,7 +65,7 @@ class MyFragment : BaseFragment() {
     fun onClick(v: View) {
         when (v.id) {
             R.id.fm_fbtn_create -> {
-                val intent = Intent(mActivity, CreateActivity::class.java)
+                val intent = Intent(mActivity, ImageCheckActivity::class.java)
                 startActivity(intent)
             }
 

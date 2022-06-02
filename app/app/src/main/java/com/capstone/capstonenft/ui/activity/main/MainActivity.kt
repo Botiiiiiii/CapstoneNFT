@@ -2,6 +2,7 @@ package com.capstone.capstonenft.ui.activity.main
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import com.capstone.capstonenft.NFT
@@ -13,6 +14,7 @@ import com.capstone.capstonenft.ui.adapter.main.MainAdapter
 import com.capstone.capstonenft.viewmodel.MainViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_image_check.view.*
 
 class MainActivity : BaseActivity() {
     lateinit var mBinding: ActivityMainBinding
@@ -30,7 +32,6 @@ class MainActivity : BaseActivity() {
     fun setLayout() {
         mAdapter = MainAdapter(this)
         mBinding.amVpPager.adapter = mAdapter
-
         TabLayoutMediator(
             mBinding.amTlTab,
             mBinding.amVpPager
@@ -47,6 +48,7 @@ class MainActivity : BaseActivity() {
                 }
             }
         }.attach()
+        mBinding.amTlTab.setTabTextColors(ContextCompat.getColor(this, R.color.black), ContextCompat.getColor(this, R.color.white))
 
         mBinding.amVpPager.setCurrentItem(1, false)
     }

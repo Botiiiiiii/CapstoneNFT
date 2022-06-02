@@ -42,6 +42,7 @@ class CreateActivity : BaseActivity() {
                 val intent = Intent(Intent.ACTION_GET_CONTENT)
                 intent.setType("image/*")
                 mResultLauncher.launch(intent)
+
             }
 
             R.id.fc_btn_regist -> {

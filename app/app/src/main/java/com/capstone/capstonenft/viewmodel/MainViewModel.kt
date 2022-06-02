@@ -18,19 +18,19 @@ class MainViewModel: ViewModel() {
     }
 
     fun getMainItem(){
-        val protocol: MainProtocol = ProtocolFactory.create(MainProtocol::class.java)
-
-        protocol.setHttpResponsable(object : HttpResponsable<GalleryList> {
-            override fun onResponse(res: GalleryList) {
-                Trace.error("onResponse = $res")
-                mldGallery.value = res
-            }
-
-            override fun onFailure(nError: Int, strMsg: String) {
-                super.onFailure(nError, strMsg)
-                Trace.debug("++ Fail = $nError, $strMsg")
-            }
-        })
-        NetworkManager.getInstance().asyncRequest(protocol)
+//        val protocol: MainProtocol = ProtocolFactory.create(MainProtocol::class.java)
+//
+//        protocol.setHttpResponsable(object : HttpResponsable<GalleryList> {
+//            override fun onResponse(res: GalleryList) {
+//                Trace.error("onResponse = $res")
+//                mldGallery.value = res
+//            }
+//
+//            override fun onFailure(nError: Int, strMsg: String) {
+//                super.onFailure(nError, strMsg)
+//                Trace.debug("++ Fail = $nError, $strMsg")
+//            }
+//        })
+//        NetworkManager.getInstance().asyncRequest(protocol)
     }
 }

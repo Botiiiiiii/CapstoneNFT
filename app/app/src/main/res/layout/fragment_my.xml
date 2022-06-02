@@ -81,31 +81,79 @@
                     android:padding="10dp"
                     android:src="@drawable/test_profile" />
             </androidx.cardview.widget.CardView>
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="40dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@+id/fm_cv_profile"
                 app:layout_constraintStart_toEndOf="@+id/fm_cv_profile"
                 app:layout_constraintTop_toTopOf="@+id/fm_cv_profile">
-
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/notosanskr_regular"
                     android:text="ID : "
-                    android:textSize="24sp" />
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:id="@+id/fm_tv_id"
                     android:fontFamily="@font/notosanskr_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="test"
                     android:textSize="24sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="ADDRESS : "
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+                    <TextView
+                        android:id="@+id/fm_tv_ad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:textColor="@color/white"
+                        android:text="testaddress"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="KLAY : "
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+                    <TextView
+                        android:id="@+id/fm_tv_klay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:textColor="@color/white"
+                        android:text="0klay"/>
+                </LinearLayout>
+
+
             </LinearLayout>
+
 
             <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
