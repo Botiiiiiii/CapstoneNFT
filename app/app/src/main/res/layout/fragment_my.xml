@@ -27,6 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:fontFamily="@font/notosanskr_regular"
                 android:text="이용하시려면 로그인하시오"
                 app:layout_constraintBottom_toTopOf="@id/fm_btn_login"
@@ -52,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
+            android:background="@color/primary2"
             android:id="@+id/fm_cl_my">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -108,6 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="50dp"
                 android:id="@+id/fm_tv_tab"
+                android:background="@color/primary"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fm_cv_profile"/>
 

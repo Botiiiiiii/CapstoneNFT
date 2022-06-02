@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/design_default_color_on_primary">
+        android:background="@color/primary2">
 
         <TextView
             android:id="@+id/fc_tv_title"
@@ -20,6 +20,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/notosanskr_bold"
             android:text="Create My Art"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColor="@color/white"
             android:fontFamily="@font/noto_sans_medium"
             android:text="사진을 올리려면 사진을 올리고 제목을 작성해주세요."
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +65,7 @@
                 android:id="@+id/fp_tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:fontFamily="@font/notosanskr_regular"
                 android:text="Name *" />
 
@@ -89,6 +92,7 @@
             app:layout_constraintTop_toBottomOf="@id/fp_ll_name">
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/fc_tv_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

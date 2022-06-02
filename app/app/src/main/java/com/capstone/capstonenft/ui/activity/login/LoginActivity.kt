@@ -64,16 +64,13 @@ class LoginActivity : BaseActivity() {
         mBinding.alEtPw.setOnFocusChangeListener { _, b ->
             mBinding.alLlPw.isSelected = b
         }
-
     }
 
     fun onClick(v: View) {
         when (v.id) {
             R.id.al_tv_login -> {
                 mViewModel.login(mBinding.alEtId.text.toString(), mBinding.alEtPw.text.toString())
-
             }
-
             R.id.al_tv_register -> {
                 Intent(this, RegisterActivity::class.java).apply {
                     registActivityLauncher.launch(this)
@@ -83,10 +80,8 @@ class LoginActivity : BaseActivity() {
 //                    imageActivityLauncher.launch(this)
 //                }
             }
-
         }
     }
-
     fun initObserve() {
         mViewModel.loginResponse.observe(this) {
             if (it.message.equals("true")) {
@@ -94,41 +89,33 @@ class LoginActivity : BaseActivity() {
                 NFT.instance.privatekey = it.privatekey
                 setPref(this, "id", mBinding.alEtId.text.toString())
                 setPref(this, "pw", mBinding.alEtPw.text.toString())
-
                 setResult(RESULT_OK)
                 finish()
             }
         }
     }
-
     private fun createImageFile(): File {
 
         // 이미지 파일 이름 ( blackJin_{시간}_ )
         val timeStamp: String = SimpleDateFormat("HHmmss").format(Date())
         val imageFileName = "hug_" + timeStamp + "_"
-
         // 이미지가 저장될 파일 이름 ( blackJin )
         val storageDir: File =
             File(cacheDir.path)
         if (!storageDir.exists()) storageDir.mkdirs()
-
         // 빈 파일 생성
         val image = File.createTempFile(imageFileName, ".png", storageDir)
         return image
     }
-
     private fun BitmapConvertFile(bitmap: Bitmap, strFilePath: String) {
         var file = File(strFilePath);
-
         // OutputStream 선언 -> bitmap데이터를 OutputStream에 받아 File에 넣어주는 용도
         var out: OutputStream? = null;
         try {
             // 파일 초기화
             file.createNewFile();
-
             // OutputStream에 출력될 Stream에 파일을 넣어준다
             out = FileOutputStream(file);
-
             // bitmap 압축
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
         } catch (e: Exception) {

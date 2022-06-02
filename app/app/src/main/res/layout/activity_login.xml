@@ -13,8 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:background="@color/primary2"
         android:orientation="vertical">
-
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="140dp"
+    android:src="@drawable/lololog"/>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/al_ll_id"
             android:layout_width="match_parent"
@@ -29,6 +33,8 @@
                 android:layout_width="wrap_content"
                 android:includeFontPadding="false"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:text="아이디" />
 
             <EditText
@@ -38,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:background="@color/transparent" />
+                android:background="@color/primary" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -58,6 +64,8 @@
                 android:fontFamily="@font/notosanskr_regular"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="비밀번호" />
 
             <EditText
@@ -67,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
                 android:layout_marginStart="20dp"
-                android:background="@color/transparent" />
+                android:background="@color/primary" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

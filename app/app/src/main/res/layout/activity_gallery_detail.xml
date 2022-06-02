@@ -4,26 +4,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:background="@color/primary2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
+            android:background="@color/primary2"
             android:layout_width="match_parent"
             android:layout_height="60dp">
+
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentStart="true"
-                tools:src="@drawable/cloud_image"/>
+                tools:src="@drawable/cloud_image" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="작품"
                 android:fontFamily="@font/notosanskr_bold"
+                android:text="작품"
                 android:textSize="20sp"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <View
@@ -35,10 +39,12 @@
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
+            android:background="@color/primary2"
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
             <ImageView
+                android:background="@color/primary2"
                 android:id="@+id/agd_iv_picture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -50,9 +56,10 @@
             android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"
             android:text="#owner"
+            android:background="@color/primary2"
             android:fontFamily="@font/notosanskr_regular"
             android:layout_marginTop="10dp"
-            android:textColor="@color/primary2"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <TextView
@@ -60,10 +67,12 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:textSize="35sp"
+            android:background="@color/primary2"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="8sp"
             android:fontFamily="@font/notosanskr_bold"
             android:textStyle="bold"
+            android:textColor="@color/white"
             android:text="title" />
 
         <TextView
@@ -72,6 +81,8 @@
             android:fontFamily="@font/notosanskr_regular"
             android:layout_marginHorizontal="20dp"
             android:textSize="25sp"
+            android:background="@color/primary2"
+            android:textColor="@color/white"
             android:text="titledsdsdsbjfbdagbvfjkadbvkjadbnvkjsbdavkjabfdjkvbadjvbadfjkbvkdbsjkfbdjksbfjkdsbfkj" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

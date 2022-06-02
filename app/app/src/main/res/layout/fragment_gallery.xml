@@ -8,7 +8,8 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/primary">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -26,10 +27,11 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <EditText
+
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@color/transparent"
+                        android:background="@color/primary2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/fg_iv_search"
                         app:layout_constraintStart_toStartOf="parent"

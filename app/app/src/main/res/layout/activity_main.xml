@@ -9,6 +9,7 @@
         tools:context=".ui.activity.main.MainActivity">
 
         <androidx.viewpager2.widget.ViewPager2
+            android:background="@color/primary2"
             android:id="@+id/am_vp_pager"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -18,6 +19,7 @@
             app:layout_constraintBottom_toTopOf="@+id/am_tl_tab"/>
 
         <com.google.android.material.tabs.TabLayout
+            android:background="@color/primary2"
             android:id="@+id/am_tl_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
