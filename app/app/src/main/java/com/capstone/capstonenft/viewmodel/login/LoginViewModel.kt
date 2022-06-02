@@ -80,9 +80,10 @@ class LoginViewModel : ViewModel() {
 
     fun uploadFile(file: File) {
         val protocol: UploadProtocol = ProtocolFactory.create(UploadProtocol::class.java)
-        var upload:Map<String, File> = mapOf(Pair("file", file))
 
         protocol.setJsonRequestBody(file)
+        Trace.error("header = ${protocol.getRequestHeaderMap()}")
+        Trace.error("data = ${protocol.getJsonRequestBody()}")
         protocol.setHttpResponsable(object : HttpResponsable<BaseResponse> {
             override fun onResponse(res: BaseResponse) {
                 Trace.error("onResponse = $res")

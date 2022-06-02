@@ -62,12 +62,12 @@ class MyFragment : BaseFragment() {
                 mBinding.fmClMy.isVisible = false
 
 
-//        mBinding.fmLlLogin.isVisible = NFT.instance.privatekey.isNullOrEmpty()
-//
-//        mBinding.fmClMy.isVisible = !NFT.instance.privatekey.isNullOrEmpty()
-//        if(!NFT.instance.privatekey.isNullOrEmpty()){
-//            mBinding.fmTvId.text = NFT.instance.name
-//        }
+        mBinding.fmLlLogin.isVisible = NFT.instance.privatekey.isNullOrEmpty()
+
+        mBinding.fmClMy.isVisible = !NFT.instance.privatekey.isNullOrEmpty()
+        if(!NFT.instance.privatekey.isNullOrEmpty()){
+            mBinding.fmTvId.text = NFT.instance.name
+        }
     }
 
     fun onClick(v: View) {

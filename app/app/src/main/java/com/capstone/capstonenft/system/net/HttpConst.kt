@@ -31,6 +31,7 @@ object HttpConst {
     const val HTTP_MIME_TYPE_HTML = "text/html"
     const val HTTP_MIME_TYPE_JSON = "application/json";
     const val HTTP_MIME_TYPE_JPEG = "image/jpeg"
+    const val HTTP_MIME_TYPE_IMG = "image/*"
     const val HTTP_MIME_TYPE_PNG = "image/png"
     const val HTTP_MIME_TYPE_GIF = "image/gif"
     const val HTTP_MIME_TYPE_APK = "application/vnd.android.package-archive"

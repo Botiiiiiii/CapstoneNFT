@@ -98,7 +98,7 @@ class LoginActivity : BaseActivity() {
 
         // 이미지 파일 이름 ( blackJin_{시간}_ )
         val timeStamp: String = SimpleDateFormat("HHmmss").format(Date())
-        val imageFileName = "hug_" + timeStamp + "_"
+        val imageFileName = "file"
         // 이미지가 저장될 파일 이름 ( blackJin )
         val storageDir: File =
             File(cacheDir.path)

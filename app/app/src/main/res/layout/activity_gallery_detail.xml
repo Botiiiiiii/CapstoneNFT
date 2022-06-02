@@ -47,6 +47,7 @@
                 android:background="@color/primary2"
                 android:id="@+id/agd_iv_picture"
                 android:layout_width="match_parent"
+                android:src="@drawable/test"
                 android:layout_height="wrap_content" />
         </androidx.cardview.widget.CardView>
 
@@ -84,6 +85,12 @@
             android:background="@color/primary2"
             android:textColor="@color/white"
             android:text="titledsdsdsbjfbdagbvfjkadbvkjadbnvkjsbdavkjabfdjkvbadjvbadfjkbvkdbsjkfbdjksbfjkdsbfkj" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="판매"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
