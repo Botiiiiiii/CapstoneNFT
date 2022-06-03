@@ -32,9 +32,12 @@ class Tab1Fragment : Fragment() {
             }
         }
         mBinding.ftRvList.adapter = mAdapter
-        mAdapter.setItem(NFT.instance.loginResponse.token_list)
         // Inflate the layout for this fragment
         return mBinding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        mAdapter.setItem(NFT.instance.loginResponse.token_list)
+    }
 }

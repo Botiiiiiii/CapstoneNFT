@@ -33,9 +33,11 @@ class Tab2Fragment : Fragment() {
             }
         }
         mBinding.ft2RvList.adapter = mAdapter
-        mAdapter.setItem(NFT.instance.loginResponse.token_sale)
         return mBinding.root
     }
-
+    override fun onResume() {
+        super.onResume()
+        mAdapter.setItem(NFT.instance.loginResponse.token_sale)
+    }
 
 }

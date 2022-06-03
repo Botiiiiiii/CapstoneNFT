@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -47,6 +48,8 @@ class MyFragment : BaseFragment() {
             }
         }.attach()
 
+        mBinding.fmTvTab.setTabTextColors(ContextCompat.getColor(mActivity!!, R.color.black), ContextCompat.getColor(mActivity!!, R.color.white))
+        
         return mBinding.root
 
     }
