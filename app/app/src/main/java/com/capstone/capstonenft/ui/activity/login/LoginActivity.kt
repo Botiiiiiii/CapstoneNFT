@@ -1,5 +1,6 @@
 package com.capstone.capstonenft.ui.activity.login
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -7,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -64,6 +66,16 @@ class LoginActivity : BaseActivity() {
         mBinding.alEtPw.setOnFocusChangeListener { _, b ->
             mBinding.alLlPw.isSelected = b
         }
+
+        mBinding.root.setOnClickListener {
+            softkeyboardHide()
+        }
+
+    }
+
+    fun softkeyboardHide() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 
     fun onClick(v: View) {
