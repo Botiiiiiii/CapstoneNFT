@@ -3,11 +3,12 @@ package com.capstone.capstonenft
 import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatDelegate
+import com.capstone.capstonenft.dto.Klay
+import com.capstone.capstonenft.dto.LoginResponse
 
 class NFT: Application() {
-    var name = ""
-    var privatekey = ""
-
+    var loginResponse = LoginResponse()
+    var klay = Klay()
 
 
     companion object {

@@ -5,12 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.databinding.ViewGalleryBinding
 import com.capstone.capstonenft.dto.GalleryList
+import com.capstone.capstonenft.dto.Token
 
 class GalleryAdapter(val onClicklistener: (View, Int) -> Unit): RecyclerView.Adapter<GalleryAdapter.SearchViewHolder>() {
-    var listItem = GalleryList("", arrayListOf())
+    var listItem = ArrayList<Token>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,7 +22,16 @@ class GalleryAdapter(val onClicklistener: (View, Int) -> Unit): RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-//        val item = listItem.items[position]
+        if (listItem.isNullOrEmpty())
+            return
+
+        val item = listItem[position]
+
+        holder.binding.vgTvTitle.text = item.title
+        holder.binding.vgTvPrice.text = "%d KLAY".format(item.price)
+        Glide.with(holder.binding.vgIvThumnail)
+            .load(item.imageSrc)
+            .into(holder.binding.vgIvThumnail)
 
         holder.binding.root.setOnClickListener{v ->
             onClicklistener(v, holder.adapterPosition)
@@ -28,10 +39,10 @@ class GalleryAdapter(val onClicklistener: (View, Int) -> Unit): RecyclerView.Ada
 
     }
 
-//    override fun getItemCount(): Int = listItem.items.size
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = listItem.size
+//    override fun getItemCount(): Int = 10
 
-    fun setItem(item: GalleryList){
+    fun setItem(item: ArrayList<Token>){
         listItem = item
         notifyDataSetChanged()
     }

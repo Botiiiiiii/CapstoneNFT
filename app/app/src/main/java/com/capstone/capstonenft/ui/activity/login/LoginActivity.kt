@@ -85,8 +85,7 @@ class LoginActivity : BaseActivity() {
     fun initObserve() {
         mViewModel.loginResponse.observe(this) {
             if (it.message.equals("true")) {
-                NFT.instance.name = it.name
-                NFT.instance.privatekey = it.privatekey
+                NFT.instance.loginResponse = it
                 setPref(this, "id", mBinding.alEtId.text.toString())
                 setPref(this, "pw", mBinding.alEtPw.text.toString())
                 setResult(RESULT_OK)

@@ -1,8 +1,26 @@
 package com.capstone.capstonenft.dto
 
-data class LoginResponse(
-        val message:String,
-        val name: String,
-        val privatekey:String
+import java.io.Serializable
 
-    )
+data class LoginResponse(
+    val message: String = "",
+    val name: String = "",
+    val privatekey: String = "",
+    val address: String = "",
+    var profile_img: String? = "",
+    val token_list:ArrayList<Token> = arrayListOf(),
+    val token_sale:ArrayList<Token> = arrayListOf()
+)
+
+data class Token(
+    val tokenId: Int,
+    val title: String,
+    val description: String,
+    val imageSrc: String,
+    val owner: String,
+    val creator: String,
+    val price: Int?
+): Serializable
+
+data class TokenResponse(val token:Token)
+

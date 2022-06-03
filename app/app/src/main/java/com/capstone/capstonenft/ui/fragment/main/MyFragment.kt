@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseFragment
 import com.capstone.capstonenft.databinding.FragmentMyBinding
+import com.capstone.capstonenft.system.utils.Trace
 import com.capstone.capstonenft.ui.activity.create.CreateActivity
 import com.capstone.capstonenft.ui.activity.create.ImageCheckActivity
 import com.capstone.capstonenft.ui.activity.login.LoginActivity
@@ -51,14 +53,19 @@ class MyFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-                mBinding.fmClMy.isVisible = false
-
-
-        mBinding.fmLlLogin.isVisible = NFT.instance.privatekey.isNullOrEmpty()
-
-        mBinding.fmClMy.isVisible = !NFT.instance.privatekey.isNullOrEmpty()
-        if(!NFT.instance.privatekey.isNullOrEmpty()){
-            mBinding.fmTvId.text = NFT.instance.name
+        Trace.error("loginResponse = ${NFT.instance.loginResponse}")
+        mBinding.fmLlLogin.isVisible = NFT.instance.loginResponse.privatekey.isNullOrEmpty()
+        mBinding.fmClMy.isVisible = !NFT.instance.loginResponse.privatekey.isNullOrEmpty()
+        if (!NFT.instance.loginResponse.privatekey.isNullOrEmpty()) {
+            mBinding.fmTvId.text = NFT.instance.loginResponse.name
+            mBinding.fmTvAd.text = NFT.instance.loginResponse.address
+            mBinding.fmTvKlay.text = "%f KLAY".format(NFT.instance.klay.klay)
+            NFT.instance.loginResponse.profile_img.let {
+                if(!it.isNullOrEmpty())
+                    Glide.with(this)
+                        .load(it)
+                        .into(mBinding.fmIvProfile)
+            }
         }
     }
 

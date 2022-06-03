@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.databinding.FragmentTab2Binding
 import com.capstone.capstonenft.ui.activity.detail.GalleryDetailActivity
@@ -17,6 +18,7 @@ import com.capstone.capstonenft.ui.adapter.main.GalleryAdapter
 class Tab2Fragment : Fragment() {
 
     lateinit var mBinding: FragmentTab2Binding
+    lateinit var mAdapter: GalleryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,11 +26,14 @@ class Tab2Fragment : Fragment() {
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab2, container, false)
         mBinding.ft2RvList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        mBinding.ft2RvList.adapter = GalleryAdapter(){ v, pos ->
+        mAdapter = GalleryAdapter(){ v, pos ->
             Intent(activity, GalleryDetailActivity::class.java).apply {
+                this.putExtra("data", NFT.instance.loginResponse.token_sale[pos])
                 startActivity(this)
             }
         }
+        mBinding.ft2RvList.adapter = mAdapter
+        mAdapter.setItem(NFT.instance.loginResponse.token_sale)
         return mBinding.root
     }
 

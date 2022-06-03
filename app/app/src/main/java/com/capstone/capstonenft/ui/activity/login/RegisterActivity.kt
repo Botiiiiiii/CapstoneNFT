@@ -37,13 +37,10 @@ class RegisterActivity : BaseActivity() {
             mBinding.arLlPwre.isSelected=b
         }
 
-        mViewModel.register.observe(this){
+        mViewModel.loginResponse.observe(this){
             if(it.message.equals("true")){
                 setPref(this, "id", mBinding.arEtId.text.toString())
                 setPref(this, "pw", mBinding.arEtPw.text.toString())
-
-                NFT.instance.privatekey = it.privatekey
-                NFT.instance.name = it.name
                 setResult(RESULT_OK)
                 finish()
             }

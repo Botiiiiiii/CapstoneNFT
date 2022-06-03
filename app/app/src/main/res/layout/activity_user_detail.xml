@@ -2,6 +2,12 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="data"
+            type="com.capstone.capstonenft.dto.Owner" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,7 +53,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/primary"
                 android:padding="10dp"
-                android:src="@drawable/test_profile" />
+                tools:src="@drawable/test_profile" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -57,7 +63,7 @@
             app:layout_constraintTop_toTopOf="@id/aud_cv_profile"
             app:layout_constraintBottom_toBottomOf="@id/aud_cv_profile"
             app:layout_constraintStart_toEndOf="@id/aud_cv_profile"
-            android:text="id: test"/>
+            android:text="@{`id: ` + data.userinfo.nickname}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/aud_rv_list"
