@@ -37,6 +37,7 @@ class ImageCheckActivity : BaseActivity() {
     private val createrActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
+                setResult(RESULT_OK)
                 finish()
             }
         }

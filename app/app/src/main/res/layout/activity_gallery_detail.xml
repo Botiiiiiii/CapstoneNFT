@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="@{listener::onClick}"
-            android:text="@{isMine? `판매`: `구매`, default=`구매`}"/>
+            android:text="@{isMine? `구매`: `판매`, default=`구매`}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

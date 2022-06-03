@@ -18,7 +18,7 @@ data class Token(
     val description: String,
     val imageSrc: String,
     val owner: String,
-    val creator: String,
+    val creator: S
     val price: Int?
 ): Serializable
 

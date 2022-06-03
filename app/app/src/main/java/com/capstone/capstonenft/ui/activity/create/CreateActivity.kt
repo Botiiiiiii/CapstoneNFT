@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivityCreateBinding
@@ -44,10 +45,10 @@ class CreateActivity : BaseActivity() {
             )
         }
         val img: Bitmap = BitmapFactory.decodeStream(ins)
-        var file = createImageFile()
         BitmapConvertFile(img, file.path)
 
         mViewModel.token.observe(this){
+            NFT.instance.loginResponse.token_list.add(it)
             finish()
         }
     }

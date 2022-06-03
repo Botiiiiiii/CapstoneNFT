@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
@@ -18,11 +22,20 @@ import com.capstone.capstonenft.ui.activity.create.CreateActivity
 import com.capstone.capstonenft.ui.activity.create.ImageCheckActivity
 import com.capstone.capstonenft.ui.activity.login.LoginActivity
 import com.capstone.capstonenft.ui.adapter.main.MyAdapter
+import com.capstone.capstonenft.viewmodel.MainViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MyFragment : BaseFragment() {
     lateinit var mBinding: FragmentMyBinding
     lateinit var mAdapter: MyAdapter
+    val mViewModel:MainViewModel by activityViewModels()
+
+    private val createrActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                mViewModel.getMainItem()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +89,7 @@ class MyFragment : BaseFragment() {
         when (v.id) {
             R.id.fm_fbtn_create -> {
                 val intent = Intent(mActivity, ImageCheckActivity::class.java)
-                startActivity(intent)
+                createrActivityLauncher.launch(intent)
             }
 
             R.id.fm_btn_login -> {
