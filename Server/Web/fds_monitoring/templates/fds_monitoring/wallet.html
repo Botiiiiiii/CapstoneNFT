@@ -85,7 +85,7 @@
                     </div>
 
                     <div class="sb-sidenav-footer">
-		            <div class="small">My Future ChangChang:</div>
+		            <div class="small">King_Sejong NFT:</div>
                                         NFT MONITORING SYSTEM
                     </div>
                 </nav>
@@ -257,9 +257,17 @@
                                     }
                                 </script>
                                 <script>
-                                    function graph_button(){
+                                    function graph_button(url){
                                         var graph = document.getElementById('visual_graph');
                                         graph.style.display = "block";
+                                        var img=new Image();
+                                        img.src=url;
+                                        var img_width=1000;
+                                        var win_width=1000;
+                                        var img_height=1000;
+                                        var win=1000;
+                                        var OpenWindow=window.open('popup.html','_blank', 'width='+img_width+', height='+img_height+', menubars=no, scrollbars=auto');
+                                        OpenWindow.document.write("<style>body{margin:0px;}</style><img src='"+url+"' width='"+win_width+"'>");
                                     }
                                 </script>
                             </div>
@@ -272,7 +280,7 @@
                             <div class="card-body" id="wallet_table">
 
                             </div>
-                            <input type="button" id="visual_button" onclick="graph_button();"
+                            <input type="button" id="visual_button" onclick="graph_button('/static/image/def.png');"
                                    style="margin-left:70%; display:none;" value="시각화 보기">
 
                         </div>
@@ -294,7 +302,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; My Future ChangChang 2021</div>
+                            <div class="text-muted">Copyright &copy; King_Sejong 2022</div>
                         </div>
                     </div>
                 </footer>

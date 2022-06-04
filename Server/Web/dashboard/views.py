@@ -13,12 +13,12 @@ def index(request):
     # response_score = es.get(index='scorecheck_df', id=2)
     # wallet_score_df = pd.DataFrame.from_dict([response_score['_source']])
 
-    wallet_score_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv" ,encoding= 'utf-8')
+    wallet_score_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv" ,encoding= 'utf-8')
 
     # response_cycle = es.get(index='all_cycle_df', id=2)
     # cycle_df = pd.DataFrame([response_cycle['_source']])
 
-    cycle_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
+    cycle_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
 
 
     # token_list = ['animal_society','ape_harbour_yachts','dogex','metavillains','the_evolving_forest']
@@ -30,7 +30,7 @@ def index(request):
 
     token_df = pd.DataFrame()
     cnt = 0
-    path ="C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/token/"
+    path ="C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/token/"
     file_list = os.listdir(path)
     for name in file_list:
         if(cnt == 0):

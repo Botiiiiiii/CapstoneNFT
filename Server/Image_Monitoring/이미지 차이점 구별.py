@@ -1,10 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
 
-# In[ ]:
-
-
-# -*- coding: utf-8 -*-
 
 
 import cv2
@@ -40,6 +34,12 @@ class SimilarImage:
         self.name = name
         self.score = score
         self.thresh = thresh
+
+    def printr(self):
+        print(self.path)
+        print(self.name)
+        print(self.score)
+        print(self.thresh)
 
 
 def getOriginalImages():
@@ -80,7 +80,7 @@ def compareImage(imgList, targetImg):
         # 이미지 유사도를 비교함
         score, diff = compare_ssim(grayA, grayImg, full=True) #반환값: 1. 두 이미지의 유사도 2. 실제 각 픽셀의 차이를 담은 2차원 배열
 
-        print(f'유사도(SSIM): {score:.6f}')
+        # print(f'유사도(SSIM): {score:.6f}')
 
         # 만약 유사도가 0.9 이상인 경우 배열에 저장
         if score < 0.9: continue
@@ -90,8 +90,8 @@ def compareImage(imgList, targetImg):
         thresh = cv2.threshold(diff, 0, 255,
                                cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
         #threshold: 특정 임계치를 기준으로 값을 바꿈
-        cv2.imshow("Debug", cv2.resize(thresh, (960, 540)))
-        cv2.waitKey(0)
+        # cv2.imshow("Debug", cv2.resize(thresh, (960, 540)))
+        # cv2.waitKey(0)
 
         # 차이점 추가
         imgMeta = SimilarImage(img, path.splitext(path.basename(img))[0], score, thresh)
@@ -109,12 +109,12 @@ def saveSimilarImgList(targetImage, similarImgList):
         scoreStr = str(round(simImg.score, 2))
         diffImgPath = path.join('diff_image', TARGET_IMAGE_NAME, '[' + scoreStr + ']' + simImg.name + '.png')
 
-        print('save path: ' + diffImgPath)
+        # print('save path: ' + diffImgPath)
         os.makedirs(path.join('diff_image', TARGET_IMAGE_NAME), exist_ok=True)
         cv2.imwrite(diffImgPath, imageCopy)
 
-        cv2.imshow("Difference", cv2.resize(imageCopy, (960, 540)))
-        cv2.waitKey(0)
+        # cv2.imshow("Difference", cv2.resize(imageCopy, (960, 540)))
+        # cv2.waitKey(0)
 
     return
 
@@ -123,7 +123,7 @@ def main():
     # 이미지 리스트를 받아옴
     imageList = getOriginalImages()
 
-    print(imageList)
+    # print(imageList)
 
     # 비교할 이미지를 수신
     targetImage = getTargetImage()
@@ -137,6 +137,4 @@ def main():
 
     # 가장 높은 유사도를 가진 이미지를 보여줌
 
-
 main()
-

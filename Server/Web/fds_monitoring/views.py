@@ -2,8 +2,11 @@ import json
 import os
 from pyvis import network as net
 import pandas as pd
+import matplotlib.pyplot as plt
 from django.shortcuts import render
 from django.http import HttpResponse
+from txnalyz_scoring import *
+from PIL import Image
 
 from elasticsearch import Elasticsearch
 
@@ -14,14 +17,13 @@ def index(request):
     # response_score = es.get(index='scorecheck_df', id=2)
     # wallet_score_df = pd.DataFrame(response_score['_source'])
     wallet_score_df = pd.read_csv(
-        "C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv", encoding='utf-8')
+        "C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv", encoding='utf-8')
     wallet_score_df = wallet_score_df[['type','score','wallet','trade count','value sum','value average','single cycle number','multi cycle number']]
     wallet_score_df['wallet'] = wallet_score_df['wallet'].apply(lambda x: f'<a href="/table/wallet?wallet={x}">{x}</a>')
     wallet_score_table = wallet_score_df.to_html(index=False,table_id='datatablesSimple',render_links=True,escape=False)
 
 
     return render(request, 'fds_monitoring/index.html',context={'wallet_score_table':wallet_score_table})
-
 
 def wallet(request):
     if request.method == "GET" :
@@ -30,7 +32,7 @@ def wallet(request):
         # 데이터프레임 생성
         # response_score = es.get(index='scorecheck_df', id=2)
         # wallet_score_df = pd.DataFrame(response_score['_source'])
-        wallet_score_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv", encoding='utf-8')
+        wallet_score_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv", encoding='utf-8')
         wallet_info = wallet_score_df[wallet_score_df['wallet'] == wallet_name]
 
         trade = int(wallet_info['trade count'].agg('sum'))
@@ -67,13 +69,12 @@ def wallet(request):
 
 
 def get_trade_df(wallet_name):
-
     token_df = pd.DataFrame()
     token_list = ['animal_society','ape_harbour_yachts','dogex','metavillains','the_evolving_forest']
     for token_name in token_list:
         # es_response = es.get(index=token_name, id=2)
         # df = pd.DataFrame(es_response['_source'])
-        df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/token/" + token_name +'.csv', encoding='utf-8')
+        df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/token/" + token_name +'.csv', encoding='utf-8')
         token_df = token_df.append(df)
 
     token_df.reset_index(drop=True, inplace=True)
@@ -117,7 +118,7 @@ def get_single_cycle(wallet_name):
     # df 불러오기
     # response_cycle = es.get(index='all_cycle_df', id=2)
     # cycle_df = pd.DataFrame(response_cycle['_source'])
-    cycle_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
+    cycle_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
     cycle_df = cycle_df[cycle_df['From']==wallet_name].copy()
 
     # 자전 거래만 추출
@@ -131,7 +132,7 @@ def get_multi_cycle(wallet_name):
     # df 불러오기
     # response_cycle = es.get(index='all_cycle_df', id=2)
     # cycle_df = pd.DataFrame(response_cycle['_source'])
-    cycle_df = pd.read_csv("C:/Users/Jinwoo/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv",
+    cycle_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv",
                            encoding='utf-8')
 
     # 자전 거래 제거
@@ -146,7 +147,7 @@ def get_multi_cycle(wallet_name):
     wallet_cycle_key = list(wallet_cycle_df.groupby(['Route Number','Cycle Number','Token Name']).groups.keys())
     cycle_df['Type'] = ""
 
-    print(wallet_cycle_key)
+    # print(wallet_cycle_key)
     return_df = pd.DataFrame()
     for i in range(len(wallet_cycle_key)):
         cycle = cycle_df[(cycle_df['Route Number'] == wallet_cycle_key[i][0]) &
@@ -158,29 +159,12 @@ def get_multi_cycle(wallet_name):
 
     return return_df[['Type','From','To','Value','TokenID']]
 
-
 def get_pyvis_graph(df:pd.DataFrame):
-    return_df = df
-    return_cycle = net.Network(notebook=True, directed=True, height="750px", width="100%")
-    From_list = return_df['From']
-    To_list = return_df['To']
-    Value_list = return_df['Value']
+    ta = txnalyz()
+    ta.read_df(df)
+    ta.init()
+    ta.init_route(1)
+    ta.show_networkx_graph()
+    ta.networkx_png()
 
-    edge_data = zip(From_list, To_list, Value_list)
-    for e in edge_data:
-        src = e[0]
-        dst = e[1]
-        w = e[2]
-
-        return_cycle.add_node(src, src, title=src)
-        return_cycle.add_node(dst, dst, title=dst)
-        return_cycle.add_edge(src, dst)
-
-    return_cycle.repulsion(central_gravity=0)
-    return_cycle.show_buttons(filter_=['physics'])
-
-    return_cycle.show('abc.html')
-    return_graph = open('abc.html', 'r', encoding='utf-8').read()
-    os.remove('abc.html')
-
-    return return_graph
+    return ta.show_networkx_graph()

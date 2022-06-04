@@ -2,12 +2,13 @@ import numpy as np
 from os import path as path
 import glob
 import tensorflow as tf
-
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
-from tensorflow.keras.models import Model
+from tensorflow import keras
+from keras_preprocessing import image
+from keras.applications.vgg16 import VGG16, preprocess_input
+from keras.models import Model
 from pathlib import Path
 from PIL import Image
+import matplotlib.pyplot as plt
 
 # 학습에 사용되는 이미지 디렉토리
 # 현재 테스트에서는 bored apes yacht club nft 이미지 만개를 사용함
@@ -40,7 +41,6 @@ class FeatureExtractor:
                            outputs=base_model.get_layer('fc1').output)
 
     def __gpu_settings(self):
-
         gpus = tf.config.experimental.list_physical_devices('GPU')
         if gpus:
             try:
@@ -107,14 +107,14 @@ if __name__ == "__main__":
 
     # feature extractor를 객체화
     fe = FeatureExtractor()
-
+    print("--")
     # 각 이미지에서 피쳐를 추출함
     # 추출한 feature는 feature directory에 npy 형태로 저장
     Init.getImageFeature(IMG_DIR)
 
     # 피쳐파일로부터 피쳐를 로드함
     # 한번만 진행
-    features = Init.loadFeatures()
+    features, img_paths = Init.loadFeatures()
 
     # 쿼리할 이미지 수신
     img = Image.open(TARGET_IMAGE)

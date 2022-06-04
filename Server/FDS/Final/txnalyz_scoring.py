@@ -41,6 +41,9 @@ class txnalyz:
         self.token_df['Value'] = self.token_df['Value'].astype('str').str.replace(',','').astype('float')
         self.token_df['TokenID'] = self.token_df['TokenID'].astype('str').str.replace('ID','')
 
+    def read_df(self, df):
+        self.token_df = df
+
     def init_score_df(self):
         self.wallet_df = pd.DataFrame(self.node_list, columns=['wallet'])
         self.wallet_df["week trade count"] = 0

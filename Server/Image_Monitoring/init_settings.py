@@ -2,7 +2,8 @@ from pathlib import Path
 import glob
 import numpy as np
 from os import path as path
-
+from vgg_feature_extractor import FeatureExtractor as fe
+from PIL import Image
 
 class Init:
     # 학습에 활용할 (기존의 NFT) 이미지 경로를 불러옴
@@ -24,7 +25,7 @@ class Init:
     @classmethod
     def getImageFeature(cls, imageDirectory):
 
-        img_paths = __getSampleImagesPath(imageDirectory)
+        img_paths = cls.__getSampleImagesPath(imageDirectory)
 
         for img_path in sorted(img_paths):
             print(img_path)
@@ -38,7 +39,8 @@ class Init:
                 continue
 
             # 이미지 피쳐를 추출함
-            feature = fe.extract(img=Image.open(img_path))
+            fea = fe()
+            feature = fea.extract(img=Image.open(img_path))
 
             np.save(feature_path, feature)
 

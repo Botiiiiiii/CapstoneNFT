@@ -23,6 +23,7 @@ urlpatterns = [
     path('image/',include('image_monitoring.urls')),
     path('',include('dashboard.urls')),
     path('wallet/',include('fds_monitoring.urls')),
+    path('pic/',include('fds_monitoring.urls')),
     path('image_monitoring/',include('image_monitoring.urls')),
     path('dashboard/',include('dashboard.urls')),
     path('table/', include('fds_monitoring.urls')),

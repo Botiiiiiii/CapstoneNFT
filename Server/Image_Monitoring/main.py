@@ -2,6 +2,8 @@ from typing import Optional
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
 
+
+
 from PIL import Image
 import numpy as np
 from os import path as path
@@ -13,12 +15,15 @@ import matplotlib.pyplot as plt
 import uuid as uuid
 import io
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 # # 학습에 사용되는 이미지 디렉토리
 # # 현재 테스트에서는 bored apes yacht club nft 이미지 만개를 사용함
 # IMG_DIR = 'bayc\*'
 
 # 추출된 피쳐가 저장되는 디렉토리
-FEATURE_DIR = 'static\\feature/*'
+FEATURE_DIR = 'static/feature/*'
 
 
 app = FastAPI()
@@ -78,7 +83,7 @@ def searchImage(img, fileid=0000):
         plt.imshow(Image.open(score[1]))
 
     # fig.tight_layout()
-    # plt.show()
+    # plt.show()features, img_paths = Init.loadFeatures(FEATURE_DIR)x
     plt.savefig(f'static\\result\\{fileid}-result.png')
 
 
