@@ -1,12 +1,18 @@
 package com.capstone.capstonenft.ui.fragment.main
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,12 +26,18 @@ import com.capstone.capstonenft.ui.activity.detail.GalleryDetailActivity
 import com.capstone.capstonenft.ui.adapter.main.GalleryAdapter
 import com.capstone.capstonenft.ui.adapter.main.ProfileAdapter
 import com.capstone.capstonenft.viewmodel.MainViewModel
+import java.io.InputStream
 
 class GalleryFragment() : BaseFragment() {
     lateinit var mBinding: FragmentGalleryBinding
     lateinit var mGalleryAdapter: GalleryAdapter
     val mViewModel: MainViewModel by activityViewModels()
-
+    private val imageActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                mViewModel.getMainItem()
+            }
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -46,7 +58,8 @@ class GalleryFragment() : BaseFragment() {
 
         mGalleryAdapter = GalleryAdapter(){ v, pos ->
             Intent(activity, GalleryDetailActivity::class.java).apply {
-                activity?.startActivity(this)
+                this.putExtra("data", mViewModel.mldGallery.value!!.token[pos])
+                imageActivityLauncher.launch(this)
             }
         }
         mBinding.fgRvGallery.adapter = mGalleryAdapter
@@ -80,7 +93,7 @@ class GalleryFragment() : BaseFragment() {
 //        })
 
         mViewModel.mldGallery.observe(viewLifecycleOwner){
-            mGalleryAdapter.setItem(it)
+            mGalleryAdapter.setItem(it.token)
         }
     }
 }

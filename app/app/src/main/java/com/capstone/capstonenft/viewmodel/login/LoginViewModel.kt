@@ -3,14 +3,14 @@ package com.capstone.capstonenft.viewmodel.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.capstone.capstonenft.dto.BaseResponse
+import com.capstone.capstonenft.NFT
+import com.capstone.capstonenft.dto.Klay
 import com.capstone.capstonenft.dto.LoginRequest
 import com.capstone.capstonenft.dto.LoginResponse
 import com.capstone.capstonenft.dto.RegisterResponse
+import com.capstone.capstonenft.protocol.KlayProtocol
 import com.capstone.capstonenft.protocol.LoginProtocol
 import com.capstone.capstonenft.protocol.RegisterProtocol
-import com.capstone.capstonenft.protocol.Upload
-import com.capstone.capstonenft.protocol.UploadProtocol
 import com.capstone.capstonenft.system.net.HttpResponsable
 import com.capstone.capstonenft.system.net.NetworkManager
 import com.capstone.capstonenft.system.net.ProtocolFactory
@@ -40,7 +40,8 @@ class LoginViewModel : ViewModel() {
             protocol.setHttpResponsable(object : HttpResponsable<LoginResponse> {
                 override fun onResponse(res: LoginResponse) {
                     Trace.error("onResponse = $res")
-                    _loginResponse.value = res
+                    NFT.instance.loginResponse = res
+                    getKlay()
                 }
 
                 override fun onFailure(nError: Int, strMsg: String) {
@@ -66,7 +67,7 @@ class LoginViewModel : ViewModel() {
             protocol.setHttpResponsable(object : HttpResponsable<RegisterResponse> {
                 override fun onResponse(res: RegisterResponse) {
                     Trace.error("onResponse = $res")
-                    _register.value = res
+                    login(id, pw)
                 }
 
                 override fun onFailure(nError: Int, strMsg: String) {
@@ -78,14 +79,14 @@ class LoginViewModel : ViewModel() {
         })
     }
 
-    fun uploadFile(file: File) {
-        val protocol: UploadProtocol = ProtocolFactory.create(UploadProtocol::class.java)
-        var upload:Map<String, File> = mapOf(Pair("file", file))
+    fun getKlay() {
+        val protocol: KlayProtocol = ProtocolFactory.create(KlayProtocol::class.java)
+        protocol.PATH = "user/${NFT.instance.loginResponse.name}/balance"
 
-        protocol.setJsonRequestBody(file)
-        protocol.setHttpResponsable(object : HttpResponsable<BaseResponse> {
-            override fun onResponse(res: BaseResponse) {
-                Trace.error("onResponse = $res")
+        protocol.setHttpResponsable(object : HttpResponsable<Klay> {
+            override fun onResponse(res: Klay) {
+                NFT.instance.klay = res
+                _loginResponse.postValue(NFT.instance.loginResponse)
             }
 
             override fun onFailure(nError: Int, strMsg: String) {
@@ -94,5 +95,24 @@ class LoginViewModel : ViewModel() {
             }
         })
         NetworkManager.getInstance().asyncRequest(protocol)
+    }
+
+    fun uploadFile(file: File) {
+//        val protocol: UploadProtocol = ProtocolFactory.create(UploadProtocol::class.java)
+//
+//        protocol.setJsonRequestBody(file)
+//        Trace.error("header = ${protocol.getRequestHeaderMap()}")
+//        Trace.error("data = ${protocol.getJsonRequestBody()}")
+//        protocol.setHttpResponsable(object : HttpResponsable<BaseResponse> {
+//            override fun onResponse(res: BaseResponse) {
+//                Trace.error("onResponse = $res")
+//            }
+//
+//            override fun onFailure(nError: Int, strMsg: String) {
+//                Trace.error("onFailure = $nError $strMsg")
+//                super.onFailure(nError, strMsg)
+//            }
+//        })
+//        NetworkManager.getInstance().asyncRequest(protocol)
     }
 }

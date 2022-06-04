@@ -22,6 +22,9 @@ class SupportFragment: BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_support, container, false)
+
+
+
         return mBinding.root
     }
 }

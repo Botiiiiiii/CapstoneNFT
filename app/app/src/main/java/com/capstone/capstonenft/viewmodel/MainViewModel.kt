@@ -2,7 +2,6 @@ package com.capstone.capstonenft.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.capstone.capstonenft.dto.Gallery
 import com.capstone.capstonenft.dto.GalleryList
 import com.capstone.capstonenft.protocol.MainProtocol
 import com.capstone.capstonenft.system.net.HttpResponsable

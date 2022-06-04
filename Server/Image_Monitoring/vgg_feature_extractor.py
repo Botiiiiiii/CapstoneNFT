@@ -3,14 +3,17 @@ from os import path as path
 import glob
 import tensorflow as tf
 
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
-from tensorflow.keras.models import Model
+import os
+from keras.preprocessing import image
+from keras.applications.vgg16 import VGG16, preprocess_input
+from keras.models import Model
 from pathlib import Path
 from PIL import Image
 
 # 학습에 사용되는 이미지 디렉토리
 # 현재 테스트에서는 bored apes yacht club nft 이미지 만개를 사용함
+from matplotlib import pyplot as plt
+
 IMG_DIR = 'bayc\*'
 
 # 추출된 피쳐가 저장되는 디렉토리
@@ -78,7 +81,7 @@ def searchImage(img):
 
     # 피쳐 추출
     query = fe.extract(img)
-
+    img_paths = glob.glob(IMG_DIR)
     # 이미지 사이의 similarity를 계산함
     dists = np.linalg.norm(features - query, axis=1)
 
@@ -102,6 +105,7 @@ def searchImage(img):
 
 
 if __name__ == "__main__":
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
     from init_settings import Init
 

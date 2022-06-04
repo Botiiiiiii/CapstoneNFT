@@ -1,26 +1,23 @@
 package com.capstone.capstonenft.system.net
 
-import com.capstone.capstonenft.system.utils.Trace
-
 import android.os.Handler
 import android.os.Looper
-import com.capstone.capstonenft.system.config.Config
+import com.capstone.capstonenft.system.utils.Trace
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.RequestBody
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.*
+import retrofit2.http.Headers
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -96,13 +93,20 @@ class NetworkManager private constructor() {
             HttpConst.HTTP_FILE_UPLOAD -> {
                 val file: File = protocol.getRequestBody() as File
                 val reqBody: RequestBody =
-                    file.asRequestBody(HttpConst.HTTP_MIME_TYPE_JPEG.toMediaType())
+                    file.asRequestBody("image/png".toMediaTypeOrNull())
                 val filePart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                    HttpConst.HTTP_MULTIPART_FILE,
+                    "upload",
                     file.name,
                     reqBody
                 )
-                retrofitInterface.uploadFile(strUrl, protocol.getRequestHeaderMap(), filePart)
+                val req: RequestBody =
+                    "upload".toRequestBody("text/plain".toMediaTypeOrNull())
+
+                Trace.error("data = $file")
+//                protocol.setResponseHeaderMap(headers)
+                val body = HashMap<String, RequestBody>()
+                body["file"] = reqBody
+                retrofitInterface.uploadFile(strUrl, protocol.getRequestHeaderMap(), filePart, reqBody)
             }
 
             HttpConst.HTTP_MULTIPART -> {
@@ -192,7 +196,7 @@ class NetworkManager private constructor() {
             .connectTimeout(protocol.getConnectTimeout().toLong(), TimeUnit.SECONDS)
             .readTimeout(protocol.getReadTimeout().toLong(), TimeUnit.SECONDS)
             .apply {
-                if (Config.SUPPORT_DEBUG) addInterceptor(mInterceptor)
+                addInterceptor(mInterceptor)
                 if (HttpConst.HTTP_FEATURE_HTTPS_ALL && isSecure(protocol.getUrl())) trustAllCert(
                     this
                 )
@@ -206,7 +210,7 @@ class NetworkManager private constructor() {
 
         call.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
-                Trace.debug(">> asyncRequest() onResponse = $response")
+                Trace.debug(">> asyncRequest()dsds onResponse = $response, data = $call")
 
                 when (response.code()) {
                     HttpConst.Status.HTTP_200.getCode() -> {
@@ -219,13 +223,14 @@ class NetworkManager private constructor() {
 
                     HttpConst.Status.HTTP_301.getCode(),
                     HttpConst.Status.HTTP_302.getCode() -> {
-                        Trace.debug(">> redirection url = ${response.headers()["location"]}")
+                        Trace.error(">> redirection url = ${response.headers()["location"]}")
                         protocol.setRedirection(response.headers()["location"])
                         asyncRequest(protocol)
                         return
                     }
 
                     else -> {
+                        Trace.error("response.code() = ${response.code()}, msg = ${response.message()}, ${response}")
                         protocol.requestFailed(response.code(), response.message())
                         mTransactionCallback?.transactionEnd(protocol)
                         return
@@ -291,6 +296,7 @@ class NetworkManager private constructor() {
 
     fun processResponse(protocol: HttpRequestable, response: Response<ResponseBody?>) {
         protocol.setResponseHeaderMap(response.headers().toMultimap())
+        Trace.error("contentType = ${protocol.getResponseHeader(HttpConst.HTTP_HEADER_CONTENT_TYPE, 0)}")
 
         when (protocol.getResponseHeader(HttpConst.HTTP_HEADER_CONTENT_TYPE, 0)) {
             HttpConst.HTTP_MIME_TYPE_JPEG,
@@ -374,10 +380,12 @@ class NetworkManager private constructor() {
 
         @POST
         @Multipart
+        @Headers("Accept: */*", "Connection: keep-alive", "Accept-Encoding: gzip, deflate, br")
         fun uploadFile(
             @Url strUrl: String,
             @HeaderMap headers: Map<String, String>,
-            @Part file: MultipartBody.Part,
+            @Part image:MultipartBody.Part,
+            @Part("upload") name: RequestBody,
         ): Call<ResponseBody>
 
         @POST

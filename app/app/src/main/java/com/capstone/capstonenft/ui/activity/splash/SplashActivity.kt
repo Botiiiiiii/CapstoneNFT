@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.databinding.ActivitySplashBinding
+import com.capstone.capstonenft.system.utils.Trace
 import com.capstone.capstonenft.system.utils.getPref
 import com.capstone.capstonenft.system.utils.setPref
 import com.capstone.capstonenft.ui.activity.main.MainActivity
@@ -57,31 +58,33 @@ class SplashActivity : AppCompatActivity() {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startProcess()
                 } else {
-                    Intent(this, MainActivity::class.java).apply {
-                        startActivity(this)
-                        finish()
-                    }
+                    startProcess()
+//                    Intent(this, MainActivity::class.java).apply {
+//                        startActivity(this)
+//                        finish()
+//                    }
                 }
             }
         }
     }
 
     private fun startProcess() {
-//        val id = getPref(this, "id")
-//        val pw = getPref(this, "pw")
-//        if (!id.isNullOrEmpty() && !pw.isNullOrEmpty())
-//            mViewModel.login(id, pw)
-//        else
+        val id = getPref(this, "id")
+        val pw = getPref(this, "pw")
+        Trace.error("id = $id, pw = $pw, if() = ${!id.isNullOrEmpty() && !pw.isNullOrEmpty()}")
+        if (!id.isNullOrEmpty() && !pw.isNullOrEmpty())
+            mViewModel.login(id, pw)
+        else
             Intent(this, MainActivity::class.java).apply {
                 startActivity(this)
+                finish()
             }
     }
 
     fun initObserve() {
         mViewModel.loginResponse.observe(this) {
             if (it.message.equals("true")) {
-                NFT.instance.privatekey = it.privatekey
-                NFT.instance.name = it.name
+                NFT.instance.loginResponse = it
             }
 
             Intent(this, MainActivity::class.java).apply {

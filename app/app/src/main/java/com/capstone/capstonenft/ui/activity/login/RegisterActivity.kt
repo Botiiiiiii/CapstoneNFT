@@ -1,9 +1,11 @@
 package com.capstone.capstonenft.ui.activity.login
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +29,10 @@ class RegisterActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_register)
         mBinding.listener = this
 
+        mBinding.root.setOnClickListener{
+            softkeyboardHide()
+        }
+
         mBinding.arEtId.setOnFocusChangeListener { _, b ->
             mBinding.arLlId.isSelected = b
         }
@@ -37,17 +43,19 @@ class RegisterActivity : BaseActivity() {
             mBinding.arLlPwre.isSelected=b
         }
 
-        mViewModel.register.observe(this){
+        mViewModel.loginResponse.observe(this){
             if(it.message.equals("true")){
                 setPref(this, "id", mBinding.arEtId.text.toString())
                 setPref(this, "pw", mBinding.arEtPw.text.toString())
-
-                NFT.instance.privatekey = it.privatekey
-                NFT.instance.name = it.name
                 setResult(RESULT_OK)
                 finish()
             }
         }
+    }
+
+    fun softkeyboardHide() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 
     fun onClick(v:View){
