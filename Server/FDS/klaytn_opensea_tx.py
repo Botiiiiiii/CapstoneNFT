@@ -149,8 +149,10 @@ def crawling_data(tx_data):
                     error = 1
 
             except:
+                driver.quit()
                 print('time sleep')
                 time.sleep(310)
+                driver = webdriver.Chrome(options=options)
                 try:
                     # 웹사이트 이동
                     driver.get(i + '?tabId=tokenTransfer')
@@ -201,8 +203,10 @@ def crawling_data(tx_data):
                 Token_name = driver.find_element(By.XPATH,'//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div/div[4]/a/div/span[2]').get_attribute('innerText')
                 Token_Id = driver.find_element(By.XPATH,'//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div/div[5]/a').get_attribute(('innerText'))
             except:
+                driver.quit
                 print('time sleep2')
                 time.sleep(310)
+                driver = webdriver.Chrome(options=options)
                 driver.find_element(By.XPATH,
                                     '//*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[1]/div[2]').click()  # NFT Transfers 클릭
                 driver.implicitly_wait(5)
@@ -253,6 +257,6 @@ num=2000
 # else:
 #     table_df.to_csv('txn_hash.csv', index=False, mode='a', encoding='utf-8-sig', header=False)
 crawl_tx = pd.read_csv('txn_hash.csv')
-crawl_tx = crawl_tx[4999:]
+crawl_tx = crawl_tx[7379:]
 crawl_data = crawling_data(crawl_tx)
 # print(crawl_data)

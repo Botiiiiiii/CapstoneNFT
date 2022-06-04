@@ -3,28 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="listener"
+            type="com.capstone.capstonenft.ui.activity.detail.GalleryDetailActivity" />
+
+        <variable
+            name="data"
+            type="com.capstone.capstonenft.dto.Token" />
+        <variable
+            name="isMine"
+            type="boolean" />
+    </data>
+
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:background="@color/primary2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
+            android:background="@color/primary2"
             android:layout_width="match_parent"
             android:layout_height="60dp">
+
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/agd_iv_exit"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
                 android:layout_alignParentStart="true"
-                tools:src="@drawable/cloud_image"/>
+                android:layout_centerVertical="true"
+                android:src="@drawable/baseline_arrow_back_18" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="작품"
                 android:fontFamily="@font/notosanskr_bold"
+                android:text="작품"
                 android:textSize="20sp"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/agd_iv_option"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/baseline_menu_18"
+                android:visibility="@{isMine? View.VISIBLE: View.GONE, default = gone}" />
 
             <View
                 android:layout_width="match_parent"
@@ -35,12 +66,16 @@
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
+            android:background="@color/primary2"
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
             <ImageView
+                android:background="@color/primary2"
                 android:id="@+id/agd_iv_picture"
                 android:layout_width="match_parent"
+                android:src="@drawable/test"
+                android:onClick="@{listener::onClick}"
                 android:layout_height="wrap_content" />
         </androidx.cardview.widget.CardView>
 
@@ -49,10 +84,12 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"
-            android:text="#owner"
+            android:text="@{`#`+data.owner}"
+            android:onClick="@{listener::onClick}"
+            android:background="@color/primary2"
             android:fontFamily="@font/notosanskr_regular"
             android:layout_marginTop="10dp"
-            android:textColor="@color/primary2"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <TextView
@@ -60,11 +97,13 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:textSize="35sp"
+            android:background="@color/primary2"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="8sp"
             android:fontFamily="@font/notosanskr_bold"
             android:textStyle="bold"
-            android:text="title" />
+            android:textColor="@color/white"
+            android:text="@{data.title}" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,7 +111,17 @@
             android:fontFamily="@font/notosanskr_regular"
             android:layout_marginHorizontal="20dp"
             android:textSize="25sp"
-            android:text="titledsdsdsbjfbdagbvfjkadbvkjadbnvkjsbdavkjabfdjkvbadjvbadfjkbvkdbsjkfbdjksbfjkdsbfkj" />
+            android:background="@color/primary2"
+            android:textColor="@color/white"
+            android:text="@{data.description}" />
+
+        <Button
+            android:id="@+id/agd_btn_buy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{listener::onClick}"
+            android:text="@{isMine? `구매`: `판매`, default=`구매`}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

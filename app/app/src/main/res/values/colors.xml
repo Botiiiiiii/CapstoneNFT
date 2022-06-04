@@ -8,9 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="transparent">#ffffffff</color>
-    <color name="primary">#DBDFFD</color>
-    <color name="primary2">#646FD4</color>
+    <color name="transparent">#00000000</color>
+    <color name="primary">#323232</color>
+    <color name="primary2">#404040</color>
     <color name="gray_999999">#999999</color>
     <color name="blue">#216FEA</color>
 </resources>

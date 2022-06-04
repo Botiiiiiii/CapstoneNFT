@@ -1,6 +1,4 @@
 
-
-
 import cv2
 from os import path as path
 import os
@@ -106,6 +104,7 @@ def saveSimilarImgList(targetImage, similarImgList):
         # 이미지의 차이점을 색칠
         imageCopy[simImg.thresh == 255] = [0, 0, 255]
 
+
         scoreStr = str(round(simImg.score, 2))
         diffImgPath = path.join('diff_image', TARGET_IMAGE_NAME, '[' + scoreStr + ']' + simImg.name + '.png')
 
@@ -138,3 +137,4 @@ def main():
     # 가장 높은 유사도를 가진 이미지를 보여줌
 
 main()
+
