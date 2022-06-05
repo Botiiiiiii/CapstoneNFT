@@ -1,11 +1,11 @@
 package com.capstone.capstonenft.protocol
 
-import com.capstone.capstonenft.dto.Upload
+import com.capstone.capstonenft.dto.BaseResponse
 import com.capstone.capstonenft.system.net.AbstractHttpProtocol
 import com.capstone.capstonenft.system.net.HttpConst
 
-class UploadImgProtocol: AbstractHttpProtocol<Upload>() {
-    var PATH = "upload/image"
+class UploadProtocol: AbstractHttpProtocol<BaseResponse>() {
+    var PATH = "test/upload"
 
     override fun getUrl() = getDomain() + PATH
 

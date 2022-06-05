@@ -19,7 +19,6 @@
         android:textColor="@color/white"
         />
     <ScrollView
-        android:background="@drawable/sel_box"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <TextView
@@ -27,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:background="@drawable/sel_box"
         android:textStyle="bold"
         android:text="SejongNFT에서는 NFT(Non-Fungible-Token)라고 불리는 새로운 유형의 디지털 재화에 대해 열광하고 있습니다.\n
 NFT는 흥미로운 새로운 특성을 가지고 있다.\n 독특하고, 드물며, 거래 가능하며, 여러 애플리케이션에서 사용할 수 있다.\n

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.dto.*
+import com.capstone.capstonenft.dto.Upload
 import com.capstone.capstonenft.protocol.*
 import com.capstone.capstonenft.system.net.HttpResponsable
 import com.capstone.capstonenft.system.net.NetworkManager

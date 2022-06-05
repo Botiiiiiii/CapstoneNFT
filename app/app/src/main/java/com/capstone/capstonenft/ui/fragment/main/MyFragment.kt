@@ -57,7 +57,6 @@ class MyFragment : BaseFragment() {
             when (position) {
                 0 -> tab.text = "보유 작품"
                 1 -> tab.text = "내 작품"
-                2 -> tab.text = "거래 내역"
             }
         }.attach()
 

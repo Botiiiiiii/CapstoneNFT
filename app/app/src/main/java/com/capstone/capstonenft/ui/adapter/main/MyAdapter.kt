@@ -9,13 +9,12 @@ import com.capstone.capstonenft.ui.fragment.main.Tab3Fragment
 
 
 class MyAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
-    override fun getItemCount(): Int = 3
+    override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
             0 -> Tab1Fragment()
             1 -> Tab2Fragment()
-            2 -> Tab3Fragment()
             else -> Tab1Fragment()
         }
     }
