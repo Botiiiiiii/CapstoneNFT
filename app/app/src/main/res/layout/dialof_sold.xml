@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/primary2"
+        android:background="@drawable/sel_90"
         android:layout_marginHorizontal="20dp"
         android:gravity="center"
         android:orientation="vertical">
@@ -15,20 +15,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="NFT판매" />
+            android:text="NFT판매"
+            android:textColor="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="가격을 입력해주세요" />
+            android:text="가격을 입력해주세요"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/ds_et_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@color/transparent"
+            android:background="@drawable/sel_90"
             android:inputType="numberDecimal" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -43,11 +45,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:background="@drawable/sel_90"
                 android:paddingVertical="10dp"
                 android:text="취소" />
 
             <TextView
                 android:id="@+id/ds_btn_ok"
+                android:background="@drawable/sel_90"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
