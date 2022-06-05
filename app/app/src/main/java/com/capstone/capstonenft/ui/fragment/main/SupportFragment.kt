@@ -27,10 +27,7 @@ class SupportFragment: BaseFragment() {
                 val intent = Intent(mActivity, AboutActivity::class.java)
                 startActivity(intent)
             }
-            R.id.fs_blog->{
-
-            }
-            R.id.fs_help->{
+            R.id.fs_logout->{
 
             }
 

@@ -13,12 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/sel_box"
         android:gravity="center_horizontal"
+        android:background="@drawable/sel_90"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/dc_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -27,7 +26,6 @@
             android:text="@{dialogItem.title}"/>
 
         <TextView
-            android:id="@+id/dc_tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -42,7 +40,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/dc_btn_cancel"
+                android:id="@+id/dcBtnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -54,10 +52,11 @@
                 />
 
             <TextView
-                android:id="@+id/dc_btn_ok"
+                android:id="@+id/dcBtnOk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:paddingVertical="10dp"
                 android:text="@{dialogItem.okBtnName}"
