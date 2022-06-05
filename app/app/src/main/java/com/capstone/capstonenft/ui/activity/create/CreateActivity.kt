@@ -40,11 +40,11 @@ class CreateActivity : BaseActivity() {
             .into(mBinding.fcIvImage)
 
         val ins: InputStream? = uri.let {
-            applicationContext.contentResolver.openInputStream(
-                it
-            )
+            applicationContext.contentResolver.openInputStream(it)
         }
+
         val img: Bitmap = BitmapFactory.decodeStream(ins)
+        file = createImageFile()
         BitmapConvertFile(img, file.path)
 
         mViewModel.token.observe(this){

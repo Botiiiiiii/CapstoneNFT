@@ -23,6 +23,9 @@ class LoginViewModel : ViewModel() {
     private val _loginResponse = MutableLiveData<LoginResponse>()
     val loginResponse: LiveData<LoginResponse> get() = _loginResponse
 
+    private val _loginFailure = MutableLiveData<Boolean>()
+    val loginFailure: LiveData<Boolean> get() = _loginFailure
+
     private val _register = MutableLiveData<RegisterResponse>()
     val register: LiveData<RegisterResponse> get() = _register
 
@@ -46,6 +49,7 @@ class LoginViewModel : ViewModel() {
 
                 override fun onFailure(nError: Int, strMsg: String) {
                     Trace.error("onFailure = $nError $strMsg")
+                    _loginFailure.postValue(true)
                     super.onFailure(nError, strMsg)
                 }
             })
