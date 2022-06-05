@@ -13,15 +13,18 @@ import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivityGalleryDetailBinding
+import com.capstone.capstonenft.dto.DialogItem
 import com.capstone.capstonenft.dto.Token
 import com.capstone.capstonenft.system.utils.Trace
+import com.capstone.capstonenft.ui.dialog.CommonDialog
+import com.capstone.capstonenft.ui.dialog.SoldDialog
 import com.capstone.capstonenft.viewmodel.DetailViewModel
 
 
-class GalleryDetailActivity: BaseActivity() {
+class GalleryDetailActivity : BaseActivity() {
     lateinit var mBinding: ActivityGalleryDetailBinding
     lateinit var item: Token
-    private val mViewModel:DetailViewModel by viewModels()
+    private val mViewModel: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,24 +42,36 @@ class GalleryDetailActivity: BaseActivity() {
 
         registerForContextMenu(mBinding.agdIvOption)
 
-        mViewModel.message.observe(this){
+        mViewModel.message.observe(this) {
+            NFT.instance.loginResponse.token_list.add(item)
             setResult(RESULT_OK)
             finish()
         }
     }
 
-    fun onClick(v:View){
-        when(v.id){
+    fun onClick(v: View) {
+        when (v.id) {
             R.id.agd_iv_exit -> {
                 finish()
             }
 
             R.id.agd_btn_buy -> {
-                if(item.owner == NFT.instance.loginResponse.name){
-                    mViewModel.soldItem(item.tokenId, price = 0)
+                if (item.owner == NFT.instance.loginResponse.name) {
+                    SoldDialog() {
+                        mViewModel.soldItem(item.tokenId, price = it.toFloat())
+                    }.show(supportFragmentManager, "")
 //                    fun soldItem(tokenId: String, price: Int) {
-                }else{
-                    mViewModel.buyItem(item.tokenId.toString())
+                } else {
+                    CommonDialog(
+                        DialogItem(
+                            title = "NFT 구매",
+                            content = "${item.title}작품을 구매하시겠습니까?",
+                            cancelBtnName = "취소",
+                            okBtnName = "확인"
+                        )
+                    ) {
+                        mViewModel.buyItem(item.tokenId.toString())
+                    }.show(supportFragmentManager, "")
                 }
             }
 

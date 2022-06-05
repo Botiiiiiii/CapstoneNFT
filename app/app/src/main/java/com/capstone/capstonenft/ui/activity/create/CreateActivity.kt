@@ -66,9 +66,6 @@ class CreateActivity : BaseActivity() {
                 if(mBinding.fcEtDescription.text.isNullOrEmpty())
                     return
 
-                if(mBinding.fcEtPrice.text.isNullOrEmpty())
-                    return
-
                 if(mBinding.fpEtName.text.isNullOrEmpty())
                     return
 

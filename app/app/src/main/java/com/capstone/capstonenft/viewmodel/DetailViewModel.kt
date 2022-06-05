@@ -42,7 +42,7 @@ class DetailViewModel : ViewModel() {
         NetworkManager.getInstance().asyncRequest(protocol)
     }
 
-    fun soldItem(tokenId: Int, price: Int) {
+    fun soldItem(tokenId: Int, price: Float) {
         val protocol: TokenRegisterProtocol =
             ProtocolFactory.create(TokenRegisterProtocol::class.java)
         protocol.PATH = "token/$tokenId/regist"

@@ -28,7 +28,7 @@ class GalleryAdapter(val onClicklistener: (View, Int) -> Unit): RecyclerView.Ada
         val item = listItem[position]
 
         holder.binding.vgTvTitle.text = item.title
-        holder.binding.vgTvPrice.text = "%d KLAY".format(item.price)
+        holder.binding.vgTvPrice.text = "%f KLAY".format(item.price)
         Glide.with(holder.binding.vgIvThumnail)
             .load(item.imageSrc)
             .into(holder.binding.vgIvThumnail)

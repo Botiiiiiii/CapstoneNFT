@@ -121,37 +121,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ac_ll_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fc_ll_description">
-
-
-                    <TextView
-                        android:id="@+id/fc_tv_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/notosanskr_regular"
-                        android:text="Price"
-                        android:textColor="@color/white" />
-
-                    <EditText
-                        android:id="@+id/fc_et_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="43dp"
-                        android:background="@drawable/bg_rect_red_r10"
-                        android:fontFamily="@font/notosanskr_regular"
-                        android:inputType="numberDecimal"
-                        android:hint="가격을 입력해 주세요."
-                        android:padding="4dp" />
-                </LinearLayout>
-
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/fc_btn_regist"
                     android:layout_width="0dp"
@@ -161,12 +130,11 @@
                     android:text="등록"
                     android:textColor="@color/white"
                     android:background="@drawable/sel_login_field"
+                    app:layout_constraintTop_toBottomOf="@id/fc_ll_description"
+                    android:layout_marginTop="100dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="30dp"
-                    app:layout_constraintTop_toBottomOf="@id/ac_ll_price"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintVertical_bias="0.8" />
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

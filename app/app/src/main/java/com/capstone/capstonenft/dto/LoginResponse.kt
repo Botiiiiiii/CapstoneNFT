@@ -19,7 +19,7 @@ data class Token(
     val imageSrc: String,
     val owner: String,
     val creator: String,
-    val price: Int?
+    val price: Float?
 ): Serializable
 
 data class TokenResponse(val token:Token)
