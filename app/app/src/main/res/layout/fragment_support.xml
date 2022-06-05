@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <data>
+        <variable
+            name="listener"
+            type="com.capstone.capstonenft.ui.fragment.main.SupportFragment" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,40 +19,41 @@
             android:text="MORE"
             android:textSize="30dp"
             android:textColor="@color/white"
-            android:background="@color/primary"
+            android:background="@color/primary2"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fs_btn1"
+            android:id="@+id/fs_about"
             android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:onClick="@{listener::onClick}"
             android:text="About"
             android:textColor="@color/white"
-            android:background="@color/primary"
+            android:background="@color/primary2"
             android:textSize="20dp"
             />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fs_btn2"
+            android:id="@+id/fs_blog"
             android:layout_marginTop="3dp"
+            android:onClick="@{listener::onClick}"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:text="Blog"
-
             android:textSize="20dp"
             android:textColor="@color/white"
-            android:background="@color/primary"
+            android:background="@color/primary2"
             />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fs_btn3"
+            android:id="@+id/fs_help"
             android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:text="Help Center"
-
+            android:onClick="@{listener::onClick}"
             android:textSize="20dp"
             android:textColor="@color/white"
-            android:background="@color/primary"
+            android:background="@color/primary2"
             />
 
 
