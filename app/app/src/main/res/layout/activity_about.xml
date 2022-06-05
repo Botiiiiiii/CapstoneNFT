@@ -19,7 +19,7 @@
         android:textColor="@color/white"
         />
     <ScrollView
-        android:background="@color/white"
+        android:background="@drawable/sel_box"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <TextView
@@ -38,8 +38,8 @@ NFT는 흥미로운 새로운 특성을 가지고 있다.\n 독특하고, 드물
 우리는 소비자가 자신의 아이템을 자유롭게 거래할 수 있는 도구, 크리에이터가 새로운 디지털 작품을 출시할 수 있는 도구, 개발자가 디지털 아이템을 위한 풍부한 통합 마켓플레이스를 구축할 수 있는 도구를 구축하고 있다.\n
 
 Sejong NFT는 NFT거래소중 FDS와 이미지모니터링을 도입하여 거래의 보안성을 극대화한 최초의 거래소 입니다.\n"
-        android:textSize="16sp"
-        android:textColor="@color/primary2"/>
+        android:textSize="20sp"
+        android:textColor="@color/white"/>
 
 
     </ScrollView>

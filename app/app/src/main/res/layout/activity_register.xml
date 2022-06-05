@@ -12,7 +12,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#404040"
+        android:background="@color/primary2"
         android:gravity="center"
         android:orientation="vertical">
             <ImageView
@@ -21,6 +21,7 @@
                 android:src="@drawable/lololog"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_marginTop="30dp"
             android:id="@+id/ar_ll_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notosanskr_regular"
                 android:includeFontPadding="false"
-                android:textColor="@color/gray_999999"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:text="아이디" />
 
@@ -43,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:background="#323232"
+                android:background="@color/white"
                 android:fontFamily="@font/notosanskr_regular"
                 android:includeFontPadding="false" />
 
@@ -63,7 +64,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_999999"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:fontFamily="@font/notosanskr_regular"
                 android:includeFontPadding="false"
@@ -74,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:background="#323232"
+                android:background="@color/white"
                 android:fontFamily="@font/notosanskr_regular"
                 android:includeFontPadding="false"
                 android:inputType="textPassword" />
@@ -94,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_999999"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:fontFamily="@font/notosanskr_regular"
                 android:includeFontPadding="false"
@@ -105,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:background="#323232"
+                android:background="@color/white"
                 android:fontFamily="@font/notosanskr_regular"
                 android:includeFontPadding="false"
                 android:inputType="textPassword" />

@@ -60,18 +60,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray_999999"
+                android:background="@color/white"
                 android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
-            android:background="@color/primary2"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
             <ImageView
-                android:background="@color/primary2"
+                android:background="@color/white"
                 android:id="@+id/agd_iv_picture"
                 android:layout_width="match_parent"
                 android:src="@drawable/test"
@@ -115,10 +115,14 @@
             android:textColor="@color/white"
             android:text="@{data.description}" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_marginTop="100dp"
             android:id="@+id/agd_btn_buy"
-            android:layout_width="match_parent"
+            android:background="@drawable/sel_login_field"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:gravity="center"
             android:onClick="@{listener::onClick}"
             android:text="@{isMine? `구매`: `판매`, default=`구매`}"/>

@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:background="@drawable/sel_login_field"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:gravity="center"
@@ -19,7 +20,6 @@
             android:text="MORE"
             android:textSize="30dp"
             android:textColor="@color/white"
-            android:background="@color/primary2"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -30,7 +30,7 @@
             android:onClick="@{listener::onClick}"
             android:text="About"
             android:textColor="@color/white"
-            android:background="@color/primary2"
+            android:background="@drawable/sel_login_field"
             android:textSize="20dp"
             />
         <androidx.appcompat.widget.AppCompatButton
@@ -42,7 +42,7 @@
             android:text="Blog"
             android:textSize="20dp"
             android:textColor="@color/white"
-            android:background="@color/primary2"
+            android:background="@drawable/sel_login_field"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fs_help"
@@ -53,7 +53,7 @@
             android:onClick="@{listener::onClick}"
             android:textSize="20dp"
             android:textColor="@color/white"
-            android:background="@color/primary2"
+            android:background="@drawable/sel_login_field"
             />
 
 

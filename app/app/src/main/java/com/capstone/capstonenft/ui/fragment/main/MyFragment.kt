@@ -61,7 +61,7 @@ class MyFragment : BaseFragment() {
             }
         }.attach()
 
-        mBinding.fmTvTab.setTabTextColors(ContextCompat.getColor(mActivity!!, R.color.black), ContextCompat.getColor(mActivity!!, R.color.white))
+        mBinding.fmTvTab.setTabTextColors(ContextCompat.getColor(mActivity!!, R.color.black), ContextCompat.getColor(mActivity!!, R.color.primary2))
         
         return mBinding.root
 
