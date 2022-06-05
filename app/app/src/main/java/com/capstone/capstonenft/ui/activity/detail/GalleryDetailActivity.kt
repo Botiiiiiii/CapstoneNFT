@@ -31,6 +31,8 @@ class GalleryDetailActivity: BaseActivity() {
         mBinding.data = item
         mBinding.isMine = item.owner == NFT.instance.loginResponse.name
 
+        Trace.error("owner = ${item.owner}, name = ${NFT.instance.loginResponse.name}, boolean = ${item.owner == NFT.instance.loginResponse.name}")
+
         Glide.with(this)
             .load(item.imageSrc)
             .into(mBinding.agdIvPicture)

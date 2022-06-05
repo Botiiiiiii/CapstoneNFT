@@ -16,12 +16,14 @@ import com.bumptech.glide.Glide
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivityImageCheckBinding
+import com.capstone.capstonenft.dto.DialogItem
 import com.capstone.capstonenft.system.utils.Trace
+import com.capstone.capstonenft.ui.dialog.CommonDialog
 import java.io.InputStream
 
 class ImageCheckActivity : BaseActivity() {
     lateinit var mBinding: ActivityImageCheckBinding
-    lateinit var uri: Uri
+    var uri: Uri? = null
 
     private val imageActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -58,8 +60,18 @@ class ImageCheckActivity : BaseActivity() {
                 }
             }
             R.id.aig_btn_regist -> {
-                if (uri == null)
+                if (uri == null){
+                    CommonDialog(DialogItem(
+                        title = "이미지를 선택해주세요",
+                        content = "이미지 유사도 측정과 민팅을 위해 이미지를 선택해주세요",
+                        okBtnName = "확인"
+                    )){
+
+                    }.show(supportFragmentManager, "")
+
                     return
+                }
+
                 Intent(this, CreateActivity::class.java).apply {
                     this.putExtra("uri", uri.toString())
                     createrActivityLauncher.launch(this)

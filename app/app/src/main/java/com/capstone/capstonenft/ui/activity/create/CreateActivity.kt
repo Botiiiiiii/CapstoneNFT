@@ -49,6 +49,7 @@ class CreateActivity : BaseActivity() {
 
         mViewModel.token.observe(this){
             NFT.instance.loginResponse.token_list.add(it)
+            setResult(RESULT_OK)
             finish()
         }
     }

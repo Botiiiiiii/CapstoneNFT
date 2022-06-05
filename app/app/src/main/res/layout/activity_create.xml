@@ -147,7 +147,7 @@
                         android:layout_height="43dp"
                         android:background="@drawable/bg_rect_red_r10"
                         android:fontFamily="@font/notosanskr_regular"
-                        android:gravity="top"
+                        android:inputType="numberDecimal"
                         android:hint="가격을 입력해 주세요."
                         android:padding="4dp" />
                 </LinearLayout>

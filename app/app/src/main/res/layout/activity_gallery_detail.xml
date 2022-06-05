@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="listener"
             type="com.capstone.capstonenft.ui.activity.detail.GalleryDetailActivity" />
@@ -12,29 +14,30 @@
         <variable
             name="data"
             type="com.capstone.capstonenft.dto.Token" />
+
         <variable
             name="isMine"
             type="boolean" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:background="@color/primary2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/primary2"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:background="@color/primary2"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="60dp"
+            android:background="@color/primary2">
 
             <ImageView
                 android:id="@+id/agd_iv_exit"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginStart="10dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/baseline_arrow_back_18" />
 
             <TextView
@@ -43,52 +46,52 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/notosanskr_bold"
                 android:text="작품"
-                android:textSize="20sp"
                 android:textColor="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/agd_iv_option"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginEnd="10dp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
                 android:src="@drawable/baseline_menu_18"
                 android:visibility="@{isMine? View.VISIBLE: View.GONE, default = gone}" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/white"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:background="@color/white" />
 
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
-            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="200dp"
+            android:background="@color/white">
 
             <ImageView
-                android:background="@color/white"
                 android:id="@+id/agd_iv_picture"
                 android:layout_width="match_parent"
-                android:src="@drawable/test"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:onClick="@{listener::onClick}"
-                android:layout_height="wrap_content" />
+                android:src="@drawable/test" />
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/agd_tv_owner"
             android:layout_width="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"
-            android:text="@{`#`+data.owner}"
-            android:onClick="@{listener::onClick}"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             android:background="@color/primary2"
             android:fontFamily="@font/notosanskr_regular"
-            android:layout_marginTop="10dp"
+            android:onClick="@{listener::onClick}"
+            android:text="@{`#`+data.owner}"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -96,36 +99,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:textSize="35sp"
             android:background="@color/primary2"
+            android:fontFamily="@font/notosanskr_bold"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="8sp"
-            android:fontFamily="@font/notosanskr_bold"
-            android:textStyle="bold"
+            android:text="@{data.title}"
             android:textColor="@color/white"
-            android:text="@{data.title}" />
+            android:textSize="35sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/notosanskr_regular"
             android:layout_marginHorizontal="20dp"
-            android:textSize="25sp"
             android:background="@color/primary2"
+            android:fontFamily="@font/notosanskr_regular"
+            android:text="@{data.description}"
             android:textColor="@color/white"
-            android:text="@{data.description}" />
+            android:textSize="25sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_marginTop="100dp"
             android:id="@+id/agd_btn_buy"
-            android:background="@drawable/sel_login_field"
             android:layout_width="wrap_content"
-            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/sel_login_field"
             android:gravity="center"
             android:onClick="@{listener::onClick}"
-            android:text="@{isMine? `구매`: `판매`, default=`구매`}"/>
+            android:text="@{isMine? `판매`: `구매`, default=`구매`}"
+            android:textColor="@color/white" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
