@@ -7,7 +7,6 @@ import com.capstone.capstonenft.ui.fragment.main.Tab1Fragment
 import com.capstone.capstonenft.ui.fragment.main.Tab2Fragment
 import com.capstone.capstonenft.ui.fragment.main.Tab3Fragment
 
-
 class MyAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount(): Int = 2
 
@@ -18,6 +17,4 @@ class MyAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragm
             else -> Tab1Fragment()
         }
     }
-
-
 }

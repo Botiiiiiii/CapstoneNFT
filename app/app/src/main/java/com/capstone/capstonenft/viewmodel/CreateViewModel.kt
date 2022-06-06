@@ -17,7 +17,7 @@ import java.io.File
 
 class CreateViewModel : ViewModel() {
     private val _token = MutableLiveData<Token>()
-    val token:LiveData<Token> get() = _token
+    val token: LiveData<Token> get() = _token
     fun uploadImage(file: File, title: String, desc: String, creator: String, price: Int) {
         val imgProtocol: UploadImgProtocol = ProtocolFactory.create(UploadImgProtocol::class.java)
 
@@ -76,14 +76,13 @@ class CreateViewModel : ViewModel() {
         NetworkManager.getInstance().asyncRequest(protocol)
     }
 
-    fun getTokenInfo(tokenId:String) {
+    fun getTokenInfo(tokenId: String) {
         val protocol: TokenProtocol = ProtocolFactory.create(TokenProtocol::class.java)
         protocol.PATH = "token/$tokenId/info"
 
         protocol.setHttpResponsable(object : HttpResponsable<TokenResponse> {
             override fun onResponse(res: TokenResponse) {
                 Trace.error("onResponse = $res")
-                NFT.instance.loginResponse.token_list.add(res.token)
                 _token.postValue(res.token)
             }
 
