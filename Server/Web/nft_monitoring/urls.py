@@ -22,11 +22,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('image/',include('image_monitoring.urls')),
     path('',include('dashboard.urls')),
+    path('danger/',include('dashboard.urls')),
     path('wallet/',include('fds_monitoring.urls')),
     path('pic/',include('fds_monitoring.urls')),
     path('image_monitoring/',include('image_monitoring.urls')),
     path('dashboard/',include('dashboard.urls')),
     path('table/', include('fds_monitoring.urls')),
+    path('manage/', include('user_manage.urls')),
+    path('user/', include('user_manage.urls'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

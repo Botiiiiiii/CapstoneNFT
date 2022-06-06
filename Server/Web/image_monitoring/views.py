@@ -16,12 +16,12 @@ import requests
 
 def uploadFile(request):
     # 비교하기 버튼 ajax request
-    if request.method == "POST" and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+    if request.method == "POST" and request.is_ajax():
 
         # file 받아오기
         file = request.FILES['file']
 
-        url = 'http://127.0.0.1:8000/images/'
+        url = 'http://34.64.110.121:8000/images/'
 
         files = {'file': file}
 
@@ -31,6 +31,12 @@ def uploadFile(request):
         e = timeit.default_timer()
 
         time = e - s
+
+        s1 = timeit.default_timer()
+        r = requests.post(url=url)
+        e1 = timeit.default_timer()
+        t1 = e1 - s1
+        print(time, t1)
 
         different_img_str = "data:image/png;base64," + base64.b64encode(response.content).decode()
         # different_img_file = base64.b64encode(output.getvalue()).decode()

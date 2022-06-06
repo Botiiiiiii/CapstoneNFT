@@ -46,6 +46,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
         <!--Ajax 라이브러리-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+        <!--csrfToken setup -->
+        <script>
+          $.ajaxSetup({
+            headers: { "X-CSRFToken": '{{csrf_token}}' }
+          });
+        </script>
 
     </head>
 
@@ -80,7 +88,7 @@
                             </a>
 
                             <!-- 사용자 설정 메뉴 -->
-                            <a class="nav-link" href="/image/">
+                            <a class="nav-link" href="/manage/">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 User Manual
                             </a>
@@ -146,7 +154,7 @@
 
 
                         <div style="height:100px; width:23.5%; background-color:#4B6FF3;margin-left:0.8%;
-                        margin-right:0.5%; color:white; text-align:center;" >
+                        margin-right:0.5%; color:white; text-align:center;" onclick="danger_wallet()">
                             <p style="margin-top:2%;">이상거래 의심 지갑</p>
                             <p style="font-size:31px">{{fraud_wallet}}</p>
                         </div>
@@ -473,6 +481,15 @@
                     }
                 });
         		</script>
+
+                <!-- onclick 처리하는 부분 -->
+                <script>
+                    function danger_wallet(){
+                        // alert('<p> 안녕 </P>');
+                        window.open("/dashboard/danger/","팝업 테스트","width=800, height=600, top=10, left=10");
+                    }
+                </script>
+
                 </main>
 
 	            <!-- 하단 -->

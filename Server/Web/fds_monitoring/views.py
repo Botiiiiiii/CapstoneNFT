@@ -17,7 +17,7 @@ def index(request):
     # response_score = es.get(index='scorecheck_df', id=2)
     # wallet_score_df = pd.DataFrame(response_score['_source'])
     wallet_score_df = pd.read_csv(
-        "C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv", encoding='utf-8')
+        "./static/wallet/scorecheck_df.csv", encoding='utf-8')
     wallet_score_df = wallet_score_df[['type','score','wallet','trade count','value sum','value average','single cycle number','multi cycle number']]
     wallet_score_df['wallet'] = wallet_score_df['wallet'].apply(lambda x: f'<a href="/table/wallet?wallet={x}">{x}</a>')
     wallet_score_table = wallet_score_df.to_html(index=False,table_id='datatablesSimple',render_links=True,escape=False)
@@ -32,7 +32,7 @@ def wallet(request):
         # 데이터프레임 생성
         # response_score = es.get(index='scorecheck_df', id=2)
         # wallet_score_df = pd.DataFrame(response_score['_source'])
-        wallet_score_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv", encoding='utf-8')
+        wallet_score_df = pd.read_csv("./static/wallet/scorecheck_df.csv", encoding='utf-8')
         wallet_info = wallet_score_df[wallet_score_df['wallet'] == wallet_name]
 
         trade = int(wallet_info['trade count'].agg('sum'))
@@ -74,7 +74,7 @@ def get_trade_df(wallet_name):
     for token_name in token_list:
         # es_response = es.get(index=token_name, id=2)
         # df = pd.DataFrame(es_response['_source'])
-        df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/token/" + token_name +'.csv', encoding='utf-8')
+        df = pd.read_csv("./static/token/" + token_name +'.csv', encoding='utf-8')
         token_df = token_df.append(df)
 
     token_df.reset_index(drop=True, inplace=True)
@@ -118,7 +118,7 @@ def get_single_cycle(wallet_name):
     # df 불러오기
     # response_cycle = es.get(index='all_cycle_df', id=2)
     # cycle_df = pd.DataFrame(response_cycle['_source'])
-    cycle_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
+    cycle_df = pd.read_csv("./static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
     cycle_df = cycle_df[cycle_df['From']==wallet_name].copy()
 
     # 자전 거래만 추출
@@ -132,7 +132,7 @@ def get_multi_cycle(wallet_name):
     # df 불러오기
     # response_cycle = es.get(index='all_cycle_df', id=2)
     # cycle_df = pd.DataFrame(response_cycle['_source'])
-    cycle_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv",
+    cycle_df = pd.read_csv("./static/cycle/all_cycle_df.csv",
                            encoding='utf-8')
 
     # 자전 거래 제거
