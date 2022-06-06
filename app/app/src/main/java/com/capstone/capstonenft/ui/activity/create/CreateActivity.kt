@@ -50,7 +50,6 @@ class CreateActivity : BaseActivity() {
                     val img: Bitmap = BitmapFactory.decodeStream(ins)
                     file = createImageFile()
                     BitmapConvertFile(img, file.path)
-
                 }
             }
         }

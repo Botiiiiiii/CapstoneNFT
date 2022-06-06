@@ -38,6 +38,7 @@ class GalleryFragment() : BaseFragment() {
                 mViewModel.getMainItem()
             }
         }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -64,33 +65,6 @@ class GalleryFragment() : BaseFragment() {
         }
         mBinding.fgRvGallery.adapter = mGalleryAdapter
         mBinding.fgRvGallery.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false)
-//        mBinding.fgRvGallery.addItemDecoration(object : RecyclerView.ItemDecoration() {
-//
-//            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-//                super.onDraw(c, parent, state)
-//            }
-//
-//            override fun getItemOffsets(
-//                outRect: Rect,
-//                view: View,
-//                parent: RecyclerView,
-//                state: RecyclerView.State
-//            ) {
-//                super.getItemOffsets(outRect, view, parent, state)
-//
-//                val position = parent.getChildAdapterPosition(view)
-//                val lp = view.layoutParams as GridLayoutManager.LayoutParams
-//                val spanIndex = lp.spanIndex
-//
-//                //첫째줄
-//                if (position / 2 != 0) outRect.top =
-//                    PixelUtil.dpToPx(mActivity!!, 5f)
-//
-//                //제일 오른쪽 아이템
-//                if (spanIndex == 2) outRect.right = PixelUtil.dpToPx(mActivity!!, 5f)
-//
-//            }
-//        })
 
         mBinding.fgSlSwipe.setOnRefreshListener {
             mViewModel.getMainItem()

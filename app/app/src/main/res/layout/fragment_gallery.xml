@@ -63,7 +63,7 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:paddingVertical="10dp"
-                            android:background="@drawable/sel_box"
+                            android:background="@drawable/sel_90"
                             android:id="@+id/fg_rv_gallery"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
