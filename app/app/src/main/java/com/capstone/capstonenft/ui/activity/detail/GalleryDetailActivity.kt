@@ -43,6 +43,7 @@ class GalleryDetailActivity : BaseActivity() {
         registerForContextMenu(mBinding.agdIvOption)
 
         mViewModel.message.observe(this) {
+            item.owner = NFT.instance.loginResponse.name
             NFT.instance.loginResponse.token_list.add(item)
             setResult(RESULT_OK)
             finish()

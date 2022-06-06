@@ -19,6 +19,7 @@ class CommonDialog(val item: DialogItem, val okListener: ((Boolean) -> Unit)): D
         savedInstanceState: Bundle?
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_common, container, false)
+        dialog?.setCancelable(item.isCancel)
         mBinding.dialogItem = item
 
         mBinding.dcBtnOk.setOnClickListener {

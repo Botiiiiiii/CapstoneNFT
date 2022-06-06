@@ -26,6 +26,9 @@ class LoginViewModel : ViewModel() {
     private val _loginFailure = MutableLiveData<Boolean>()
     val loginFailure: LiveData<Boolean> get() = _loginFailure
 
+    private val _isblock = MutableLiveData<Boolean>()
+    val isblock: LiveData<Boolean> get() = _isblock
+
     private val _register = MutableLiveData<RegisterResponse>()
     val register: LiveData<RegisterResponse> get() = _register
 
@@ -43,8 +46,12 @@ class LoginViewModel : ViewModel() {
             protocol.setHttpResponsable(object : HttpResponsable<LoginResponse> {
                 override fun onResponse(res: LoginResponse) {
                     Trace.error("onResponse = $res")
-                    NFT.instance.loginResponse = res
-                    getKlay()
+                    if(res.message == "blocked user"){
+                        _isblock.postValue(true)
+                    }else{
+                        NFT.instance.loginResponse = res
+                        getKlay()
+                    }
                 }
 
                 override fun onFailure(nError: Int, strMsg: String) {

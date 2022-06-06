@@ -19,7 +19,9 @@ import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivityLoginBinding
+import com.capstone.capstonenft.dto.DialogItem
 import com.capstone.capstonenft.system.utils.setPref
+import com.capstone.capstonenft.ui.dialog.CommonDialog
 import com.capstone.capstonenft.viewmodel.login.LoginViewModel
 import java.io.*
 import java.text.SimpleDateFormat
@@ -70,7 +72,6 @@ class LoginActivity : BaseActivity() {
         mBinding.root.setOnClickListener {
             softkeyboardHide()
         }
-
     }
 
     fun softkeyboardHide() {
@@ -94,6 +95,7 @@ class LoginActivity : BaseActivity() {
             }
         }
     }
+
     fun initObserve() {
         mViewModel.loginResponse.observe(this) {
             if (it.message.equals("true")) {
@@ -104,7 +106,18 @@ class LoginActivity : BaseActivity() {
                 finish()
             }
         }
+
+        mViewModel.isblock.observe(this) {
+            CommonDialog(DialogItem(title = "사용자 정지", content = "이상 거래가 탐지되어 해당 계정은 정지 처리되었습니다", isCancel =  false)) {
+                setPref(this, "id", "")
+                setPref(this, "pw", "")
+                setResult(RESULT_OK)
+                finish()
+            }.show(supportFragmentManager, "")
+
+        }
     }
+
     private fun createImageFile(): File {
 
         // 이미지 파일 이름 ( blackJin_{시간}_ )
@@ -118,6 +131,7 @@ class LoginActivity : BaseActivity() {
         val image = File.createTempFile(imageFileName, ".png", storageDir)
         return image
     }
+
     private fun BitmapConvertFile(bitmap: Bitmap, strFilePath: String) {
         var file = File(strFilePath);
         // OutputStream 선언 -> bitmap데이터를 OutputStream에 받아 File에 넣어주는 용도

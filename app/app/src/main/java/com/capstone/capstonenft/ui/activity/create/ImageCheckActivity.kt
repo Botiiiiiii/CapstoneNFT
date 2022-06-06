@@ -43,16 +43,16 @@ class ImageCheckActivity : BaseActivity() {
             Glide.with(this)
                 .load(it.imageSrc)
                 .into(mBinding.aigIvImage)
-
             mBinding.aigTvSimialrity.text = "유사도 : %d".format(item.score.toInt()) + "%"
         }
+
+        setResult(RESULT_OK)
 
     }
 
     fun onClick(v: View) {
         when (v.id) {
             R.id.aig_btn_regist -> {
-                setResult(RESULT_OK)
                 finish()
             }
         }

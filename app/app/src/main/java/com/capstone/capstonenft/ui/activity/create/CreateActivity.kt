@@ -31,8 +31,8 @@ class CreateActivity : BaseActivity() {
     lateinit var mResultLauncher: ActivityResultLauncher<Intent>
     private val mViewModel: CreateViewModel by viewModels()
 
-    lateinit var uri:Uri
-    lateinit var file:File
+    lateinit var uri: Uri
+    lateinit var file: File
 
     private val imageActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -66,13 +66,20 @@ class CreateActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_create)
         mBinding.listener = this
 
-        mViewModel.token.observe(this){
-            NFT.instance.loginResponse.token_list.add(it)
-            setResult(RESULT_OK)
-            finish()
+        mViewModel.token.observe(this) {
+            CommonDialog(
+                DialogItem(
+                    title = "민팅성공",
+                    content = "민팅에 성공했습니다."
+                )
+            ) { _ ->
+                NFT.instance.loginResponse.token_list.add(it)
+                setResult(RESULT_OK)
+                finish()
+            }
         }
 
-        mViewModel.upload.observe(this){
+        mViewModel.upload.observe(this) {
             Intent(this, ImageCheckActivity::class.java).apply {
                 this.putExtra("data", it)
                 simActivityLauncher.launch(this)
@@ -90,30 +97,36 @@ class CreateActivity : BaseActivity() {
             }
 
             R.id.fc_btn_regist -> {
-                if (uri == null){
+                if (uri == null) {
                     CommonDialog(
                         DialogItem(
-                        title = "이미지를 선택해주세요",
-                        content = "이미지 유사도 측정과 민팅을 위해 이미지를 선택해주세요",
-                        okBtnName = "확인"
-                    )
-                    ){
+                            title = "이미지를 선택해주세요",
+                            content = "이미지 유사도 측정과 민팅을 위해 이미지를 선택해주세요",
+                            okBtnName = "확인"
+                        )
+                    ) {
 
                     }.show(supportFragmentManager, "")
 
                     return
                 }
 
-                if(file == null)
+                if (file == null)
                     return
 
-                if(mBinding.fcEtDescription.text.isNullOrEmpty())
+                if (mBinding.fcEtDescription.text.isNullOrEmpty())
                     return
 
-                if(mBinding.fpEtName.text.isNullOrEmpty())
+                if (mBinding.fpEtName.text.isNullOrEmpty())
                     return
 
-                mViewModel.uploadImage(file, mBinding.fpEtName.text.toString(), mBinding.fcEtDescription.text.toString(), "aaa", 1)
+                mViewModel.uploadImage(
+                    file,
+                    mBinding.fpEtName.text.toString(),
+                    mBinding.fcEtDescription.text.toString(),
+                    "aaa",
+                    1
+                )
             }
         }
     }
@@ -131,6 +144,7 @@ class CreateActivity : BaseActivity() {
         val image = File.createTempFile(imageFileName, ".png", storageDir)
         return image
     }
+
     private fun BitmapConvertFile(bitmap: Bitmap, strFilePath: String) {
         var file = File(strFilePath);
         // OutputStream 선언 -> bitmap데이터를 OutputStream에 받아 File에 넣어주는 용도
