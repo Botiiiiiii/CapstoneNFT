@@ -92,6 +92,11 @@ class GalleryFragment() : BaseFragment() {
 //            }
 //        })
 
+        mBinding.fgSlSwipe.setOnRefreshListener {
+            mViewModel.getMainItem()
+            mBinding.fgSlSwipe.isRefreshing = false
+        }
+
         mViewModel.mldGallery.observe(viewLifecycleOwner){
             mGalleryAdapter.setItem(it.token)
         }

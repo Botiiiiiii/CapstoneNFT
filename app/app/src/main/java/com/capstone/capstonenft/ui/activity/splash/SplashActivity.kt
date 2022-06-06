@@ -11,9 +11,12 @@ import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivitySplashBinding
+import com.capstone.capstonenft.dto.DialogItem
 import com.capstone.capstonenft.system.utils.Trace
 import com.capstone.capstonenft.system.utils.getPref
+import com.capstone.capstonenft.system.utils.setPref
 import com.capstone.capstonenft.ui.activity.main.MainActivity
+import com.capstone.capstonenft.ui.dialog.CommonDialog
 import com.capstone.capstonenft.viewmodel.login.LoginViewModel
 
 class SplashActivity : BaseActivity() {
@@ -90,11 +93,29 @@ class SplashActivity : BaseActivity() {
             }
         }
 
-        mViewModel.loginFailure.observe(this){
+        mViewModel.loginFailure.observe(this) {
             Intent(this, MainActivity::class.java).apply {
                 startActivity(this)
                 finish()
             }
+        }
+
+        mViewModel.isblock.observe(this) {
+            CommonDialog(
+                DialogItem(
+                    title = "사용자 정지",
+                    content = "이상 거래가 탐지되어 해당 계정은 정지 처리되었습니다",
+                    isCancel = false
+                )
+            ) {
+                setPref(this, "id", "")
+                setPref(this, "pw", "")
+                Intent(this, MainActivity::class.java).apply {
+                    startActivity(this)
+                    finish()
+                }
+            }.show(supportFragmentManager, "")
+
         }
     }
 }

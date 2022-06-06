@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseFragment
 import com.capstone.capstonenft.databinding.FragmentSupportBinding
@@ -24,6 +26,21 @@ class SupportFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_support, container, false)
+        mBinding.listener = this
+
+        mBinding.fsLogout.isVisible = !NFT.instance.loginResponse.privatekey.isNullOrEmpty()
+
+
+        return mBinding.root
     }
 
     fun onClick(v: View) {
@@ -61,18 +78,4 @@ class SupportFragment : BaseFragment() {
 
         }
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_support, container, false)
-        mBinding.listener = this
-
-
-
-        return mBinding.root
-    }
-
 }

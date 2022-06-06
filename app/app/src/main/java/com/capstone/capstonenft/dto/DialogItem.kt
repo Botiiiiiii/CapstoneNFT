@@ -4,5 +4,6 @@ data class DialogItem(
     val okBtnName:String = "확인",
     var cancelBtnName:String = "",
     val title:String,
-    val content:String
+    val content:String,
+    val isCancel:Boolean = true,
 )
