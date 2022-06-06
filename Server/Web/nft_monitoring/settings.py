@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'image_monitoring',
     'fds_monitoring',
     'dashboard',
+    'user_manage'
 ]
 
 MIDDLEWARE = [
@@ -79,8 +80,12 @@ WSGI_APPLICATION = 'nft_monitoring.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nft',
+        'USER': 'user',
+        'PASSWORD': 'User123!',
+        'HOST': 'ec2-18-220-138-199.us-east-2.compute.amazonaws.com',
+        'PORT': '3306'
     }
 }
 

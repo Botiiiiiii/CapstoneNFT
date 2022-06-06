@@ -1,8 +1,6 @@
 import pandas as pd
 import os
 import networkx as nx
-import matplotlib.pyplot as plt
-from PIL import Image
 from pyvis import network as net
 
 class txnalyz:
@@ -48,12 +46,13 @@ class txnalyz:
 
     def init_score_df(self):
         self.wallet_df = pd.DataFrame(self.node_list, columns=['wallet'])
-        self.wallet_df["week trade count"] = 0
-        self.wallet_df["week value sum"] = 0
-        self.wallet_df["week value average"] = 0
+        # self.wallet_df["week trade count"] = 0
+        # self.wallet_df["week value sum"] = 0
+        # self.wallet_df["week value average"] = 0
         self.wallet_df["day trade count"] = 0
         self.wallet_df["day value sum"] = 0
-        self.wallet_df["day value average"] = 0
+        # self.wallet_df["day value average"] = 0
+        self.wallet_df["one side trade"] = 0
         self.wallet_df["single cycle number"] = 0
         self.wallet_df["multi cycle number"] = 0
         self.wallet_df["cycle wallets number"] = 0
@@ -63,6 +62,7 @@ class txnalyz:
     def count_score_cycle(self):
         # 2차원 리스트 중복 제거
         self.cycle_route = list(set(map(tuple,self.cycle_route)))
+        # print(self.cycle_route)
         # 점수 부여
         for n in self.cycle_route:
             if (len(n) == 1):
@@ -74,6 +74,29 @@ class txnalyz:
                     self.wallet_df['cycle wallets number'][self.wallet_df['wallet'] == j] += len(n)
                     self.wallet_df['score'][self.wallet_df['wallet'] == j] += 3
 
+    def count_side_trade(self):
+        side_df = pd.DataFrame(self.token_df)
+        cnt = 0
+        while(len(side_df) > 0):
+            ind = list(side_df[(side_df['From'] == side_df.loc[cnt]['From']) & (side_df['To'] == side_df.loc[cnt]['To'])].index)
+            if(len(ind)>1):
+                self.wallet_df['score'][self.wallet_df['wallet'] == side_df.loc[cnt]['From']] += len(ind)-1
+                self.wallet_df['score'][self.wallet_df['wallet'] == side_df.loc[cnt]['To']] += len(ind)-1
+                self.wallet_df["one side trade"][self.wallet_df['wallet'] == side_df.loc[cnt]['From']] += len(ind)
+                self.wallet_df["one side trade"][self.wallet_df['wallet'] == side_df.loc[cnt]['To']] += len(ind)
+            side_df.drop(ind, inplace=True)
+            side_df.reset_index(drop=True, inplace=True)
+
+        for i in range(len(self.wallet_df)):
+            score = self.wallet_df.loc[i]['score']
+            if (0<=score<5):
+                self.wallet_df.loc[i]['type'] = '일반'
+            elif (5 <= score < 10):
+                self.wallet_df.loc[i]['type'] = '관심'
+            elif (10 <= score):
+                self.wallet_df.loc[i]['type'] = '위험'
+
+
     def count_avg(self, date):
         # date 형식: XXXX-XX-XX
         index_list =[]
@@ -83,19 +106,30 @@ class txnalyz:
         tmp_df['Timestamp'] = self.token_df['Timestamp'].astype(str).apply(date_filter)
         tmp_df['Timestamp'] = pd.to_datetime(tmp_df['Timestamp'])
 
+        # print(tmp_df)
+
 
         filtered_df = tmp_df.loc[tmp_df['Timestamp'] == date]
 
-
-
-        for i in self.wallet_df['wallet']:
-            index_list.extend(tmp_df.index[filtered_df['From'] == i].tolist())
-            index_list.extend(tmp_df.index[filtered_df['To'] == i].tolist())
+        filtered_wallet = list(set(list(filtered_df.groupby("From").groups.keys()) + list(filtered_df.groupby("From").groups.keys())))
+        # print('---')
+        for i in filtered_wallet:
+            index_list.extend(filtered_df.index[filtered_df['From'] == i].tolist())
+            index_list.extend(filtered_df.index[filtered_df['To'] == i].tolist())
             value_index = list(set(index_list))
+            self.wallet_df['trade count'][self.wallet_df['wallet'] == i] = len(value_index)
+            if (2<=len(value_index)<5):
+                self.wallet_df['score'][self.wallet_df['wallet'] == i] += 1
+            elif (5 <= len(value_index) < 10):
+                self.wallet_df['score'][self.wallet_df['wallet'] == i] += 3
+            elif (10 <= len(value_index)):
+                self.wallet_df['score'][self.wallet_df['wallet'] == i] += 7
+
             # 금액 합계
-            value_sum = tmp_df['Value'].loc[value_index].sum()
+            value_sum = filtered_df['Value'].loc[value_index].sum()
 
             # 금액 스코어링 (ETH 기준) ( 달러로 500, 600, 700, 800, 900)
+            #
             if( 0.275 <= value_sum < 0.33 ):
                 self.wallet_df['score'][self.wallet_df['wallet'] == i] += 1
             elif( 0.33 <= value_sum < 0.385):
@@ -106,23 +140,14 @@ class txnalyz:
                 self.wallet_df['score'][self.wallet_df['wallet'] == i] += 4
             elif ( 0.495 <= value_sum < 0.55):
                 self.wallet_df['score'][self.wallet_df['wallet'] == i] += 5
+
             # 1000달러 이상일 경우 warning
             # else:
                 # warning
-            self.wallet_df["day value sum"][self.wallet_df['wallet'] == i] = value_sum
+            self.wallet_df["value sum"][self.wallet_df['wallet'] == i] = value_sum
             index_list = []
 
-        self.wallet_df.to_csv("wallet.csv", index=False)
-
-
-        print(self.wallet_df)
-
-        # market_date_average = market_date_group.agg({"Market Place": [('Market Place', get_market_name)],
-        #                                              "From": [('Sale Count Average', from_group_count_avg)],
-        #                                              "To": [("Purchase Count Average", to_group_count_avg)],
-        #                                              "TokenID": [('Token count Average', token_count_avg)],
-        #                                              'Value': [('Value Average', 'mean')]})
-
+        # self.wallet_df.to_csv("wallet.csv", index=False)
 
     def delete_node(self, delete_list):
         for addr in delete_list:
@@ -264,13 +289,13 @@ class txnalyz:
         
         df.to_csv('result/' + fname, header = True, index = False)
             
-    def draw_graph3(self, networkx_graph,notebook=True, directed=True, show_buttons=True,only_physics_buttons=False,
+    def draw_graph3(self, networkx_graph,notebook=True, show_buttons=True,only_physics_buttons=False,
                 height="750px",width="100%",bgcolor=None,font_color=None,pyvis_options=None):        
         # import
         from pyvis import network as net
 
         # make a pyvis network
-        network_class_parameters = {"notebook": notebook, "height": height, "width": width, "bgcolor": bgcolor, "font_color": font_color, "directed": directed}
+        network_class_parameters = {"notebook": notebook, "height": height, "width": width, "bgcolor": bgcolor, "font_color": font_color}
         pyvis_graph = net.Network(**{parameter_name: parameter_value for parameter_name, parameter_value in network_class_parameters.items() if parameter_value})
 
         # for each node and its attributes in the networkx graph
@@ -285,66 +310,49 @@ class txnalyz:
                 edge_attrs['value']=edge_attrs['weight']
             # add the edge
             pyvis_graph.add_edge(source,target,**edge_attrs)
-            # print('source : ', source)
-            # print('target : ', target)
+            print('source : ', source)
+            print('target : ', target)
             
         # print(pyvis_graph)
 
         # turn buttons on
-        pyvis_graph.show_buttons(filter_=['physics'])
-        # if show_buttons:
-        #     if only_physics_buttons:
-        #         pyvis_graph.show_buttons(filter_=['physics'])
-        #     else:
-        #         pyvis_graph.show_buttons()
+        if show_buttons:
+            if only_physics_buttons:
+                pyvis_graph.show_buttons(filter_=['physics'])
+            else:
+                pyvis_graph.show_buttons()
 
         # pyvis-specific options
         if pyvis_options:
             pyvis_graph.set_options(pyvis_options)
 
         # return and also save
-        pyvis_graph.show('abc.html')
-        return_graph = open('abc.html','r',encoding='utf-8').read()
-        os.remove('abc.html')
-        return return_graph
+        return pyvis_graph.show(self.selected_csv.split('.')[0]+'.html')
 
     def show_networkx_graph(self):
-        G = nx.DiGraph()
-        
-        for n in self.node_route:
-            G.add_weighted_edges_from([n])
-
-        return self.draw_graph3(G)
-
-    def networkx_png(self):
         sum_weight = 0
         length = 0
         G = nx.DiGraph()
 
+        
         for n in self.node_route:
             G.add_weighted_edges_from([n])
-            sum_weight += n[2]
-            length += 1
+            # sum_weight += n[0][2]
+            # length += 1
 
-        plt.figure(figsize=(25, 25))
-        pos = nx.spring_layout(G, k=0.2)
-        d = dict(G.degree)
+        # avg = sum_weight/length
+        # print(avg)
+        # edges = G.edges
+        # weights = [G[u][v]['weight']*3.0/avg for u, v in edges]
+        # print(weights)
+        # plt.figure(figsize=(25, 25))
+        # pos = nx.spring_layout(G, k=0.2)
+        # d = dict(G.degree)
 
-        if (sum_weight != 0):
-            avg = sum_weight / length
-            edges = G.edges
-            weights = [G[u][v]['weight'] * 3.0 / avg for u, v in edges]
-            n_data = [v * 1000 for v in d.values()]
-            nx.draw_networkx_edges(G, pos, width=0.5, arrows=True, arrowstyle='->', arrowsize=5, )
-            nx.draw(G, pos, width=weights, with_labels=True, font_size=6, linewidths=0.5,
-                    edge_color="black", edgecolors='gray', node_size=n_data, node_color=n_data)
-            plt.savefig('static/image/def.png')
+        # n_data = [v * 1000 for v in d.values()]
+        # nx.draw_networkx_edges(G, pos,width=0.5,arrows=True, arrowstyle='->', arrowsize=5, )
+        # nx.draw(G, pos, width = weights, with_labels=True, font_size=6, linewidths=0.5,
+        # edge_color="black", edgecolors='gray', node_size=n_data, node_color=n_data)
+        # plt.show()
 
-        else:
-            n_data = [v * 1000 for v in d.values()]
-            nx.draw_networkx_edges(G, pos, width=0.5, arrows=True, arrowstyle='->', arrowsize=5, )
-            nx.draw(G, pos, with_labels=True, font_size=6, linewidths=0.5,
-                    edge_color="black", edgecolors='gray', node_size=n_data, node_color=n_data)
-            plt.savefig('static/image/def.png')
-
-        # return_png = Image.open('def.png')
+        self.draw_graph3(G)

@@ -48,7 +48,7 @@ router.post('/mint', async function(req, res, next) {
     var imageSrc = req.body.image;
 
     // var token_uri = req.body.uri;
-    var token_uri = 'https://sejong-nft.s3.ap-northeast-2.amazonaws.com/1652687503491.jpg';
+    var token_uri = req.body.uri;
 
     var token_ID;
 
@@ -63,13 +63,26 @@ router.post('/mint', async function(req, res, next) {
     }
 
     // 토큰 아이디 설정
-    [rows, field] = await con.promise().query('SELECT tokenId FROM NFT ORDER BY tokenId DESC LIMIT 1');
+    // try{
+    //     [rows, field] = await con.promise().query('SELECT tokenId FROM NFT ORDER BY tokenId DESC LIMIT 1');
+    //     token_ID = rows[0].tokenId+1;
+    // }catch(e){
+    //     token_ID = 1111111
+    // }
 
-    token_ID = rows[0].tokenId+1;
+    const tl = await caver.kas.kip17.getTokenList('sejong-nft')
+
+    var items = tl.items;
+    items = items.sort(function(a, b){
+        if(parseInt(a['tokenId']) > parseInt(b['tokenId'])) return -1;
+        if(parseInt(a['tokenId']) < parseInt(b['tokenId'])) return 1;
+    });
+
+    token_ID = parseInt(items[1]['tokenId'])+1;
 
     console.log('[token_ID] :' + token_ID);
 
-    var token_info = [''+token_ID, title, description, imageSrc, owner, creator];
+    var token_info = [''+token_ID, title, description, imageSrc, owner, creator, 0];
 
     console.log(token_info);
 
@@ -84,7 +97,13 @@ router.post('/mint', async function(req, res, next) {
     // db정보 갱신
     await con.promise().query('INSERT INTO NFT VALUES ?', [[token_info]]); 
 
-    res.send('mint good');
+    var result = {
+        message: 'true',
+        tokenid: token_ID,
+        tokenuri: token_uri
+    }
+
+    res.send(result);
 });
 
 router.post('/:tokenid/test', async function(req, res, next){
@@ -174,6 +193,7 @@ router.post('/:tokenid/regist', async function(req, res, next){
         }
 
         res.send(result);
+        return 0;
     }
 
     // 토큰 전송 권한 주기
@@ -211,6 +231,7 @@ router.post('/:tokenid/buy', async function(req, res, next){
     var from = req.body.from;
     var tokenid = req.params.tokenid;
     var price;
+    var pk;
 
     kip17Instance = new caver.kct.kip17('0xad7be282f80720b230ff4a7222931183b1d10a1b');
 
@@ -233,8 +254,29 @@ router.post('/:tokenid/buy', async function(req, res, next){
 
     // pay money
     // from의 개인키 가져오기,
+    try{
+        var [rows, fileds] = await con.promise().query('SELECT * FROM user WHERE address = ?', [from]);
+        pk = rows[0].privateKey;
+    }catch(e){
+        console.log(e);
+        res.send(e.code);
+        return 0;
+    }
     // from에서 to로 price만큼 지불
+    const keyringContainer = new caver.keyringContainer();
+    const keyring = await keyringContainer.keyring.createFromPrivateKey(pk);
+    keyringContainer.add(keyring);
+    const vt = await caver.transaction.valueTransfer.create({
+        from: keyring.address,
+        to: to,
+        value: caver.utils.convertToPeb(price.toString(), 'KLAY'),
+        gas: 25000,
+    })
 
+    const signed = await keyringContainer.sign(keyring.address, vt);
+
+    const receipt = await caver.rpc.klay.sendRawTransaction(signed);
+    console.log(receipt);
 
     // token transfer
     const result = await caver.kas.kip17.transfer('sejong-nft', '0xda1DA25DDF16D2E89Ec50B22bA8609Ed610E3972', to, from, tokenid)
@@ -242,6 +284,12 @@ router.post('/:tokenid/buy', async function(req, res, next){
     // sale 테이블에서 삭제
     try{
         var[rows, fields] = await con.promise().query('DELETE FROM sale WHERE tokenId = ?', [[tokenid]]); 
+        await con.promise().query('UPDATE NFT SET owner = ? WHERE tokenId = ?', [from, tokenid])
+        await con.promise().query('UPDATE NFT SET price = ? WHERE tokenId = ?', [price, tokenid])
+
+        // transaction 테이블에 거래내역 추가
+        // await con.promise().query('')
+
     }catch(e){
         console.log(e);
         res.send(e.code);
@@ -249,7 +297,9 @@ router.post('/:tokenid/buy', async function(req, res, next){
 	
 	console.log(result)
 
-    res.send('transfer ok');
+    res.send({
+        message: 'true'
+    });
 });
 
 router.delete('/:tokenid/burn', async function(req, res, next){
@@ -263,6 +313,7 @@ router.delete('/:tokenid/burn', async function(req, res, next){
     var [rows, field] = await con.promise().query('SELECT * FROM user WHERE address = ?', [from]);
 
     pk = rows[0].privateKey;
+    // pk = '0x4af4f05b5b7e3cd0905feef1cd19a598a79ccbc206a68715f15823a45da15b0c';
 
     console.log('[!]'+pk);
 
@@ -309,17 +360,70 @@ router.delete('/:tokenid/burn', async function(req, res, next){
 })
 
 // token list
-router.get('/list', async function(req, res, next) {
+router.get('/nftlist', async function(req, res, next) {
     const result = await caver.kas.kip17.getTokenList('sejong-nft')
+
+    console.log(result.items);
+
+    var items = result.items;
+    items.sort(function(a, b){
+        if(parseInt(a['tokenId']) > parseInt(b['tokenId'])) return 1;
+        if(parseInt(a['tokenId']) < parseInt(b['tokenId'])) return -1;
+    })
 	
-	res.send(result);
+	res.send(items);
 });
 
+router.get('/lasttoken', async function(req, res, next){
+    const result = await caver.kas.kip17.getTokenList('sejong-nft')
+
+    var items = result.items;
+    items = items.sort(function(a, b){
+        if(parseInt(a['tokenId']) > parseInt(b['tokenId'])) return -1;
+        if(parseInt(a['tokenId']) < parseInt(b['tokenId'])) return 1;
+    })
+
+    res.send({
+        tokenId : parseInt(items[1]['tokenId'])
+    });
+})
+
+router.get('/list', async function(req, res, next){
+    try{
+        var [rows, field] = await con.promise().query("SELECT NFT.tokenId, NFT.title, NFT.description, NFT.imageSrc, (SELECT user.nickname FROM user WHERE user.address = NFT.owner) as owner, (SELECT user.nickname FROM user WHERE user.address = NFT.creator)  as creator, sale.price from NFT JOIN sale ON NFT.tokenId = sale.tokenId");
+    }catch(e){
+        console.log(e);
+        res.send(e.code)
+    }
+
+    console.log(JSON.stringify(rows));
+    console.log(rows);
+
+    res.send({
+        token: rows
+    });
+})
+
 // token info
-router.get('/:tokenid/info', async function(req, res, next) {
-    const result = await caver.kas.kip17.getToken('sejong-nft', req.params.tokenid);
+// router.get('/:tokenid/info', async function(req, res, next) {
+//     const result = await caver.kas.kip17.getToken('sejong-nft', req.params.tokenid);
 	
-	res.send(result);
-});
+// 	res.send(result);
+// });
+
+router.get('/:tokenid/info', async function(req, res, next){
+    var tokenId = req.params.tokenid;
+
+    try{
+        var [rows, field] = await con.promise().query('SELECT NFT.tokenId, NFT.title, NFT.description, NFT.imageSrc, (SELECT user.nickname FROM user WHERE user.address = NFT.owner) as owner, (SELECT user.nickname FROM user WHERE user.address = NFT.creator)  as creator, sale.price from NFT LEFT OUTER JOIN sale ON NFT.tokenId = sale.tokenId WHERE NFT.tokenId = ?', [tokenId]);
+    }catch(e){
+        console.log(e);
+        res.send(e.code);
+    }
+
+    res.send({
+        token: rows[0]
+    });
+})
 
 module.exports = router;

@@ -13,12 +13,16 @@ def index(request):
     # response_score = es.get(index='scorecheck_df', id=2)
     # wallet_score_df = pd.DataFrame.from_dict([response_score['_source']])
 
-    wallet_score_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/wallet/scorecheck_df.csv" ,encoding= 'utf-8')
+    print('[!]', request.path)
+
+    # if(requset.path == '/dashboard/danger/')
+
+    wallet_score_df = pd.read_csv("static/wallet/scorecheck_df.csv" ,encoding= 'utf-8')
 
     # response_cycle = es.get(index='all_cycle_df', id=2)
     # cycle_df = pd.DataFrame([response_cycle['_source']])
 
-    cycle_df = pd.read_csv("C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
+    cycle_df = pd.read_csv("static/cycle/all_cycle_df.csv" ,encoding= 'utf-8')
 
 
     # token_list = ['animal_society','ape_harbour_yachts','dogex','metavillains','the_evolving_forest']
@@ -30,7 +34,7 @@ def index(request):
 
     token_df = pd.DataFrame()
     cnt = 0
-    path ="C:/Users/82106/Documents/GitHub/CapstoneNFT/Server/Web/static/token/"
+    path ="static/token/"
     file_list = os.listdir(path)
     for name in file_list:
         if(cnt == 0):
@@ -130,4 +134,11 @@ def index(request):
 
     render_table = {'wallet_score_table':wallet_score_table}
     render_context.update(render_table)
+
+    if(request.path == '/dashboard/danger/'):
+        wallet_score_table = wallet_score_df[wallet_score_df['type']=="위험"].to_html(index=False,table_id='datatablesSimple',render_links=True,escape=False)
+
+        return render(request, 'dashboard/danger.html', context={'wallet_score_table':wallet_score_table})
+    
+
     return render(request, 'dashboard/index.html',context=render_context)

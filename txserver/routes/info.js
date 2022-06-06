@@ -13,7 +13,6 @@ caver.initKASAPI(chainId, accessKeyId, secretAccessKey)
 
 // db 설정
 const mysql = require('mysql');
-const { Console } = require('console');
 var con = mysql.createConnection({
     host: 'ec2-18-220-138-199.us-east-2.compute.amazonaws.com',
     user: 'user',
