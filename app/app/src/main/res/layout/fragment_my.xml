@@ -30,17 +30,20 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textStyle="bold"
+                android:textSize="20sp"
                 android:fontFamily="@font/notosanskr_regular"
                 android:text="이용하시려면 로그인하시오"
                 app:layout_constraintBottom_toTopOf="@id/fm_btn_login"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/fm_btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Login"
+                android:textColor="@color/white"
+                android:background="@drawable/sel_box"
                 android:paddingVertical="0dp"
                 android:fontFamily="@font/notosanskr_regular"
                 android:onClick="@{listener::onClick}"
@@ -87,7 +90,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="40dp"
+                android:layout_margin="20dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@+id/fm_cv_profile"
                 app:layout_constraintStart_toEndOf="@+id/fm_cv_profile"
@@ -117,7 +120,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -125,19 +128,21 @@
                         android:text="ADDRESS : "
                         android:textStyle="bold"
                         android:textColor="@color/white"/>
+
                     <TextView
                         android:id="@+id/fm_tv_ad"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20dp"
+                        android:layout_height="20dp"
+                        android:text="testaddress"
                         android:textColor="@color/white"
-                        android:text="testaddress"/>
+                        android:textSize="10dp" />
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="20dp">
+                    android:orientation="vertical"
+                    android:layout_marginTop="1dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

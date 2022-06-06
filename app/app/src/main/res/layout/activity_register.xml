@@ -43,7 +43,7 @@
                 android:id="@+id/ar_et_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="60dp"
                 android:background="@color/white"
                 android:fontFamily="@font/notosanskr_regular"
                 android:includeFontPadding="false" />
@@ -74,7 +74,7 @@
                 android:id="@+id/ar_et_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="46dp"
                 android:background="@color/white"
                 android:fontFamily="@font/notosanskr_regular"
                 android:includeFontPadding="false"
