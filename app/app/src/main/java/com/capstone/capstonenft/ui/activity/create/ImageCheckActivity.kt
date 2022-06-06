@@ -10,6 +10,7 @@ import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -17,65 +18,42 @@ import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivityImageCheckBinding
 import com.capstone.capstonenft.dto.DialogItem
+import com.capstone.capstonenft.dto.Upload
 import com.capstone.capstonenft.system.utils.Trace
 import com.capstone.capstonenft.ui.dialog.CommonDialog
+import com.capstone.capstonenft.viewmodel.CreateViewModel
 import java.io.InputStream
 
 class ImageCheckActivity : BaseActivity() {
     lateinit var mBinding: ActivityImageCheckBinding
+    lateinit var item:Upload
     var uri: Uri? = null
-
-    private val imageActivityLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == RESULT_OK) {
-                result.data?.let {
-                    uri = it.data as Uri
-                    Glide.with(this)
-                        .load(uri)
-                        .into(mBinding.aigIvImage)
-                }
-            }
-        }
-    private val createrActivityLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == RESULT_OK) {
-                setResult(RESULT_OK)
-                finish()
-            }
-        }
+    val mViewModel: CreateViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_image_check)
         mBinding.listener = this
 
+        item = intent.getSerializableExtra("data") as Upload
+
+        mViewModel.getTokenInfo(item.sim_token_id)
+
+        mViewModel.token.observe(this){
+            Glide.with(this)
+                .load(it.imageSrc)
+                .into(mBinding.aigIvImage)
+
+            mBinding.aigTvSimialrity.text = "유사도 : %d".format(item.score.toInt()) + "%"
+        }
+
     }
 
     fun onClick(v: View) {
         when (v.id) {
-            R.id.aig_iv_image -> {
-                Intent(Intent.ACTION_PICK).apply {
-                    this.type = MediaStore.Images.Media.CONTENT_TYPE
-                    imageActivityLauncher.launch(this)
-                }
-            }
             R.id.aig_btn_regist -> {
-                if (uri == null){
-                    CommonDialog(DialogItem(
-                        title = "이미지를 선택해주세요",
-                        content = "이미지 유사도 측정과 민팅을 위해 이미지를 선택해주세요",
-                        okBtnName = "확인"
-                    )){
-
-                    }.show(supportFragmentManager, "")
-
-                    return
-                }
-
-                Intent(this, CreateActivity::class.java).apply {
-                    this.putExtra("uri", uri.toString())
-                    createrActivityLauncher.launch(this)
-                }
+                setResult(RESULT_OK)
+                finish()
             }
         }
     }

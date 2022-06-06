@@ -87,7 +87,7 @@ class MyFragment : BaseFragment() {
     fun onClick(v: View) {
         when (v.id) {
             R.id.fm_fbtn_create -> {
-                val intent = Intent(mActivity, ImageCheckActivity::class.java)
+                val intent = Intent(mActivity, CreateActivity::class.java)
                 createrActivityLauncher.launch(intent)
             }
 
