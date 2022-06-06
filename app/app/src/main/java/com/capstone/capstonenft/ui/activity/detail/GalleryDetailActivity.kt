@@ -43,10 +43,30 @@ class GalleryDetailActivity : BaseActivity() {
         registerForContextMenu(mBinding.agdIvOption)
 
         mViewModel.message.observe(this) {
-            item.owner = NFT.instance.loginResponse.name
-            NFT.instance.loginResponse.token_list.add(item)
-            setResult(RESULT_OK)
-            finish()
+            if (item.owner == NFT.instance.loginResponse.name) {
+                CommonDialog(
+                    DialogItem(
+                        title = "판매 등록 완료",
+                        content = "판매 등록이 완료되었습니다",
+                    )
+                ) {
+                    setResult(RESULT_OK)
+                    finish()
+                }.show(supportFragmentManager, "")
+
+            } else {
+                CommonDialog(
+                    DialogItem(
+                        title = "구매 완료",
+                        content = "구매가 완료되었습니다",
+                    )
+                ) {
+                    item.owner = NFT.instance.loginResponse.name
+                    NFT.instance.loginResponse.token_list.add(item)
+                    setResult(RESULT_OK)
+                    finish()
+                }.show(supportFragmentManager, "")
+            }
         }
     }
 

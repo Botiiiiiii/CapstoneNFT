@@ -49,9 +49,10 @@ class DetailViewModel : ViewModel() {
         val request = TokenRegisteRquest(NFT.instance.loginResponse.address, price.toString())
 
         protocol.setJsonRequestBody(request)
-        protocol.setHttpResponsable(object : HttpResponsable<TokenRegisterResponse> {
-            override fun onResponse(res: TokenRegisterResponse) {
+        protocol.setHttpResponsable(object : HttpResponsable<Message> {
+            override fun onResponse(res: Message) {
                 Trace.error("onResponse = $res")
+                _message.postValue(res)
             }
 
             override fun onFailure(nError: Int, strMsg: String) {
