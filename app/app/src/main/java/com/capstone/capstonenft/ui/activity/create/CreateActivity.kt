@@ -20,6 +20,7 @@ import com.capstone.capstonenft.R
 import com.capstone.capstonenft.base.BaseActivity
 import com.capstone.capstonenft.databinding.ActivityCreateBinding
 import com.capstone.capstonenft.dto.DialogItem
+import com.capstone.capstonenft.system.utils.Trace
 import com.capstone.capstonenft.ui.dialog.CommonDialog
 import com.capstone.capstonenft.viewmodel.CreateViewModel
 import java.io.*
@@ -75,7 +76,7 @@ class CreateActivity : BaseActivity() {
                 NFT.instance.loginResponse.token_list.add(it)
                 setResult(RESULT_OK)
                 finish()
-            }
+            }.show(supportFragmentManager, "")
         }
 
         mViewModel.upload.observe(this) {
