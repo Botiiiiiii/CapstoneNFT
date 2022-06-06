@@ -6,38 +6,31 @@
         <entry key="../../../../../.gradle/caches/transforms-3/0eb30ad48244b1774706c861eb8d6125/transformed/play-services-base-18.0.1/res/drawable/common_google_signin_btn_text_dark.xml" value="0.154" />
         <entry key="app/src/main/res/drawable-v24/bg_rect_gray_r10.xml" value="0.1675" />
         <entry key="app/src/main/res/drawable-v24/bg_rect_red_full_r10.xml" value="0.1675" />
-        <entry key="app/src/main/res/drawable-v24/bg_rect_red_r10.xml" value="0.2315" />
-        <entry key="app/src/main/res/drawable/baseline_arrow_back_18.xml" value="0.2395" />
-        <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.2395" />
-        <entry key="app/src/main/res/drawable/sel_90.xml" value="0.2395" />
-        <entry key="app/src/main/res/drawable/sel_box.xml" value="0.2315" />
+        <entry key="app/src/main/res/drawable/bg_box.xml" value="0.1635" />
+        <entry key="app/src/main/res/drawable/sel_90.xml" value="0.1635" />
+        <entry key="app/src/main/res/drawable/sel_box.xml" value="0.1635" />
         <entry key="app/src/main/res/drawable/sel_login_field.xml" value="0.1675" />
         <entry key="app/src/main/res/font-v26/noto_sans.xml" value="0.1550925925925926" />
         <entry key="app/src/main/res/layout/activity_about.xml" value="0.13703703703703704" />
-        <entry key="app/src/main/res/layout/activity_about.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_create.xml" value="0.1867007672634271" />
-        <entry key="app/src/main/res/layout/activity_gallery_detail.xml" value="0.2582048769350405" />
-        <entry key="app/src/main/res/layout/activity_image_check.xml" value="0.42543792724609375" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.40250305175781254" />
+        <entry key="app/src/main/res/layout/activity_create.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_gallery_detail.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_image_check.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12824074074074074" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.35104115804036456" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.14427083333333332" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.12824074074074074" />
-        <entry key="app/src/main/res/layout/activity_user_detail.xml" value="0.40542986425339367" />
-        <entry key="app/src/main/res/layout/dialof_sold.xml" value="0.23333333333333334" />
-        <entry key="app/src/main/res/layout/dialog_common.xml" value="0.24429372151692708" />
-        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.1382716049382716" />
-        <entry key="app/src/main/res/layout/fragment_my.xml" value="0.3132827758789063" />
+        <entry key="app/src/main/res/layout/activity_user_detail.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/dialog_common.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.1470276008492569" />
+        <entry key="app/src/main/res/layout/fragment_my.xml" value="0.14427083333333332" />
         <entry key="app/src/main/res/layout/fragment_my_adapter.xml" value="0.30833333333333335" />
-        <entry key="app/src/main/res/layout/fragment_support.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_support.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_tab1.xml" value="0.12824074074074074" />
         <entry key="app/src/main/res/layout/fragment_tab2.xml" value="0.12824074074074074" />
-        <entry key="app/src/main/res/layout/fragment_tab3.xml" value="0.21770833333333334" />
-        <entry key="app/src/main/res/layout/view_gallery.xml" value="0.2783131917317708" />
+        <entry key="app/src/main/res/layout/view_gallery.xml" value="0.14427083333333332" />
         <entry key="app/src/main/res/layout/view_profile.xml" value="0.12824074074074074" />
         <entry key="app/src/main/res/layout/view_td.xml" value="0.25" />
         <entry key="app/src/main/res/menu/context_menu.xml" value="0.12824074074074074" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2315" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2315" />
       </map>
     </option>
   </component>
