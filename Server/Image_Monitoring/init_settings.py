@@ -52,6 +52,7 @@ class Init:
 
         features = []
         img_paths = []
+        np_paths = []
 
         # 이미지 경로를 불러옴
         for feature in featurePathList:
@@ -61,5 +62,6 @@ class Init:
 
             img_paths.append(Path("./static/bayc") /
                              (path.basename(feature).split('.')[0] + ".png"))
+            np_paths.append(path.basename(feature).split('.')[0])
 
-        return features, img_paths
+        return features, img_paths, np_paths
