@@ -1,6 +1,7 @@
 package com.capstone.capstonenft.dto
 
-data class ImageMonitoringRequest(
+data class ImageMonitoring(
+    val message: String,
     val scoring : Int,
     val token_id : String
 )

@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:onClick="@{listener::onClick}"
-            android:text="등록"
+            android:text="확인"
             android:textColor="@color/white"
             android:background="@drawable/sel_login_field"
             app:layout_constraintBottom_toBottomOf="parent"

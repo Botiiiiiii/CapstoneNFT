@@ -18,6 +18,10 @@ import java.io.File
 class CreateViewModel : ViewModel() {
     private val _token = MutableLiveData<Token>()
     val token: LiveData<Token> get() = _token
+
+    private val _upload = MutableLiveData<Upload>()
+    val upload: LiveData<Upload> get() = _upload
+
     fun uploadImage(file: File, title: String, desc: String, creator: String, price: Int) {
         val imgProtocol: UploadImgProtocol = ProtocolFactory.create(UploadImgProtocol::class.java)
 
@@ -27,7 +31,11 @@ class CreateViewModel : ViewModel() {
         imgProtocol.setHttpResponsable(object : HttpResponsable<Upload> {
             override fun onResponse(res: Upload) {
                 Trace.error("onResponse = $res")
+                if(res.imageUrl.equals("false")){
+                    _upload.postValue(res)
+                }else{
                 downloadUri(res.imageUrl, title, desc, creator, price)
+                }
             }
 
             override fun onFailure(nError: Int, strMsg: String) {
@@ -84,6 +92,22 @@ class CreateViewModel : ViewModel() {
             override fun onResponse(res: TokenResponse) {
                 Trace.error("onResponse = $res")
                 _token.postValue(res.token)
+            }
+
+            override fun onFailure(nError: Int, strMsg: String) {
+                Trace.error("onFailure = $nError $strMsg")
+                super.onFailure(nError, strMsg)
+            }
+        })
+        NetworkManager.getInstance().asyncRequest(protocol)
+    }
+
+    fun checkImage(){
+        val protocol: ImageMonitoringProtocol = ProtocolFactory.create(ImageMonitoringProtocol::class.java)
+
+        protocol.setHttpResponsable(object : HttpResponsable<ImageMonitoring> {
+            override fun onResponse(res: ImageMonitoring) {
+                Trace.error("onResponse = $res")
             }
 
             override fun onFailure(nError: Int, strMsg: String) {
