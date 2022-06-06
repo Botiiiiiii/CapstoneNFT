@@ -22,6 +22,8 @@ let upload = multer({
 
 })
 
+// let upload = multer();
+
 const uploadFile = async (fileName, res) =>{
     const content = {
         title: 'title',
@@ -71,18 +73,7 @@ router.get('/', function(req, res, next) {
     
 });
 
-// router.post('/upload', function(req, res, next){
-//     try{
-//         uploadFile('./config/awsconfig.json');
-//     }catch(e){
-//         // res.send('fail');
-//         console.log(e);
-//     }
-
-//     res.send('good');
-// })
-
-router.post('/upload', upload.single("file"), async function(req, res, next){   
+router.post('/upload', upload.single("upload"), async function(req, res, next){   
     // upload.single("imgFile")
 
     console.log(req.file)
@@ -102,5 +93,14 @@ router.post('/upload', upload.single("file"), async function(req, res, next){
 
     // res.send(result);
 })
+
+// router.post('/upload', upload.single("file"), async function(req, res, next){
+//     console.log(req.body);
+//     console.log(req.headers);
+//     console.log(req.file);
+//     console.log(req.params.file);
+
+//     res.send('hello');
+// })
 
 module.exports = router;
