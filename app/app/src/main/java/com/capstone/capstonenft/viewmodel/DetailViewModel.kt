@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.capstone.capstonenft.NFT
 import com.capstone.capstonenft.dto.*
-import com.capstone.capstonenft.protocol.BuyProtocol
-import com.capstone.capstonenft.protocol.OwnerProtocol
-import com.capstone.capstonenft.protocol.ProfileProtocol
-import com.capstone.capstonenft.protocol.TokenRegisterProtocol
+import com.capstone.capstonenft.protocol.*
 import com.capstone.capstonenft.system.net.HttpResponsable
 import com.capstone.capstonenft.system.net.NetworkManager
 import com.capstone.capstonenft.system.net.ProtocolFactory
@@ -52,7 +49,7 @@ class DetailViewModel : ViewModel() {
         protocol.setHttpResponsable(object : HttpResponsable<Message> {
             override fun onResponse(res: Message) {
                 Trace.error("onResponse = $res")
-                _message.postValue(res)
+                getKlay()
             }
 
             override fun onFailure(nError: Int, strMsg: String) {
@@ -73,7 +70,7 @@ class DetailViewModel : ViewModel() {
         protocol.setHttpResponsable(object : HttpResponsable<Message> {
             override fun onResponse(res: Message) {
                 Trace.error("onResponse = $res")
-                _message.postValue(res)
+                getKlay()
             }
 
             override fun onFailure(nError: Int, strMsg: String) {
@@ -93,6 +90,25 @@ class DetailViewModel : ViewModel() {
             override fun onResponse(res: Owner) {
                 Trace.error("onResponse = $res")
                 _owner.postValue(res)
+            }
+
+            override fun onFailure(nError: Int, strMsg: String) {
+                Trace.error("onFailure = $nError $strMsg")
+                super.onFailure(nError, strMsg)
+            }
+        })
+        NetworkManager.getInstance().asyncRequest(protocol)
+    }
+
+    fun getKlay() {
+        val protocol: KlayProtocol = ProtocolFactory.create(KlayProtocol::class.java)
+        protocol.PATH = "user/${NFT.instance.loginResponse.name}/balance"
+
+        protocol.setHttpResponsable(object : HttpResponsable<Klay> {
+            override fun onResponse(res: Klay) {
+                NFT.instance.klay = res
+                _message.postValue(Message("ds"))
+
             }
 
             override fun onFailure(nError: Int, strMsg: String) {
