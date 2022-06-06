@@ -12,10 +12,10 @@ import matplotlib.pyplot as plt
 
 # 학습에 사용되는 이미지 디렉토리
 # 현재 테스트에서는 bored apes yacht club nft 이미지 만개를 사용함
-IMG_DIR = 'bayc\*'
+IMG_DIR = 'static/bayc/*'
 
 # 추출된 피쳐가 저장되는 디렉토리
-FEATURE_DIR = 'feature\*'
+FEATURE_DIR = 'static/feature/*'
 
 
 # 검색할 이미지를 설정함

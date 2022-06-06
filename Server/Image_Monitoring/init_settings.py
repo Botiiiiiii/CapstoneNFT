@@ -32,7 +32,7 @@ class Init:
             img_name = path.splitext(path.basename(img_path))[0]
 
             # npy 형식으로 파일을 저장함
-            feature_path = f"feature/{img_name}.npy"
+            feature_path = f"static/feature/{img_name}.npy"
 
             # 만약 피쳐 파일이 존재하면 넘긴다
             if(path.isfile(feature_path)):
